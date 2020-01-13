@@ -1,11 +1,79 @@
 @import '../../styles/vars';
 
 .header {
-  padding: 1rem 0;
-  .container {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }  
+	padding: 1rem 0;
+	.container,
+	&__wrapper-logo,
+	&__wrapper-interaction {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+	&__wrapper {
+		&-search {
+			margin-right: $gup;
+		}
+		&-search,
+		&-interaction {
+			flex: 0 1 100%;
+			justify-content: flex-end;
+		}
+		&-logo {
+			min-width: $sideburWidth;
+			flex: 0 1 $sideburWidth;
+			justify-content: center;
+			position: relative;
+			margin-right: $gup;
+			&::before {
+				position: absolute;
+				width: 40px;
+				height: 100%;
+				content: '';
+				background: linear-gradient(
+					to right,
+					rgba(255, 255, 255, 0) 0%,
+					rgba(255, 255, 255, 0.1) 1%,
+					rgba(255, 255, 255, 0.5) 30%,
+					rgba(255, 255, 255, 0.7) 50%,
+					rgba(255, 255, 255, 0.5) 70%,
+					rgba(255, 255, 255, 0.1) 99%,
+					rgba(255, 255, 255, 0) 100%
+				);
+				top: 0;
+				left: 0;
+				transform: translateX(-100%) skew(-40deg, 0deg);
+				animation: move 30s 10s linear infinite;
+			}
+		}
+	}
+	&__logo {
+		height: 6rem;
+	}
+	&__login {
+		@extend %flex-jsb-ac;
+		color: $textColor;
+		font-size: 1.7em;
+		margin-right: 1.5rem;
+		text-decoration: none;
+		&:hover &-text {
+			text-decoration: underline;
+		}
+		&-text {
+			font-size: 15px;
+			margin-left: 0.5rem;
+		}
+	}
+}
+
+@keyframes move {
+	from {
+		left: 0;
+	}
+	10% {
+		left: 100%;
+	}
+	to {
+		left: 100%;
+	}
 }

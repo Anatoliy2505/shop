@@ -1,1 +1,52 @@
-$mainColor: #00c980;
+$mainColor: #08909c;
+$textColor: #424242;
+$textSize: 0.875em;
+
+$gup: 1rem;
+$sideburWidth: 16.875rem;
+
+%flex-jc-ac {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+%flex-jsb-ac {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+%flex-jfs-ac {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+%flex-jfs-asb {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: space-between;
+}
+
+%flex-column-jc-asb {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+}
+
+%flex-column-jfs-asb {
+	display: flex;
+	flex-flow: column;
+	justify-content: flex-start;
+}
+
+%before {
+	content: '';
+	display: inline-block;
+	position: absolute;
+}

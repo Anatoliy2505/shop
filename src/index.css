@@ -1,17 +1,42 @@
 body {
-  margin: 0 auto;
-  font-family: "Open Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 100%;
+	margin: 0 auto;
+	font-family: "Open Sans", "Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 100%;
+	color: #424242;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+img {
+	max-width: 100%;
 }
 
 .container {
-  max-width: 1455px;
-  margin: 0 auto;
+	max-width: 1455px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.hidden {
+	display: none;
+}
+
+.content-wrapper {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: stretch;
+	align-items: flex-start;
+}
+
+.title {
+	font-size: 1em;
+	font-weight: 500;
+	margin: 0;
+	line-height: 1em;
+	padding-bottom: 4px;
+	border-bottom: 1px solid #616161;
 }
