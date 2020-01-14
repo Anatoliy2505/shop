@@ -19,6 +19,7 @@ img {
 	max-width: 1455px;
 	margin: 0 auto;
 	padding: 0 1rem;
+	box-sizing: border-box;
 }
 
 .hidden {
@@ -30,6 +31,11 @@ img {
 	flex-flow: row nowrap;
 	justify-content: stretch;
 	align-items: flex-start;
+}
+
+.main-content {
+	flex: 0 1 100%;
+	overflow: hidden;
 }
 
 .title {

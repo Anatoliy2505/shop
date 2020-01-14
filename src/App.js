@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Header, Sidebar } from './components'
+import { Home } from './pages'
 
 function App() {
 	return (
@@ -9,7 +10,7 @@ function App() {
 			<div className={'container content-wrapper'}>
 				<Sidebar />
 				<main className={'main-content'}>
-					<h1 className={'title'}>Основной контент</h1>
+					<Home />
 				</main>
 			</div>
 		</div>

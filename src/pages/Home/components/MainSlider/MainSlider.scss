@@ -1,0 +1,120 @@
+.slick {
+  max-width: 100%;
+  overflow: hidden;
+  height: 20rem;
+  * {
+    outline: none;
+  }
+	&.slick-dotted {
+		margin: 0;
+    margin-top: 1rem;
+  }
+	&-list, &-track {
+    height: 100%;
+  }
+	&-slide {
+    position: relative;
+    &__img {
+      max-width: 100%;
+      object-fit: in;
+      margin: 0;
+    }	
+  }  
+  &-dots {
+		display: inline-block;
+		width: auto;
+		right: 1rem;
+		bottom: 50%;
+    transform: rotate(-90deg) translateX(-50%);
+    & li {
+      width: 3px;
+			padding: 0;
+			margin: 0 8px;
+			&.slick-active {
+        & button:before {
+          right: 0;
+          height: 40px;
+        }
+      }
+      & button {
+        width: 100%;
+				padding: 0;
+				&:before {
+          top: auto;
+					left: auto;
+					right: 0;
+					bottom: 0;
+					content: '';
+					background-color: #fbdbaf;
+					width: 100%;
+					transition: all 0.3s;
+        }
+      }					
+    }			
+  }
+}
+	
+	
+	// &.slick-dotted
+	// 	margin: 0
+	// 	margin-top: 1rem
+	// &-list, &-track
+	// 	height: 100%
+	// &-slide
+	// 	position: relative
+	// 	&__img
+	// 		height: 100%
+	// 		width: 100%
+	// 	&__text
+	// 		position: absolute
+	// 		top: 0
+	// 		left: 0
+	// 		width: 45%
+	// 		height: 100%
+	// 		background: url('../img/slider_bg.png') center center no-repeat
+	// 		background-size: 100% 100%
+	// 		color: #fff
+	// 		display: flex
+	// 		flex-flow: row no-wrap
+	// 		justify-content: flex-start
+	// 		align-items: center
+	// 		&::after
+	// 			content: ''
+	// 			position: absolute
+	// 			display: inline-block
+	// 			height: 100%
+	// 			width: 35%
+	// 			right: -0.5rem
+	// 			background: url('../img/slide_line.png') center center no-repeat
+	// 			background-size: 100% 100%
+	// 		.text
+	// 			font-size: 1.75em
+	// 			line-height: 1.375em
+	// 			padding: 3rem
+	// 			width: calc( 100% - 4rem )
+	// &-dots
+	// 	display: inline-block
+	// 	width: auto
+	// 	right: 1rem
+	// 	bottom: 50%
+	// 	transform: rotate(-90deg) translateX(-50%)
+	// 	& li
+	// 		width: 3px
+	// 		padding: 0
+	// 		margin: 0 8px
+	// 		&.slick-active
+	// 			& button:before
+	// 				right: 0
+	// 				height: 40px
+	// 		& button
+	// 			width: 100%
+	// 			padding: 0
+	// 			&:before
+	// 				top: auto
+	// 				left: auto
+	// 				right: 0
+	// 				bottom: 0
+	// 				content: ''
+	// 				background-color: #fbdbaf
+	// 				width: 100%
+	// 				transition: all 0.3s

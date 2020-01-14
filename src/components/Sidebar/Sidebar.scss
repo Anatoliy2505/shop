@@ -1,7 +1,8 @@
 @import '../../styles/vars';
 
 .sidebar {
-	width: $sideburWidth;
+	min-width: $sideburWidth;
+	flex: 0 1 $sideburWidth;
 	margin-right: $gup;
 	&-catalog {
 		$catalog: &;
