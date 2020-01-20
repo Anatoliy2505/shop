@@ -1,3 +1,5 @@
+@import '../../../../styles/vars';
+
 .slick {
   max-width: 100%;
   overflow: hidden;
@@ -11,15 +13,64 @@
   }
 	&-list, &-track {
     height: 100%;
-  }
-	&-slide {
-    position: relative;
+	}
+	&-slide > div{
+		height: 100%;
+	}
+	&-item {
+		position: relative;
+		max-height: 100%;	
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
     &__img {
-      max-width: 100%;
-      object-fit: in;
+			max-width: 100%;
+      object-fit: fill;
       margin: 0;
-    }	
-  }  
+		}	
+		&__text {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 60%;
+			height: 100%;
+			background: url('./img/slider_bg.png') center center no-repeat;
+			background-size: 100% 100%;
+			color: #fff;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: flex-start;
+			align-items: center;
+			box-sizing: border-box;
+			&::after {
+				content: '';
+				position: absolute;
+				display: inline-block;
+				height: 100%;
+				width: 35%;
+				right: -1rem;
+				background: url('./img/slide_line.png') center center no-repeat;
+				background-size: 100% 100%;
+			}
+			&-container {
+				padding: 2rem;
+				width: 70%;
+			}
+			&-title, &-desc {
+				display: block;
+			}
+			&-title {
+				line-height: 1.275em;
+				font-size: 1.55em;
+				margin-bottom: 1rem;
+				font-weight: 600;
+			}
+			&-desc {
+				font-size: 1em;
+				font-weight: 400;
+			}
+		}
+	}	
   &-dots {
 		display: inline-block;
 		width: auto;

@@ -19,6 +19,12 @@
 			flex: 0 1 100%;
 			justify-content: flex-end;
 		}
+		&-search {
+			flex-basis: 270%;
+		}
+		&-interaction {
+			min-width: 230px;
+		}
 		&-logo {
 			min-width: $sideburWidth;
 			flex: 0 1 $sideburWidth;
