@@ -16,10 +16,22 @@ img {
 }
 
 .container {
-	max-width: 1455px;
+	max-width: 1503px;
 	margin: 0 auto;
 	padding: 0 1rem;
 	box-sizing: border-box;
+}
+
+@media (max-width: 1503px) {
+	.container {
+		max-width: 1263px;
+	}
+}
+
+@media (max-width: 1263px) {
+	.container {
+		max-width: 1023px;
+	}
 }
 
 .hidden {
