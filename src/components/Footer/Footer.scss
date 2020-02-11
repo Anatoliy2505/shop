@@ -1,0 +1,35 @@
+.footer {
+	margin-top: 3rem;
+	background: url(./img/footer.jpg) no-repeat fixed 50% 100% #ffffff;
+	&-nav {
+		background-color: rgba(64, 64, 64, 0.8);
+	}
+	&-contact {
+		color: #bdbdbd;
+	}
+	&-copyright {
+		background-color: rgba(32, 32, 32, 0.8);
+		padding-bottom: 2rem;
+		color: #bdbdbd;
+		font-size: 0.8em;
+		&__line {
+			height: 1px;
+			background-color: #fff;
+			margin-bottom: 1rem;
+		}
+		&__name {
+			padding: 5px 0;
+			line-height: 1em;
+			font-size: 1.1em;
+			font-weight: 700;
+			color: #fff;
+		}
+		&__data {
+			font-size: 1em;
+			color: #fff;
+		}
+		&__item {
+			max-width: 1200px;
+		}
+	}
+}

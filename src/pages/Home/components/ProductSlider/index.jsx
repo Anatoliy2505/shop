@@ -102,7 +102,7 @@ const ProductSlider = ( { products, title, href, mainPage } ) => {
 		{
 			products ? 
         <section className="product-slider">
-          {title ? <h2 className={"section-title"}><Link to={href} className={'section-title__wrap'}>{title}</Link></h2> : null}
+          {title ? <h2 className={"section-title"}><Link to={href} className={'section-title__wrap'} title={`Увидеть все ${title}`}>{title}</Link></h2> : null}
           <Slider {...settings} className={'slick-products__list'}>{sliderItems}</Slider>
         </section> : null
 		}

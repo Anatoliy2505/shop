@@ -10,9 +10,9 @@ $b: 20px;
 		top: 8.75rem;
 		width: $wh;
 		height: $wh;
-		background-color: #e0e0e0;
+		background-color: #ffff;
 		border-radius: 50%;
-		opacity: 0.75;
+		opacity: 0.85;
 		transition: opacity 0.3s;
 		z-index: 1;
 		&:hover {
@@ -31,13 +31,13 @@ $b: 20px;
 		}
 	}
 	.slick-prev {
-		left: -19px;
+		left: -18px;
 		&::before {
 			border-right: $b solid $mainColor;
 		}
 	}
 	.slick-next {
-		right: -4px;
+		right: -3px;
 		&::before {
 			border-left: $b solid $mainColor;
 		}

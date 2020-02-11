@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Sidebar } from './components'
+import { Header, Sidebar, Footer } from './components'
 import { Home } from './pages'
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
 					<Home />
 				</main>
 			</div>
+			<Footer />
 		</div>
 	)
 }
