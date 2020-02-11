@@ -1,18 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './ProductCard.scss';
 
-const ProductCard = ({ id, img, title, price, priceOld, count }) => {
+const ProductCard = ({ id, img, title, price, priceOld, count, mainPage }) => {
 	return (
-		<li className={'product__item'}>
+		<div className={'product__item'}>
 			<div className={'product__card'}>
-				<a href={'category/' + id} className={'product__wrap-img'}>
+				<Link to={`/${mainPage}/${id}`} className={'product__wrap-img'} title={title}>
 					<img src={img} alt={title} className={'product__img'} />
-				</a>
+				</Link>
 				<div className="product__desc">
-					<a href={'category/' + id} className={'product__wrap-title'} title={title}>
+					<Link to={`/${mainPage}/${id}`} className={'product__wrap-title'}>
 						<h3 className="product__title">{title}</h3>
-					</a>
+					</Link>
 					<span className={'product__existence ' + (!count ? 'product__existence--empty' : '')}>
 						{count ? 'В наличии' : 'Временно отсутствует'}
 					</span>
@@ -30,7 +31,7 @@ const ProductCard = ({ id, img, title, price, priceOld, count }) => {
 					</div>
 				</div>
 			</div>
-		</li>
+		</div>
 	);
 };
 

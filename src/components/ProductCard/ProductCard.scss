@@ -1,14 +1,6 @@
 @import '../../styles/vars';
 
 .product {
-	&__list {
-		margin: 0;
-		padding: 2rem 0;
-		list-style: none;
-		display: flex;
-		flex-flow: row wrap;
-		margin-right: -15px;
-	}
 	&__item {
 		width: 14.0625rem;
 		margin: 0 15px 15px 0;

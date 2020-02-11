@@ -1,0 +1,8 @@
+.product {
+	&__list {
+		padding-top: 15px;
+		display: flex;
+		flex-flow: row wrap;
+		margin-right: -15px;
+	}
+}

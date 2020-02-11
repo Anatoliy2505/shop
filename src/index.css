@@ -58,3 +58,23 @@ img {
 	padding-bottom: 4px;
 	border-bottom: 1px solid #616161;
 }
+
+.section-title {
+	font-size: 1em;
+	margin: 15px 0;
+	line-height: 1em;
+	font-weight: 400;
+	border-top: 1px solid #e0e0e0;
+}
+
+.section-title__wrap {
+	display: inline-block;
+	padding: 7px 30px;
+	background-color: #08909c;
+	color: #fff;
+	text-decoration: none;
+}
+
+.section-title__wrap:hover {
+	text-decoration: underline;
+}
