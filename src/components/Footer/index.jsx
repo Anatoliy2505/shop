@@ -1,16 +1,142 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './Footer.scss';
+import pay_img from './img/pay.png';
 
 const Footer = () => {
 	const date = new Date();
 	const year = date.getFullYear();
 	return (
 		<footer className={'footer'}>
-			<div className={'footer-nav'}>
-				<div className={'container'}>adfdffsdfdsf</div>
+			<div className={'footer-top'}>
+				<div className={'container'}>
+					<div className="flex-container">
+						<div className={'flex-container__item footer-pay'}>
+							<Link to={'/help/delivery'} className={'footer-top__title'} title={'Условия оплаты'}>
+								Безопасная оплата
+							</Link>
+							<div className={'footer-top__desc'}>
+								При оплате онлайн, данные банковской карты надежно защищены
+							</div>
+							<Link to={'/help/delivery'} className={'footer-top__img'} title={'Безопасная оплата'}>
+								<img
+									src={pay_img}
+									alt={'При оплате онлайн, данные банковской карты надежно защищены'}
+								/>
+							</Link>
+						</div>
+						<div className={'flex-container__item'}>
+							<ul className={'footer-nav'}>
+								<li className={'footer-nav__item'}>
+									<Link to={'/news'}>Новости</Link>
+								</li>
+								<li className={'footer-nav__item'}>
+									<Link to={'/sale'}>Товары со скидками</Link>
+								</li>
+								<li className={'footer-nav__item'}>
+									<Link to={'/hits'}>Хиты продаж</Link>
+								</li>
+							</ul>
+						</div>
+						<div className={'flex-container__item'}>
+							<ul className={'footer-nav'}>
+								<li className="footer-nav__item">
+									<Link to={'/help/order'}>Как сделать заказ</Link>
+								</li>
+								<li className={'footer-nav__item'}>
+									<Link to={'/help/delivery'}>Условия доставки и оплаты</Link>
+								</li>
+								<li className={'footer-nav__item'}>
+									<Link to={'/help/return'}>Возврат товара</Link>
+								</li>
+							</ul>
+						</div>
+						<div className={'flex-container__item'}>
+							<div className={'footer-top__title'}>Следите за нами в соцсетях</div>
+							<ul className={'footer-social'}>
+								<li className={'footer-social__item footer-social__item-youtube'}>
+									<a
+										rel={'noopener noreferrer'}
+										target={'_blank'}
+										title={'Наш Youtube-канал'}
+										href={'https://www.youtube.com/sibirskylov'}
+									>
+										<i className={'fab fa-youtube'} />
+									</a>
+								</li>
+								<li className={'footer-social__item footer-social__item-ondoklassniki'}>
+									<a
+										rel={'noopener noreferrer'}
+										target={'_blank'}
+										title={'Мы в Одноклассниках'}
+										href={'https://ok.ru/sibirskylov'}
+									>
+										<i className={'fab fa-odnoklassniki'} />
+									</a>
+								</li>
+								<li className={'footer-social__item footer-social__item-facebook'}>
+									<a
+										rel={'noopener noreferrer'}
+										target={'_blank'}
+										title={'Мы в Фейсбуке'}
+										href={'https://www.facebook.com/groups/hariusfly/'}
+									>
+										<i className={'fab fa-facebook'} />
+									</a>
+								</li>
+								<li className={'footer-social__item footer-social__item-instagram'}>
+									<a
+										rel={'noopener noreferrer'}
+										target={'_blank'}
+										title={'Мы в Инстаграмме'}
+										href={'https://www.instagram.com/pavelgorohovrus/'}
+									>
+										<i className={'fab fa-instagram'} />
+									</a>
+								</li>
+								<li className={'footer-social__item footer-social__item-vk'}>
+									<a
+										rel={'noopener noreferrer'}
+										target={'_blank'}
+										title={'Мы в Контакте'}
+										href={'https://vk.com/sibirskylov'}
+									>
+										<i className={'fab fa-vk'} />
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div className={'footer-contact'}>adfdffsdfdsf </div>
+			<div className={'footer-contact'}>
+				<div className="container">
+					<h3 className={'footer-contact__title'}>Наши контакты</h3>
+					<div className="flex-container">
+						<div className={'flex-container__item'}>
+							<div className="footer-contact__item footer-contact__item-title">Торговый зал</div>
+							<div className="footer-contact__item">Кемерово, Проспект Кузнецкий, 36</div>
+							<div className="footer-contact__item">650000</div>
+						</div>
+						<div className={'flex-container__item'}>
+							<div className="footer-contact__item footer-contact__item-title">E-mail</div>
+							<div className="footer-contact__item">sibirskylov@bk.ru</div>
+							<div className="footer-contact__item">sibirskylov@mail.ru</div>
+						</div>
+						<div className={'flex-container__item footer-contact__phone'}>
+							<div className="footer-contact__item footer-contact__item-title">Tel/Viber/WhatsApp</div>
+							<div className="footer-contact__item">8-923-621-67-38</div>
+							<div className="footer-contact__item">8-908-952-42-91</div>
+						</div>
+						<div className={'flex-container__item footer-contact__mode'}>
+							<div className="footer-contact__item footer-contact__item-title">Режим работы</div>
+							<div className="footer-contact__item">Пн-Пт: 10:00-18:00</div>
+							<div className="footer-contact__item">Сб-Вс: Выходной</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div className={'footer-copyright'}>
 				<div className={'container'}>
 					<div className={'footer-copyright__line'} />
@@ -30,7 +156,7 @@ const Footer = () => {
 						является публичной офертой.
 					</div>
 					<div className={'footer-copyright__item footer-copyright__data'}>
-						ООО "Сибирскайлов" ИНН: 5190900000 ОГРН: 1095190000000
+						ООО "Сибирский лов" ИНН: 4205367046 ОГРН: 1184205005830
 					</div>
 				</div>
 			</div>

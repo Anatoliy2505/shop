@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { SearchForm, HeaderCart } from '../'
 import './Header.scss'
@@ -8,19 +9,23 @@ export const Header = () => {
 	return (
 		<header className={'header'}>
 			<div className={'container'}>
-				<a href={'/'} className={'header__wrapper-logo'}>
+				<Link to={'/'} className={'header__wrapper-logo'} title={'На главную'}>
 					<img className={'header__logo'} src={logo} alt={'logo'} />
-				</a>
+				</Link>
 
 				<div className={'header__wrapper-search'}>
 					<SearchForm />
 				</div>
 
 				<div className={'header__wrapper-interaction'}>
-					<a href={'/'} className={'header__login'}>
+					<Link
+						to={'/login'}
+						className={'header__login'}
+						title={'Вход в кабинет'}
+					>
 						<i className={'fas fa-fw fa-sign-in-alt'} />
 						<span className={'header__login-text'}>Вход</span>
-					</a>
+					</Link>
 					<HeaderCart />
 				</div>
 			</div>
