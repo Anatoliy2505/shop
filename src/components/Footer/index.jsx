@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Footer.scss';
 import pay_img from './img/pay.png';
+import { Social } from '../Social';
 
 const Footer = () => {
 	const date = new Date();
@@ -54,58 +55,7 @@ const Footer = () => {
 						</div>
 						<div className={'flex-container__item'}>
 							<div className={'footer-top__title'}>Следите за нами в соцсетях</div>
-							<ul className={'footer-social'}>
-								<li className={'footer-social__item footer-social__item-youtube'}>
-									<a
-										rel={'noopener noreferrer'}
-										target={'_blank'}
-										title={'Наш Youtube-канал'}
-										href={'https://www.youtube.com/sibirskylov'}
-									>
-										<i className={'fab fa-youtube'} />
-									</a>
-								</li>
-								<li className={'footer-social__item footer-social__item-ondoklassniki'}>
-									<a
-										rel={'noopener noreferrer'}
-										target={'_blank'}
-										title={'Мы в Одноклассниках'}
-										href={'https://ok.ru/sibirskylov'}
-									>
-										<i className={'fab fa-odnoklassniki'} />
-									</a>
-								</li>
-								<li className={'footer-social__item footer-social__item-facebook'}>
-									<a
-										rel={'noopener noreferrer'}
-										target={'_blank'}
-										title={'Мы в Фейсбуке'}
-										href={'https://www.facebook.com/groups/hariusfly/'}
-									>
-										<i className={'fab fa-facebook'} />
-									</a>
-								</li>
-								<li className={'footer-social__item footer-social__item-instagram'}>
-									<a
-										rel={'noopener noreferrer'}
-										target={'_blank'}
-										title={'Мы в Инстаграмме'}
-										href={'https://www.instagram.com/pavelgorohovrus/'}
-									>
-										<i className={'fab fa-instagram'} />
-									</a>
-								</li>
-								<li className={'footer-social__item footer-social__item-vk'}>
-									<a
-										rel={'noopener noreferrer'}
-										target={'_blank'}
-										title={'Мы в Контакте'}
-										href={'https://vk.com/sibirskylov'}
-									>
-										<i className={'fab fa-vk'} />
-									</a>
-								</li>
-							</ul>
+							<Social />
 						</div>
 					</div>
 				</div>

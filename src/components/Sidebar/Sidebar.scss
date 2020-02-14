@@ -113,4 +113,13 @@
 			}
 		}
 	}
+	&__social {
+		padding-top: 10px;
+		&-title {
+			margin: 0;
+			margin-bottom: 5px;
+			font-size: 0.9em;
+			font-weight: 400;
+		}
+	}
 }
