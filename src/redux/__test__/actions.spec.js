@@ -3,7 +3,12 @@ import thunk from 'redux-thunk'
 import { API_ROOT } from '../../utils/constants'
 import * as t from '../actionTypes'
 
-import { newsRequest, newsSuccess, newsFailure, getNews } from './actions'
+import {
+	catigoriesRequest,
+	catigoriesSuccess,
+	catigoriesFailure,
+	getCatigories,
+} from '../actions'
 
 import fetchMock from 'fetch-mock'
 import expect from 'expect'
@@ -11,33 +16,33 @@ import expect from 'expect'
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-describe('NewsActions', () => {
+describe('CategoriesActions', () => {
 	describe('Sync actions', () => {
-		it('newsRequest(): should create an action to set isLoading', () => {
+		it('catigoriesRequest(): should create an action to set isLoading', () => {
 			const expectedAction = {
-				type: t.NEWS_GET_REQUEST,
+				type: t.CATEGORIES_GET_REQUEST,
 			}
-			expect(newsRequest()).toEqual(expectedAction)
+			expect(catigoriesRequest()).toEqual(expectedAction)
 		})
 
-		it('newsSuccess(): should attach news data', () => {
+		it('catigoriesSuccess(): should attach news data', () => {
 			const expectedAction = {
-				type: t.NEWS_GET_SUCCESS,
+				type: t.CATEGORIES_GET_SUCCESS,
 				payload: [1, 2, 3],
 			}
-			expect(newsSuccess([1, 2, 3])).toEqual(expectedAction)
+			expect(catigoriesSuccess([1, 2, 3])).toEqual(expectedAction)
 		})
 
-		it('newsFailure(): should attach error message', () => {
-			const errorMessage = 'wrong password'
+		it('catigoriesFailure(): should attach error message', () => {
+			const errorMessage = 'wrong'
 			const expectedAction = {
-				type: t.NEWS_GET_FAILURE,
+				type: t.CATEGORIES_GET_FAILURE,
 				payload: {
 					errorMsg: errorMessage,
 				},
 				error: true,
 			}
-			expect(newsFailure(errorMessage)).toEqual(expectedAction)
+			expect(catigoriesFailure(errorMessage)).toEqual(expectedAction)
 		})
 	})
 
@@ -47,16 +52,19 @@ describe('NewsActions', () => {
 			fetchMock.restore()
 		})
 
-		it('creates NEWS_GET_SUCCESS when fetching news has been done', () => {
-			fetchMock.getOnce(`${API_ROOT}/news`, {
+		it('creates CATEGORIES_GET_SUCCESS when fetching catigories has been done', () => {
+			fetchMock.getOnce(`${API_ROOT}/categories`, {
 				headers: { 'content-type': 'application/json' },
 				body: { data: [1, 2, 3], status: 'ok' },
 			})
 
-			const expectedActions = [newsRequest(), newsSuccess([1, 2, 3])]
+			const expectedActions = [
+				catigoriesRequest(),
+				catigoriesSuccess([1, 2, 3]),
+			]
 			const store = mockStore({})
 
-			return store.dispatch(getNews()).then(() => {
+			return store.dispatch(getCatigories()).then(() => {
 				expect(store.getActions()).toEqual(expectedActions)
 			})
 		})
