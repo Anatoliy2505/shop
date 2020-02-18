@@ -1,48 +1,30 @@
-import {
-	LOG_IN,
-	LOG_OUT,
-	LOG_IN_FAIL,
-	REMOVE_ERROR_MSG,
-	LOG_IN_STARTED,
-} from '../actions/sessionActions'
+import * as t from './actionTypes'
 
 const initialState = {
-	userId: localStorage.getItem('userId') || null,
-	errorMsg: '',
-	logInStarted: false,
+	data: null,
+	isLoading: false,
+	errorMsg: null,
 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case LOG_IN_STARTED:
+		case t.NEWS_GET_REQUEST:
 			return {
 				...state,
-				logInStarted: true,
+				errorMsg: null,
+				isLoading: true,
 			}
-		case LOG_IN:
+		case t.NEWS_GET_SUCCESS:
 			return {
 				...state,
-				userId: action.payload,
-				errorMsg: '',
-				logInStarted: false,
+				isLoading: false,
+				data: action.payload,
 			}
-		case LOG_OUT:
+		case t.NEWS_GET_FAILURE:
 			return {
 				...state,
-				userId: null,
-				errorMsg: '',
-			}
-		case LOG_IN_FAIL:
-			return {
-				...state,
-				userId: null,
-				logInStarted: false,
+				isLoading: false,
 				errorMsg: action.payload.errorMsg,
-			}
-		case REMOVE_ERROR_MSG:
-			return {
-				...state,
-				errorMsg: '',
 			}
 		default:
 			return state

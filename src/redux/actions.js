@@ -1,5 +1,5 @@
 import { checkResponse } from '../utils/helpers/checkResponse'
-import { get } from '../utils/api/categoriesApi'
+import { getAll } from '../utils/api/categoriesApi'
 import { error } from './constants'
 
 import * as t from './actionTypes'
@@ -25,7 +25,7 @@ export const getCategories = () => {
 	return dispatch => {
 		dispatch(categoriesRequest())
 
-		return get()
+		return getAll()
 			.then(res => {
 				if (checkResponse(res)) {
 					dispatch(categoriesSuccess(res.data))

@@ -3,15 +3,11 @@ import { NAME } from './constants'
 //import { filterActive, filterCompleted } from './model';
 
 // TODO: newsSelector, isLoading selector, errorNewsSelector ??
-const categoriesSelector = state => state[NAME].data
-const categoriesIsLoading = state => state[NAME].isLoading
-const categoriesErrorMsg = state => state[NAME].errorMsg
+export const categoriesRootSelector = state => state[NAME]
 
 export const categoriesGetAll = createSelector(
-	categoriesSelector,
-	categoriesIsLoading,
-	categoriesErrorMsg,
-	(data, isLoading, errorMsg) => ({
+	categoriesRootSelector,
+	({ data, isLoading, errorMsg }) => ({
 		data,
 		isLoading,
 		errorMsg,

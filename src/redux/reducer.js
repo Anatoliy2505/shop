@@ -18,7 +18,6 @@ export default (state = initialState, action) => {
 			return {
 				data: action.payload,
 				isLoading: false,
-				errorMsg: null,
 			}
 		case t.CATEGORIES_GET_FAILURE:
 			return {

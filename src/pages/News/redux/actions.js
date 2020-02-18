@@ -1,61 +1,40 @@
-import { postLogInfo } from '../../utils/api/session'
-import { errorLog } from './constants'
+import { checkResponse } from '../../../utils/helpers/checkResponse'
+import { getAll } from '../../../utils/api/newsApi'
+import { error } from './constants'
 
-export const LOG_IN_STARTED = 'LOG_IN_STARTED'
-export const LOG_IN = 'LOG_IN'
-export const LOG_OUT = 'LOG_OUT'
-export const LOG_IN_FAIL = 'LOG_IN_FAIL'
-export const REMOVE_ERROR_MSG = 'REMOVE_ERROR_MSG'
+import * as t from './actionTypes'
 
-export function logIn(params) {
+export const newsRequest = () => ({
+	type: t.NEWS_GET_REQUEST,
+})
+
+export const newsSuccess = data => ({
+	type: t.NEWS_GET_SUCCESS,
+	payload: data,
+})
+
+export const newsFailure = (errorMsg = error.connect) => ({
+	type: t.NEWS_GET_FAILURE,
+	payload: {
+		errorMsg,
+	},
+	error: true,
+})
+
+export const getNews = () => {
 	return dispatch => {
-		dispatch({ type: LOG_IN_STARTED })
-		postLogInfo(params)
+		dispatch(newsRequest())
+
+		return getAll()
 			.then(res => {
-				if (res.status === 'ok') {
-					dispatch({
-						type: LOG_IN,
-						payload: res.data.id,
-					})
-					localStorage.setItem('userId', res.data.id)
+				if (checkResponse(res)) {
+					dispatch(newsSuccess(res.data))
 				} else {
-					dispatch({
-						type: LOG_IN_FAIL,
-						payload: {
-							errorMsg: errorLog[res.message],
-						},
-						error: true, // https://github.com/redux-utilities/flux-standard-action
-					})
+					dispatch(newsFailure(res.message))
 				}
 			})
 			.catch(error => {
-				dispatch({
-					type: LOG_IN_FAIL,
-					payload: {
-						errorMsg: errorLog.server_connection_failed,
-					},
-					error: true, // https://github.com/redux-utilities/flux-standard-action
-				})
-				console.warn('postLogInfo error ', error)
+				dispatch(newsFailure())
 			})
-	}
-}
-
-export function logOut() {
-	localStorage.removeItem('userId')
-	return {
-		type: LOG_OUT,
-	}
-}
-
-export function removeErorroMsg() {
-	return {
-		type: REMOVE_ERROR_MSG,
-	}
-}
-
-export function logInStarted() {
-	return {
-		type: LOG_IN_STARTED,
 	}
 }

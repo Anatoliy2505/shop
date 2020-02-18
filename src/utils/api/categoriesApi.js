@@ -1,3 +1,3 @@
 import { httpGet } from '../helpers/network'
 
-export const get = () => httpGet('categories')
+export const getAll = () => httpGet('categories')

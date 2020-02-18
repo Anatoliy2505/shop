@@ -55,7 +55,7 @@ const Sidebar = ({ data, isLoading, errorMsg }) => {
 					<ul className={'sidebar-catalog__list'}>{createTree(data, activeItem, onSelectItem)}</ul>
 				) : errorMsg ? (
 					<h3 className={'error'}>{errorMsg}</h3>
-				) : null}
+				) : <div>Empty</div>}
 			</nav>
 			<div className="sidebar__social">
 				<h3 className="sidebar__social-title">Следите за нами в соцсетях</h3>
