@@ -21,7 +21,7 @@ const News = ({ news: { data, isLoading, errorMsg }, getNews }) => {
 			) : errorMsg ? (
 				<div className={'error'}>{errorMsg}</div>
 			) : (
-				<div className={'empty'}>Empty</div>
+				<div className={'empty'}>Empty...</div>
 			)}
 		</section>
 	)
