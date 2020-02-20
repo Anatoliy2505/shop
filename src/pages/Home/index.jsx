@@ -6,7 +6,7 @@ import { getNews } from '../News/redux/actions'
 
 // import { ProductList } from '../Catalog/components/ProductLIst';
 import { NewsList } from '../../components'
-import { MainSlider, ProductSlider } from './components'
+import { MainSlider, ProductSlider, VkPosts } from './components'
 
 const Home = ({ news, getNews }) => {
 	useEffect(() => {
@@ -17,6 +17,7 @@ const Home = ({ news, getNews }) => {
 
 	return (
 		<div>
+			
 			<MainSlider />
 
 			{news && (
@@ -29,7 +30,10 @@ const Home = ({ news, getNews }) => {
 
 			<ProductSlider mainPage={'sale'} title={'Клёвые скидки'} href={'/sale'} />
 
+			<VkPosts />
+
 			{/* <ProductList /> */}
+			
 		</div>
 	)
 }
