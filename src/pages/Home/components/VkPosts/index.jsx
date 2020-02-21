@@ -1,33 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 
+import { getPosts } from '../../redux/actions'
+import { postsSelector } from '../../redux/selctors'
+import { VkPostsItem } from '../VkPostsItem'
 
-export const  VkPosts = () => {
-		const [text, setText] = useState(null)
-		const VK = window.VK;
-		
-    useEffect(()=>{
-			if(!text) {
-				VK.init({
-					apiId: 7328174
-				});
-				VK.Api.call('wall.get', {owner_id: '-60180312', count: '2', filter: 'owner', bool: '0', v: '5.103'},(r) => { // eslint-disable-line no-undef
-					try {
-						const response = r.response
-						console.log(r.response)
-						setText(response)
-					}
-					catch(e) {
-							console.log(e)
-					}
-			})
+const VkPosts = ({ postsData, getPosts }) => {
+	useEffect(() => {
+		if (!postsData) {
+			getPosts()
 		}
-		},[text, setText, VK])
-		
-    return ( 
-        <section className="vk-posts">
-            {
-            text ? text.items[0].text.split('\n').map(item => <div key={item}>{item}</div>) : null }
-        </section>
-     );
+	}, [postsData, getPosts])
+
+	const postsList = posts =>
+		posts.map(item => <VkPostsItem key={item.id} {...item} />)
+
+	return (
+		<section className="vk-posts">
+			{postsData ? postsList(postsData) : null}
+		</section>
+	)
 }
- 
+
+export default connect(
+	state => ({
+		postsData: postsSelector(state),
+	}),
+	{ getPosts }
+)(VkPosts)

@@ -1,23 +1,19 @@
 import { createSelector } from 'reselect'
+import { NAME } from './constants'
 
-export const sessionRootSelector = state => state.session
+export const postsRootSelector = state => state[NAME].posts
+const postsDataSelector = state => state[NAME].posts.data
 
-export const sessionIsAuthSelector = createSelector(
-	sessionRootSelector,
-	state => Boolean(state && state.userId)
+export const postsAllSelector = createSelector(
+	postsRootSelector,
+	({ posts: { data, isLoading, errorMsg } }) => ({
+		data,
+		isLoading,
+		errorMsg,
+	})
 )
 
-export const sessionErrorMsgSelector = createSelector(
-	sessionRootSelector,
-	state => (state && state.errorMsg) || ''
-)
-
-export const sessionUserIdSelector = createSelector(
-	sessionRootSelector,
-	state => Number(state && state.userId) || null
-)
-
-export const sessionLogInStartedSelector = createSelector(
-	sessionRootSelector,
-	state => Boolean(state && state.logInStarted)
+export const postsSelector = createSelector(
+	postsDataSelector,
+	data => data || null
 )

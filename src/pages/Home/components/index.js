@@ -1,3 +1,3 @@
 export { MainSlider } from './MainSlider'
 export { ProductSlider } from './ProductSlider'
-export { VkPosts } from './VkPosts'
+export { default as VkPosts } from './VkPosts'

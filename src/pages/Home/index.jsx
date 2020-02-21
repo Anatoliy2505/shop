@@ -17,7 +17,6 @@ const Home = ({ news, getNews }) => {
 
 	return (
 		<div>
-			
 			<MainSlider />
 
 			{news && (
@@ -33,7 +32,6 @@ const Home = ({ news, getNews }) => {
 			<VkPosts />
 
 			{/* <ProductList /> */}
-			
 		</div>
 	)
 }

@@ -1,4 +1,3 @@
-export const LOG_IN_REQUEST = 'LOG_IN_REQUEST'
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS'
-export const LOG_IN_FAILURE = 'LOG_IN_FAILURE'
-export const LOG_OUT = 'LOG_OUT'
+export const POSTS_GET_REQUEST = 'POSTS_GET_REQUEST'
+export const POSTS_GET_SUCCESS = 'POSTS_GET_SUCCESS'
+export const POSTS_GET_FAILURE = 'POSTS_GET_FAILURE'
