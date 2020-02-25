@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { categoriesGetAll } from './redux/selectors'
 import { getCategories } from './redux/actions'
 
 import { Header, Sidebar, Footer } from './components'
-import { Home } from './pages'
+import { Home, News } from './pages'
 
 function App({ categories, getCategories }) {
 	useEffect(() => {
@@ -19,7 +20,10 @@ function App({ categories, getCategories }) {
 			<div className={'container content-wrapper'}>
 				<Sidebar {...categories} />
 				<main className={'main-content'}>
-					<Home />
+					<Switch>
+						<Route exact path={['/', '/home']} component={Home} />
+						<Route path={['/news/:news', '/news']} component={News} />
+					</Switch>
 				</main>
 			</div>
 			<Footer />

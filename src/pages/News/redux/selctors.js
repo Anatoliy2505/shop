@@ -17,7 +17,7 @@ const _cutArr = arr => arr.splice(0, 2)
 
 export const newsPartSelector = createSelector(
 	newsSelector,
-	data => (data && _cutArr(data)) || null
+	data => (data && _cutArr([...data])) || null
 )
 
 // export const sessionErrorMsgSelector = createSelector(

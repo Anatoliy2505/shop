@@ -25,6 +25,7 @@ const NewsList = ({ data, isHome }) => {
 				</Link>
 			)
 		})
+
 	return (
 		<>
 			{data ? (
