@@ -19,11 +19,7 @@ const Home = ({ news, getNews }) => {
 		<div>
 			<MainSlider />
 
-			{news && (
-				<section className={'news'}>
-					<NewsList data={news} isHome={true} />
-				</section>
-			)}
+			{news && <NewsList data={news} isHome={true} />}
 
 			<ProductSlider mainPage={'hits'} title={'Хиты продаж'} href={'/hits'} />
 

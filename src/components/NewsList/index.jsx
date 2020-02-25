@@ -2,36 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import './NewsList.scss'
+import { NewsListItem } from '../NewsListItem'
 
 const NewsList = ({ data, isHome }) => {
 	const newsItems = news =>
 		news.map(item => {
-			return (
-				<Link
-					key={item.id}
-					to={`/news/${item.id}`}
-					className={'news-item'}
-					title={'Перейти к новости'}
-				>
-					<div className={'news-item__inner'}>
-						<div className={'news-item__img'}>
-							<img src={item.imgPath} alt={item.title} />
-						</div>
-						<div className={'news-item__desc'}>
-							{isHome ? item.litleDesc : item.desc}
-						</div>
-						<div className={'news-item__date'}>{item.date} г.</div>
-					</div>
-				</Link>
-			)
+			return <NewsListItem key={item.id} {...item} />
 		})
 
 	return (
-		<>
+		<section className={'news'}>
 			{data ? (
 				<>
-					<h2 className={'section-title'}>
-						{isHome ? (
+					{isHome ? (
+						<h2 className={'section-title'}>
 							<Link
 								to={'/news'}
 								className={'section-title__wrap'}
@@ -39,14 +23,14 @@ const NewsList = ({ data, isHome }) => {
 							>
 								Новости
 							</Link>
-						) : (
-							'Все новости'
-						)}
-					</h2>
+						</h2>
+					) : (
+						<h1 className={'news-title'}>Сибирский Лов - Наши новости</h1>
+					)}
 					<div className={'news-list'}>{newsItems(data)}</div>
 				</>
 			) : null}
-		</>
+		</section>
 	)
 }
 

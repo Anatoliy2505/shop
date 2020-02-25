@@ -5,6 +5,14 @@ $textSize: 0.875em;
 $gup: 1rem;
 $sideburWidth: 16.875rem;
 
+%date {
+	text-align: right;
+	color: #828282;
+	padding-top: 10px;
+	line-height: 1em;
+	font-size: 0.85em;
+}
+
 %flex-jc-ac {
 	display: flex;
 	flex-flow: row nowrap;
