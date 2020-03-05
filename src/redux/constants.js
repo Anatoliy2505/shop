@@ -1,7 +1,7 @@
 export const error = {
 	request: 'Не удалось получить список категорий!',
-	connect: 'Сервер недоступен!',
+	connect: 'Неудалось выполнить запрос к серверу!',
 	unknown: 'Неизвестная ошибка!',
 }
 
-export const NAME = 'categories'
+export const NAME = 'shop'

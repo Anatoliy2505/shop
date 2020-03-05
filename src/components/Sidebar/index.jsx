@@ -1,45 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-import './Sidebar.scss';
-import { Social } from '../Social';
+import './Sidebar.scss'
+import { Social } from '../Social'
 
 const Sidebar = ({ data, isLoading, errorMsg }) => {
-	const [ activeItem, setActiveItem ] = useState(null);
+	const [activeItem, setActiveItem] = useState(null)
 
-	const onSelectItem = (e) => {
-		const id = e.target.dataset.id;
-		activeItem === id ? setActiveItem(null) : setActiveItem(id);
-	};
+	const onSelectItem = e => {
+		const id = Number(e.target.dataset.id)
+		activeItem === id ? setActiveItem(null) : setActiveItem(id)
+	}
 
 	const createTree = (data, itemId, cb) => {
-		return data.map((item) => {
+		return data.map(item => {
 			return (
-				<li key={item.id} className={'sidebar-catalog__parent ' + (itemId === item.id ? 'active' : '')}>
+				<li
+					key={item.id}
+					className={
+						'sidebar-catalog__parent ' + (itemId === item.id ? 'active' : '')
+					}
+				>
 					<div className={'sidebar-catalog__parent-wrap'}>
-						<a className={'sidebar-catalog__item'} href={'/' + item.name}>
+						<Link className={'sidebar-catalog__item'} to={'/' + item.name}>
 							<span
 								className={'sidebar-catalog__parent-img'}
 								style={{ backgroundPosition: item.bg_position }}
 							/>
 							{item.title}
-						</a>
-						<span className={'sidebar-catalog__parent-open'} data-id={item.id} onClick={cb} />
+						</Link>
+						<span
+							className={'sidebar-catalog__parent-open'}
+							data-id={item.id}
+							onClick={cb}
+						/>
 					</div>
 					<ul className={'sidebar-catalog__children-list'}>
-						{item.children.map((item) => {
+						{item.children.map(childrenItem => {
 							return (
-								<li key={item.id}>
-									<a className={'sidebar-catalog__children-item'} href={'/'}>
-										{item.title}
-									</a>
+								<li key={childrenItem.id}>
+									<Link
+										className={'sidebar-catalog__children-item'}
+										to={`/${item.name}/${childrenItem.name}`}
+									>
+										{childrenItem.title}
+									</Link>
 								</li>
-							);
+							)
 						})}
 					</ul>
 				</li>
-			);
-		});
-	};
+			)
+		})
+	}
+
 	return (
 		<aside className={'sidebar'}>
 			<nav className={'sidebar-catalog'}>
@@ -52,18 +66,22 @@ const Sidebar = ({ data, isLoading, errorMsg }) => {
 				{isLoading ? (
 					<h3 className={'loading'}>Loading...</h3>
 				) : data ? (
-					<ul className={'sidebar-catalog__list'}>{createTree(data, activeItem, onSelectItem)}</ul>
+					<ul className={'sidebar-catalog__list'}>
+						{createTree(data, activeItem, onSelectItem)}
+					</ul>
 				) : errorMsg ? (
 					<h3 className={'error'}>{errorMsg}</h3>
-				) : <div>Empty</div>}
+				) : (
+					<div>Empty</div>
+				)}
 			</nav>
 			<div className="sidebar__social">
 				<h3 className="sidebar__social-title">Следите за нами в соцсетях</h3>
 				<Social />
 			</div>
 		</aside>
-	);
-};
+	)
+}
 
 // Sidebar.defaultProps = {
 // 	catalog: [
@@ -222,4 +240,4 @@ const Sidebar = ({ data, isLoading, errorMsg }) => {
 // 	]
 // };
 
-export { Sidebar };
+export { Sidebar }

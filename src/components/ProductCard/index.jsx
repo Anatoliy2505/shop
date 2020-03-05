@@ -1,20 +1,41 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import './ProductCard.scss';
+import './ProductCard.scss'
 
-const ProductCard = ({ id, img, title, price, priceOld, count, mainPage }) => {
+const ProductCard = ({
+	img,
+	title,
+	price,
+	priceOld,
+	count,
+	name,
+	path,
+	page,
+}) => {
 	return (
 		<div className={'product__item'}>
 			<div className={'product__card'}>
-				<Link to={`/${mainPage}/${id}`} className={'product__wrap-img'} title={title}>
+				<Link
+					to={`/${page || path}/${name}`}
+					className={'product__wrap-img'}
+					title={title}
+				>
 					<img src={img} alt={title} className={'product__img'} />
 				</Link>
 				<div className="product__desc">
-					<Link to={`/${mainPage}/${id}`} className={'product__wrap-title'}>
+					<Link
+						to={`/${page || path}/${name}`}
+						className={'product__wrap-title'}
+					>
 						<h3 className="product__title">{title}</h3>
 					</Link>
-					<span className={'product__existence ' + (!count ? 'product__existence--empty' : '')}>
+					<span
+						className={
+							'product__existence ' +
+							(!count ? 'product__existence--empty' : '')
+						}
+					>
 						{count ? 'В наличии' : 'Временно отсутствует'}
 					</span>
 					<div className="product__wrap-price">
@@ -32,8 +53,8 @@ const ProductCard = ({ id, img, title, price, priceOld, count, mainPage }) => {
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
 ProductCard.defaultProps = {
 	id: '1',
@@ -41,7 +62,7 @@ ProductCard.defaultProps = {
 	title: 'Пневматическая Винтовка Daisy 74 CO2',
 	price: '6000',
 	priceOld: '7000',
-	count: 10
-};
+	count: 10,
+}
 
-export { ProductCard };
+export { ProductCard }

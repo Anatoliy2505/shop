@@ -21,9 +21,9 @@ const Home = ({ news, getNews }) => {
 
 			{news && <NewsList data={news} isHome={true} />}
 
-			<ProductSlider mainPage={'hits'} title={'Хиты продаж'} href={'/hits'} />
+			<ProductSlider page={'hits'} title={'Хиты продаж'} href={'/hits'} />
 
-			<ProductSlider mainPage={'sale'} title={'Клёвые скидки'} href={'/sale'} />
+			<ProductSlider page={'sale'} title={'Клёвые скидки'} href={'/sale'} />
 
 			<VkPosts />
 

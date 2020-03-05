@@ -1,0 +1,5 @@
+60180312
+ID приложения	7328174
+Сервисный ключ доступа  820e91a5820e91a5820e91a5c5826140d18820e820e91a5dc40ddca851d91573725228e
+
+https://oauth.vk.com/authorize?client_id=7328116&display=page&scope=wall&response_type=token&v=5.52

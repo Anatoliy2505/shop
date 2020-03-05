@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { categoriesGetAll } from './redux/selectors'
-import { getCategories } from './redux/actions'
+import { sidebarSelector } from './redux/selectors'
+import { getAllMainCategories } from './redux/actions'
 
 import { Header, Sidebar, Footer } from './components'
-import { Home, News } from './pages'
+import { Home, News, Catalog } from './pages'
 
-function App({ categories, getCategories }) {
+function App({ categories, getAllMainCategories }) {
 	useEffect(() => {
 		if (!categories.data) {
-			getCategories()
+			getAllMainCategories()
 		}
-	}, [categories.data, getCategories])
+	}, [categories.data, getAllMainCategories])
 
 	return (
 		<div className="App">
@@ -23,6 +23,11 @@ function App({ categories, getCategories }) {
 					<Switch>
 						<Route exact path={['/', '/home']} component={Home} />
 						<Route path={['/news/:news', '/news']} component={News} />
+						<Route
+							path={'/:mainCategory/:parentCategory'}
+							component={Catalog}
+						/>
+						<Route path={'/:mainCategory'} component={Catalog} />
 					</Switch>
 				</main>
 			</div>
@@ -33,7 +38,7 @@ function App({ categories, getCategories }) {
 
 export default connect(
 	state => ({
-		categories: categoriesGetAll(state),
+		categories: sidebarSelector(state),
 	}),
-	{ getCategories }
+	{ getAllMainCategories }
 )(App)
