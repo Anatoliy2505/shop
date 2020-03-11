@@ -8,23 +8,23 @@ export const initialState = {
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case t.GET_MAIN_CATEGORIES_REQUEST:
+		case t.GET_HITS_CATEGORIES_REQUEST:
 			return {
 				...state,
 				isLoading: true,
 				errorMsg: null,
 			}
-		case t.GET_MAIN_CATEGORIES_SUCCESS:
+		case t.GET_HITS_CATEGORIES_SUCCESS:
 			return {
 				...state,
 				data: action.payload,
 				isLoading: false,
 			}
-		case t.GET_MAIN_CATEGORIES_FAILURE:
+		case t.GET_HITS_CATEGORIES_FAILURE:
 			return {
 				...state,
-				isLoading: false,
 				errorMsg: action.payload.errorMsg,
+				isLoading: false,
 			}
 		default:
 			return state

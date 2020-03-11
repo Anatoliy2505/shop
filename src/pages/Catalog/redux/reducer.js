@@ -1,48 +1,51 @@
-import {
-	LOG_IN,
-	LOG_OUT,
-	LOG_IN_FAIL,
-	REMOVE_ERROR_MSG,
-	LOG_IN_STARTED,
-} from '../actions/sessionActions'
+import * as t from './actionTypes'
+import { setParenstCategoriesToMain } from '../../../utils/helpers/setParenstCategoriesToMain'
 
-const initialState = {
-	userId: localStorage.getItem('userId') || null,
-	errorMsg: '',
-	logInStarted: false,
+import { createCatalogTree } from '../../../utils/helpers/createCatalogTree'
+
+export const initialState = {
+	data: null,
+	isLoading: false,
+	errorMsg: null,
 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case LOG_IN_STARTED:
+		case t.CREATE_CATALOG_TREE:
 			return {
 				...state,
-				logInStarted: true,
+				data: createCatalogTree(action.payload),
 			}
-		case LOG_IN:
+		case t.GET_PARENTS_CATEGORIES_REQUEST:
 			return {
 				...state,
-				userId: action.payload,
-				errorMsg: '',
-				logInStarted: false,
+				isLoading: true,
+				errorMsg: {
+					...state.errorMsg,
+					[action.payload.mainCat]: null,
+				},
 			}
-		case LOG_OUT:
+		case t.GET_PARENTS_CATEGORIES_SUCCESS:
 			return {
 				...state,
-				userId: null,
-				errorMsg: '',
+				data: {
+					...state.data,
+					[action.payload.mainCat]: setParenstCategoriesToMain(
+						state.data[action.payload.mainCat],
+						action.payload.data,
+						action.payload.mainCat
+					),
+				},
+				isLoading: false,
 			}
-		case LOG_IN_FAIL:
+		case t.GET_PARENTS_CATEGORIES_FAILURE:
 			return {
 				...state,
-				userId: null,
-				logInStarted: false,
-				errorMsg: action.payload.errorMsg,
-			}
-		case REMOVE_ERROR_MSG:
-			return {
-				...state,
-				errorMsg: '',
+				errorMsg: {
+					...state.errorMsg,
+					[action.payload.mainCat]: action.payload.errorMsg,
+				},
+				isLoading: false,
 			}
 		default:
 			return state

@@ -1,5 +1,9 @@
 import { httpGet } from '../helpers/network'
 
-export const getAll = () => httpGet('categories')
+export const getMainCategories = () => httpGet('categories')
 
-export const getAllChildren = mainCat => httpGet(mainCat)
+export const getParentsCategories = mainCat => httpGet(mainCat)
+
+export const getHitsCategoriesApi = () => httpGet('hits')
+
+export const getSaleCategoriesApi = () => httpGet('sale')

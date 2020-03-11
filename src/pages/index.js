@@ -1,3 +1,6 @@
 export { default as Home } from './Home'
 export { default as News } from './News'
 export { default as Catalog } from './Catalog'
+export { default as ProductsDetail } from './ProductsDetail'
+export { default as Hits } from './Hits'
+export { default as Sale } from './Sale'

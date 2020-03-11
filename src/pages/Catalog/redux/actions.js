@@ -1,49 +1,56 @@
-import { checkResponse } from '../utils/helpers/checkResponse'
-import { getAll } from '../utils/api/categoriesApi'
+import { checkResponse } from '../../../utils/helpers/checkResponse'
+import { getParentsCategories } from '../../../utils/api/categoriesApi'
 import { error } from './constants'
-
-import { catalogTree } from '../utils/helpers/catalogTree'
 import * as t from './actionTypes'
 
-export const categoriesRequest = () => ({
-	type: t.CATEGORIES_GET_REQUEST,
-})
-
-export const categoriesSuccess = data => ({
-	type: t.CATEGORIES_GET_SUCCESS,
+export const createCatalogTree = data => ({
+	type: t.CREATE_CATALOG_TREE,
 	payload: data,
 })
 
-export const categoriesFailure = (errorMsg = error.connect) => ({
-	type: t.CATEGORIES_GET_FAILURE,
+export const selectParentsCategoriesRequest = mainCat => ({
+	payload: { mainCat },
+	type: t.GET_PARENTS_CATEGORIES_REQUEST,
+})
+
+export const selectParentsCategoriesSuccess = (data, mainCat) => ({
+	type: t.GET_PARENTS_CATEGORIES_SUCCESS,
 	payload: {
+		data,
+		mainCat,
+	},
+})
+
+export const selectParentsCategoriesFailure = (
+	mainCat,
+	errorMsg = error.connect
+) => ({
+	type: t.GET_PARENTS_CATEGORIES_FAILURE,
+	payload: {
+		mainCat,
 		errorMsg,
 	},
 	error: true,
 })
 
-export const createCatalogTree = data => ({
-	type: t.CREATE_TREE,
-	payload: catalogTree(data),
-})
-
-export const getCategories = () => {
+export const getAllParentsCategories = mainCat => {
 	return dispatch => {
-		dispatch(categoriesRequest())
-
-		return getAll()
+		dispatch(selectParentsCategoriesRequest(mainCat))
+		return getParentsCategories(mainCat)
 			.then(res => {
 				if (checkResponse(res)) {
-					dispatch(categoriesSuccess(res.data))
-					if (res.data.length > 0) {
-						dispatch(createCatalogTree(res.data))
-					}
+					dispatch(selectParentsCategoriesSuccess(res.data, mainCat))
 				} else {
-					dispatch(categoriesFailure(res.message))
+					dispatch(
+						selectParentsCategoriesFailure(
+							mainCat,
+							res.message || error.request
+						)
+					)
 				}
 			})
 			.catch(error => {
-				dispatch(categoriesFailure())
+				dispatch(selectParentsCategoriesFailure(mainCat))
 				console.log(error)
 			})
 	}

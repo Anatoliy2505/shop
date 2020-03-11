@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { NewsList } from '../../components'
-import { newsAllSelector } from './redux/selctors'
+import { newsAllSelector } from './redux/selectors'
 import { getNews } from './redux/actions'
 import { NewsItem } from './components'
 
@@ -17,7 +17,8 @@ const News = ({
 		}
 	}, [data, getNews])
 
-	const selectNews = (news, id) => news.find(item => item.id === id)
+	const selectNews = (news, id) =>
+		news.find(item => Number(item.id) === Number(id))
 
 	const choiceElement = (data, id) => {
 		if (id) {

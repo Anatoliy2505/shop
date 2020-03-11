@@ -1,40 +1,27 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 
-import { newsPartSelector } from '../News/redux/selctors'
-import { getNews } from '../News/redux/actions'
+import {
+	MainSlider,
+	VkPosts,
+	HomeNews,
+	HitsSlider,
+	SaleSlider,
+} from './components'
 
-// import { ProductList } from '../Catalog/components/ProductLIst';
-import { NewsList } from '../../components'
-import { MainSlider, ProductSlider, VkPosts } from './components'
-
-const Home = ({ news, getNews }) => {
-	useEffect(() => {
-		if (!news) {
-			getNews()
-		}
-	}, [news, getNews])
-
+const Home = () => {
 	return (
-		<div>
+		<>
 			<MainSlider />
 
-			{news && <NewsList data={news} isHome={true} />}
+			<HomeNews />
 
-			<ProductSlider page={'hits'} title={'Хиты продаж'} href={'/hits'} />
+			<HitsSlider />
 
-			<ProductSlider page={'sale'} title={'Клёвые скидки'} href={'/sale'} />
+			<SaleSlider />
 
 			<VkPosts />
-
-			{/* <ProductList /> */}
-		</div>
+		</>
 	)
 }
 
-export default connect(
-	state => ({
-		news: newsPartSelector(state),
-	}),
-	{ getNews }
-)(Home)
+export default Home

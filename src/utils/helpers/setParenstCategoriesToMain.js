@@ -26,25 +26,26 @@ const deepCopy = data => {
 	return data
 }
 
-export const setAllCategoryForMain = (partCatalog, categorys, mainCat) => {
-	let newCatalog = deepCopy(partCatalog)
+export const setParenstCategoriesToMain = (partCatalog, categorys, mainCat) => {
+	let newPartCatalog = deepCopy(partCatalog)
 
-	if (categorys.length) {
-		for (const item in newCatalog.children) {
+	if (categorys.length && !categorys.loaded) {
+		for (const item in newPartCatalog.children) {
 			categorys.forEach(element => {
 				if (
-					Number(element['parent_id']) === Number(newCatalog.children[item].id)
+					Number(element['parent_id']) ===
+					Number(newPartCatalog.children[item].id)
 				) {
 					const newElement = { ...element, path: mainCat + '/' + item }
-					newCatalog.children[item].categories = [
-						...newCatalog.children[item].categories,
+					newPartCatalog.children[item].categories = [
+						...newPartCatalog.children[item].categories,
 						newElement,
 					]
 				}
 			})
 		}
-		newCatalog.loaded = true
-		return newCatalog
+		newPartCatalog.loaded = true
+		return newPartCatalog
 	} else {
 		return partCatalog
 	}

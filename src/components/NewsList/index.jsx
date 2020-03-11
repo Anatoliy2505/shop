@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './NewsList.scss'
 import { NewsListItem } from '../NewsListItem'
 
-const NewsList = ({ data, isHome }) => {
+const NewsList = ({ data, isHome, match }) => {
 	const newsItems = news =>
 		news.map(item => {
 			return <NewsListItem key={item.id} {...item} />
@@ -25,7 +25,7 @@ const NewsList = ({ data, isHome }) => {
 							</Link>
 						</h2>
 					) : (
-						<h1 className={'news-title'}>Сибирский Лов - Наши новости</h1>
+						<h1 className={'page-title'}>Сибирский Лов - Наши новости</h1>
 					)}
 					<div className={'news-list'}>{newsItems(data)}</div>
 				</>

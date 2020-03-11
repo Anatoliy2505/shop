@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import { getAllChildrenCategories } from '../../redux/actions'
-import { catalogSelector } from '../../redux/selectors'
+import { getAllParentsCategories } from './redux/actions'
+import { catalogSelector } from './redux/selectors'
 import { ProductList } from './components/ProductLIst'
 
 const Catalog = ({
 	catalog: { data, isLoading, errorMsg },
-	getAllChildrenCategories,
+	getAllParentsCategories,
 	match: {
 		params: { mainCategory, parentCategory },
 		url,
@@ -15,11 +15,11 @@ const Catalog = ({
 }) => {
 	useEffect(() => {
 		if (data && data[mainCategory] && !data[mainCategory].loaded) {
-			getAllChildrenCategories(mainCategory)
+			getAllParentsCategories(mainCategory)
 		}
-	}, [data, getAllChildrenCategories, mainCategory, parentCategory])
+	}, [data, mainCategory, getAllParentsCategories])
 
-	const arrayCategories = data => {
+	const joinCategories = data => {
 		let categories = []
 		const children = data.children
 		for (let item in children) {
@@ -29,23 +29,36 @@ const Catalog = ({
 		return categories
 	}
 
+	let categories = null,
+		title = null
+
+	if (data && data[mainCategory] && data[mainCategory].loaded) {
+		if (parentCategory) {
+			if (data[mainCategory].children[parentCategory]) {
+				title = data[mainCategory].children[parentCategory].title
+				categories = data[mainCategory].children[parentCategory].categories
+			} else {
+				categories = null
+			}
+		} else {
+			title = data[mainCategory].title
+			categories = joinCategories(data[mainCategory])
+		}
+	}
+
 	return (
-		<div>
+		<section className={'catalog page'}>
 			{isLoading ? (
-				<h2>Loading</h2>
+				<h1 className={'page-title'}>Loading</h1>
 			) : errorMsg && errorMsg[mainCategory] ? (
-				<h2>{errorMsg[mainCategory]}</h2>
-			) : parentCategory &&
-			  data &&
-			  data[mainCategory].children[parentCategory] ? (
-				<ProductList
-					products={data[mainCategory].children[parentCategory].categories}
-					url={url}
-				/>
-			) : data && data[mainCategory] && data[mainCategory].loaded ? (
-				<ProductList products={arrayCategories(data[mainCategory])} url={url} />
+				<h1 className={'page-title'}>{errorMsg[mainCategory]}</h1>
+			) : categories ? (
+				<>
+					<h1 className={'page-title'}>{title}</h1>
+					<ProductList products={categories} url={url} />
+				</>
 			) : null}
-		</div>
+		</section>
 	)
 }
 
@@ -53,5 +66,5 @@ export default connect(
 	state => ({
 		catalog: catalogSelector(state),
 	}),
-	{ getAllChildrenCategories }
+	{ getAllParentsCategories }
 )(Catalog)

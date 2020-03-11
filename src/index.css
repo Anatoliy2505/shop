@@ -1,80 +1,96 @@
 body {
-	margin: 0 auto;
-	font-family: "Open Sans", "Helvetica Neue", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-size: 100%;
-	color: #424242;
+  margin: 0 auto;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 100%;
+  color: #424242;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 img {
-	max-width: 100%;
+  max-width: 100%;
 }
 
 .container {
-	max-width: 1503px;
-	margin: 0 auto;
-	padding: 0 1rem;
-	box-sizing: border-box;
+  max-width: 1503px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 @media (max-width: 1503px) {
-	.container {
-		max-width: 1263px;
-	}
+  .container {
+    max-width: 1263px;
+  }
 }
 
 @media (max-width: 1263px) {
-	.container {
-		max-width: 1023px;
-	}
+  .container {
+    max-width: 1023px;
+  }
 }
 
 .hidden {
-	display: none;
+  display: none;
 }
 
 .content-wrapper {
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: stretch;
-	align-items: flex-start;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  align-items: flex-start;
 }
 
 .main-content {
-	flex: 0 1 100%;
-	overflow: hidden;
+  flex: 0 1 100%;
+  overflow: hidden;
 }
 
 .title {
-	font-size: 1em;
-	font-weight: 500;
-	margin: 0;
-	line-height: 1em;
-	padding-bottom: 4px;
-	border-bottom: 1px solid #616161;
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #616161;
+}
+
+.page-title {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 1.5em;
+  line-height: 1em;
+  text-align: left;
+}
+
+.page-title.left {
+  text-align: left;
 }
 
 .section-title {
-	font-size: 1em;
-	margin: 15px 0;
-	line-height: 1em;
-	font-weight: 400;
-	border-top: 1px solid #e0e0e0;
+  font-size: 1em;
+  margin: 15px 0;
+  line-height: 1em;
+  font-weight: 400;
+  border-top: 1px solid #e0e0e0;
 }
 
 .section-title__wrap {
-	display: inline-block;
-	padding: 7px 30px;
-	background-color: #08909c;
-	color: #fff;
-	text-decoration: none;
+  display: inline-block;
+  padding: 7px 30px;
+  background-color: #08909c;
+  color: #fff;
+  text-decoration: none;
 }
 
 .section-title__wrap:hover {
-	text-decoration: underline;
+  text-decoration: underline;
+}
+
+.page .page-title {
+  margin-bottom: calc(2rem - 15px);
 }

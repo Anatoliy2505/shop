@@ -4,4 +4,4 @@ export const error = {
 	unknown: 'Неизвестная ошибка!',
 }
 
-export const NAME = 'catalog'
+export const NAME = 'sale'

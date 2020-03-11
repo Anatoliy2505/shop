@@ -1,33 +1,34 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { sidebarSelector } from './redux/selectors'
-import { getAllMainCategories } from './redux/actions'
 
 import { Header, Sidebar, Footer } from './components'
-import { Home, News, Catalog } from './pages'
+import { Home, News, Catalog, ProductsDetail, Hits, Sale } from './pages'
 
-function App({ categories, getAllMainCategories }) {
-	useEffect(() => {
-		if (!categories.data) {
-			getAllMainCategories()
-		}
-	}, [categories.data, getAllMainCategories])
-
+function App() {
 	return (
 		<div className="App">
 			<Header />
 			<div className={'container content-wrapper'}>
-				<Sidebar {...categories} />
+				<Sidebar />
 				<main className={'main-content'}>
 					<Switch>
 						<Route exact path={['/', '/home']} component={Home} />
 						<Route path={['/news/:news', '/news']} component={News} />
 						<Route
-							path={'/:mainCategory/:parentCategory'}
+							path={[
+								'/sale/:products',
+								'/hits/:products',
+								'/:mainCategory/:parentCategory/:products',
+							]}
+							component={ProductsDetail}
+						/>
+						<Route path={'/hits'} component={Hits} />
+						<Route path={'/sale'} component={Sale} />
+						<Route
+							path={['/:mainCategory/:parentCategory', '/:mainCategory']}
 							component={Catalog}
 						/>
-						<Route path={'/:mainCategory'} component={Catalog} />
 					</Switch>
 				</main>
 			</div>
@@ -36,9 +37,4 @@ function App({ categories, getAllMainCategories }) {
 	)
 }
 
-export default connect(
-	state => ({
-		categories: sidebarSelector(state),
-	}),
-	{ getAllMainCategories }
-)(App)
+export default connect(null, null)(App)
