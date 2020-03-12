@@ -1,34 +1,37 @@
 import { useEffect, useState } from 'react'
 
-export default function useBookSearch(categories, pageNumber) {
-	const [viewCat, setViewCat] = useState([])
-	const [hasMore, setHasMore] = useState(false)
-	const colViewCat = 15
+export default function useSetViewList(products, currentPage) {
+	const [viewList, setViewList] = useState([])
+	const [hasMore, setHasMore] = useState(true)
+	const [thisProducts, setThisProducts] = useState(products)
+	const [viewElemets] = useState(5)
+	const [maxCountPage, setMaxCountPage] = useState(
+		Math.ceil(products.length / viewElemets) || 1
+	)
 
 	useEffect(() => {
-		if (categories) {
-			setViewCat(prevCategories => {
-				if (pageNumber === 1) {
-					if (categories.length > colViewCat) {
-						let newPies = categories.slice(0, colViewCat)
-						return [...new Set([...prevCategories, ...newPies])]
-					} else {
-						return categories
-					}
-				} else if (categories.length > colViewCat * pageNumber) {
-					let newPies = categories.slice(
-						colViewCat * (pageNumber - 1),
-						colViewCat * pageNumber
-					)
-					return [...new Set([...prevCategories, ...newPies])]
-				} else {
-					let newPies = categories.slice(colViewCat * (pageNumber - 1))
-					return [...new Set([...prevCategories, ...newPies])]
-				}
-			})
-			setHasMore(categories.length > colViewCat * pageNumber)
+		if (currentPage === 1) {
+			setViewList([])
+			if (thisProducts !== products) {
+				setThisProducts(products)
+				setMaxCountPage(Math.ceil(products.length / viewElemets) || 1)
+				setHasMore(true)
+			}
 		}
-	}, [pageNumber, colViewCat, categories])
+	}, [currentPage, maxCountPage, viewElemets, products, thisProducts])
 
-	return { viewCat, hasMore }
+	useEffect(() => {
+		if (thisProducts.length > 0 && hasMore) {
+			setViewList(viewList => [
+				...viewList,
+				...thisProducts.slice(
+					(currentPage - 1) * viewElemets,
+					currentPage * viewElemets
+				),
+			])
+		}
+		setHasMore(currentPage < maxCountPage)
+	}, [hasMore, thisProducts, viewElemets, currentPage, maxCountPage])
+
+	return { viewList, hasMore }
 }

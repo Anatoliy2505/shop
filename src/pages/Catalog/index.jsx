@@ -55,7 +55,11 @@ const Catalog = ({
 			) : categories ? (
 				<>
 					<h1 className={'page-title'}>{title}</h1>
-					<ProductList products={categories} url={url} />
+					<ProductList
+						products={categories}
+						mainCategory={mainCategory}
+						parentCategory={parentCategory}
+					/>
 				</>
 			) : null}
 		</section>
