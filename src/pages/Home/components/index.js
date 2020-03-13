@@ -1,5 +1,5 @@
 export { MainSlider } from './MainSlider'
-export { ProductSlider } from './ProductSlider'
+export { CategoriesSlider } from './CategoriesSlider'
 export { default as VkPosts } from './VkPosts'
 export { default as HomeNews } from './HomeNews'
 export { default as HitsSlider } from './HitsSlider'

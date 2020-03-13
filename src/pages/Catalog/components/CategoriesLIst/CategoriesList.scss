@@ -1,0 +1,35 @@
+@import '../../../../styles/vars';
+
+.categories {
+  &__list {
+    padding-top: 15px;
+    display: flex;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    position: relative;
+    padding-bottom: 40px;
+
+    &-observe {
+      display: block;
+      z-index: 100;
+      position: absolute;
+      bottom: 0px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
+      background-color: rgb(236, 236, 250);
+      font-size: 1em;
+      opacity: 0.8;
+
+      .fas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        color: $mainColor;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}

@@ -5,10 +5,10 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import './ProductSlider.scss'
-import { ProductCard } from '../../../../components/ProductCard'
+import './CategoriesSlider.scss'
+import { CategoryCard } from '../../../../components/CategoryCard'
 
-const products = [
+const categories = [
 	{
 		id: '1',
 		name: 'materials',
@@ -74,7 +74,7 @@ const products = [
 	},
 ]
 
-const ProductSlider = ({ products, title, href, page }) => {
+export const CategoriesSlider = ({ categories, title, href, page }) => {
 	const settings = {
 		// autoplay: true,
 		infinite: false,
@@ -103,13 +103,13 @@ const ProductSlider = ({ products, title, href, page }) => {
 			},
 		],
 	}
-	const sliderItems = products.map(item => (
-		<ProductCard key={item.id} page={page} {...item} />
+	const sliderItems = categories.map(item => (
+		<CategoryCard key={item.id} page={page} {...item} />
 	))
 	return (
 		<>
-			{products ? (
-				<section className="product-slider">
+			{categories ? (
+				<section className="categories-slider">
 					{title ? (
 						<h2 className={'section-title'}>
 							<Link
@@ -121,7 +121,7 @@ const ProductSlider = ({ products, title, href, page }) => {
 							</Link>
 						</h2>
 					) : null}
-					<Slider {...settings} className={'slick-products__list'}>
+					<Slider {...settings} className={'slick-categories__list'}>
 						{sliderItems}
 					</Slider>
 				</section>
@@ -130,8 +130,6 @@ const ProductSlider = ({ products, title, href, page }) => {
 	)
 }
 
-ProductSlider.defaultProps = {
-	products,
+CategoriesSlider.defaultProps = {
+	categories,
 }
-
-export { ProductSlider }

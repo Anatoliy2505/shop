@@ -10,10 +10,12 @@ import App from './App'
 import './index.css'
 
 import * as serviceWorker from './serviceWorker'
+import ScrollToTop from './components/ScrollToTop'
 
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
+			<ScrollToTop />
 			<App />
 		</Router>
 	</Provider>,

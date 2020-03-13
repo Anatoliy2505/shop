@@ -5,6 +5,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 100%;
   color: #424242;
+  min-width: 747px;
 }
 
 code {
@@ -15,11 +16,25 @@ img {
   max-width: 100%;
 }
 
+
 .container {
   max-width: 1503px;
   margin: 0 auto;
   padding: 0 1rem;
   box-sizing: border-box;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  align-items: flex-start;
+}
+
+.main-content {
+  width: 100%;
+  flex: 0 1 100%;
+  overflow: hidden;
 }
 
 @media (max-width: 1503px) {
@@ -34,20 +49,28 @@ img {
   }
 }
 
+@media (max-width: 1023px) {
+  .content-wrapper {
+    flex-flow: column;
+  }
+
+  .container {
+    max-width: 737px;
+  }
+
+  .main-content {
+    max-width: 100%;
+  }
+}
+
+/* @media (max-width: 757px) {
+  .container {
+    max-width: 497px;
+  }
+} */
+
 .hidden {
   display: none;
-}
-
-.content-wrapper {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: stretch;
-  align-items: flex-start;
-}
-
-.main-content {
-  flex: 0 1 100%;
-  overflow: hidden;
 }
 
 .title {

@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 
 import { hitsSelector } from './redux/selectors'
 import { getHitsCategories } from './redux/actions'
-import { ProductList } from '../Catalog/components/ProductLIst'
+import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
+import { getViewElementsSelector } from '../Catalog/redux/selectors'
 
 const Hits = ({
 	hitsCategories: { data, errorMsg, isLoading },
+	viewElements,
 	getHitsCategories,
 }) => {
 	useEffect(() => {
@@ -22,13 +24,24 @@ const Hits = ({
 			) : data ? (
 				<>
 					<h1 className={'page-title'}>Хиты продаж</h1>
-					<ProductList products={data} page={'hits'} />
+					<CategoriesLIst
+						mainCategory={'hits'}
+						categories={data}
+						page={'hits'}
+						viewElements={viewElements}
+					/>
 				</>
 			) : null}
 		</section>
 	)
 }
 
-export default connect(state => ({ hitsCategories: hitsSelector(state) }), {
-	getHitsCategories,
-})(Hits)
+export default connect(
+	state => ({
+		hitsCategories: hitsSelector(state),
+		viewElements: getViewElementsSelector(state),
+	}),
+	{
+		getHitsCategories,
+	}
+)(Hits)

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { hitsSelector } from '../../../Hits/redux/selectors'
 import { getHitsCategories } from '../../../Hits/redux/actions'
-import { ProductSlider } from '../ProductSlider'
+import { CategoriesSlider } from '../CategoriesSlider'
 
 const HitsSlider = ({ hitsCategories, getHitsCategories }) => {
 	useEffect(() => {
@@ -13,11 +13,11 @@ const HitsSlider = ({ hitsCategories, getHitsCategories }) => {
 	return (
 		<>
 			{hitsCategories.data ? (
-				<ProductSlider
+				<CategoriesSlider
 					page={'hits'}
 					title={'Хиты продаж'}
 					href={'/hits'}
-					products={hitsCategories.data}
+					categories={hitsCategories.data}
 				/>
 			) : null}
 		</>

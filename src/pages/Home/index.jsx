@@ -2,7 +2,7 @@ import React from 'react'
 
 import {
 	MainSlider,
-	VkPosts,
+	// VkPosts,
 	HomeNews,
 	HitsSlider,
 	SaleSlider,
@@ -19,7 +19,7 @@ const Home = () => {
 
 			<SaleSlider />
 
-			<VkPosts />
+			{/* <VkPosts /> */}
 		</>
 	)
 }
