@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { Header, Sidebar, Footer, BreadCrumbs } from './components'
+import { Header, Sidebar, Footer } from './components'
 import { NotFound } from './pages'
 import PrivateRoute from './hocs/PrivateRoute'
 import { routes } from './routes'
@@ -31,10 +31,7 @@ function App() {
 			<Header />
 			<div className={'container content-wrapper'}>
 				<Sidebar />
-				<main className={'main-content'}>
-					<BreadCrumbs routes={routes.filter(route => route.isBreadCrumbs)} />
-					{routersSwitch()}
-				</main>
+				<main className={'main-content'}>{routersSwitch()}</main>
 			</div>
 			<Footer />
 		</div>

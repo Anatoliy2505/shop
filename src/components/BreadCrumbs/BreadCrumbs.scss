@@ -1,0 +1,36 @@
+@import '../../styles/vars';
+
+.bread-crumbs {
+  margin-bottom: 1.5rem;
+
+  &__item {
+    display: inline-block;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+    color: $mainColor;
+    font-size: 0.9em;
+
+    &:last-of-type {
+      color: $textColor
+    }
+
+    &:not(:last-of-type) {
+      padding-right: 1rem;
+
+      &::after {
+        display: inline-block;
+        position: absolute;
+        content: '>';
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &:not(:first-of-type) {
+      padding-left: 0.5rem;
+    }
+
+  }
+}

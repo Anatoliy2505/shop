@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-
 import { getAllParentsCategories } from './redux/actions'
 import { catalogSelector } from './redux/selectors'
 import { CategoriesLIst } from './components/CategoriesLIst'
 import { useParams } from 'react-router'
+import { BreadCrumbs } from '../../components'
 
 const Catalog = React.memo(
 	({
@@ -30,7 +30,8 @@ const Catalog = React.memo(
 		}
 
 		let categories = null,
-			title = null
+			title = null,
+			routes = null
 
 		if (data && data[mainCategory] && data[mainCategory].loaded) {
 			if (parentCategory) {
@@ -46,8 +47,13 @@ const Catalog = React.memo(
 			}
 		}
 
+		if (parentCategory && data && data[mainCategory]) {
+			routes = [{ path: `/${mainCategory}`, title: data[mainCategory].title }]
+		}
+
 		return (
 			<section className={'catalog page'}>
+				<BreadCrumbs routes={routes} lastElementName={title} />
 				{isLoading ? (
 					<h1 className={'page-title'}>Loading</h1>
 				) : errorMsg && errorMsg[mainCategory] ? (
