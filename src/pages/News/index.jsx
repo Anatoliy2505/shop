@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import { NewsList } from '../../components'
+import { NewsList, BreadCrumbs } from '../../components'
 import { newsAllSelector } from './redux/selectors'
 import { getNews } from './redux/actions'
 import { NewsItem } from './components'
@@ -20,24 +20,30 @@ const News = ({
 	const selectNews = (news, id) =>
 		news.find(item => Number(item.id) === Number(id))
 
-	const choiceElement = (data, id) => {
+	let routes = null,
+		lastElementName = null
+
+	const choiceElement = (data, id, routes, lastElementName) => {
 		if (id) {
 			const item = selectNews(data, id)
-			return item ? (
-				<NewsItem {...item} />
-			) : (
-				<div className={'error'}>Новость не найдена</div>
-			)
+			if (item) {
+				routes = [{ path: '/news', title: 'Наши новости' }]
+				lastElementName = item.title
+				return <NewsItem {...item} />
+			} else {
+				return <div className={'error'}>Новость не найдена</div>
+			}
 		}
 		return <NewsList data={data} />
 	}
 
 	return (
 		<section className={'news'}>
+			<BreadCrumbs lastElementName={'Наши новости'} />
 			{isLoading ? (
 				<div className={'loading'}>Loading...</div>
 			) : data ? (
-				choiceElement(data, params.news)
+				choiceElement(data, params.news, routes, lastElementName)
 			) : errorMsg ? (
 				<div className={'error'}>{errorMsg}</div>
 			) : (

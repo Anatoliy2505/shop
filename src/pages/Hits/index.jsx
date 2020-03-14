@@ -5,6 +5,7 @@ import { hitsSelector } from './redux/selectors'
 import { getHitsCategories } from './redux/actions'
 import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
 import { getViewElementsSelector } from '../Catalog/redux/selectors'
+import { BreadCrumbs } from '../../components'
 
 const Hits = ({
 	hitsCategories: { data, errorMsg, isLoading },
@@ -17,6 +18,7 @@ const Hits = ({
 
 	return (
 		<section className={'hits page'}>
+			<BreadCrumbs lastElementName={'Хиты продаж'} />
 			{isLoading ? (
 				<h1 className={'page-title'}>Loading...</h1>
 			) : errorMsg ? (

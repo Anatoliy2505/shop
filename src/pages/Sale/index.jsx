@@ -5,6 +5,7 @@ import { saleSelector } from './redux/selectors'
 import { getSaleCategories } from './redux/actions'
 import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
 import { getViewElementsSelector } from '../Catalog/redux/selectors'
+import { BreadCrumbs } from '../../components'
 
 const Sale = ({
 	saleCategories: { data, errorMsg, isLoading },
@@ -17,6 +18,7 @@ const Sale = ({
 
 	return (
 		<section className={'sale page'}>
+			<BreadCrumbs lastElementName={'Товары со скидками'} />
 			{isLoading ? (
 				<h1 className={'page-title'}>Loading...</h1>
 			) : errorMsg ? (
