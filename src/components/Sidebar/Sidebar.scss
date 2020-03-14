@@ -2,7 +2,7 @@
 
 .sidebar {
   min-width: $sideburWidth;
-  flex: 0 1 $sideburWidth;
+  flex: 0 1;
   margin-right: $gup;
 
   &-catalog {
