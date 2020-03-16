@@ -19,6 +19,10 @@ const Catalog = React.memo(
 			}
 		}, [data, mainCategory, getAllParentsCategories])
 
+		let categories = null,
+			title = null,
+			routes = null
+
 		const joinCategories = data => {
 			let categories = []
 			const children = data.children
@@ -28,10 +32,6 @@ const Catalog = React.memo(
 			}
 			return categories
 		}
-
-		let categories = null,
-			title = null,
-			routes = null
 
 		if (data && data[mainCategory] && data[mainCategory].loaded) {
 			if (parentCategory) {
@@ -53,7 +53,10 @@ const Catalog = React.memo(
 
 		return (
 			<section className={'catalog page'}>
-				<BreadCrumbs routes={routes} lastElementName={title} />
+				<BreadCrumbs
+					routes={routes}
+					lastElementName={title || 'Категория не найдена'}
+				/>
 				{isLoading ? (
 					<h1 className={'page-title'}>Loading</h1>
 				) : errorMsg && errorMsg[mainCategory] ? (

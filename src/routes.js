@@ -9,6 +9,18 @@ export const routes = [
 		isExact: true,
 	},
 	{
+		key: 5,
+		path: [
+			'/sale/:products',
+			'/hits/:products',
+			'/:mainCategory/:parentCategory/:products',
+		],
+		name: 'Обзор продукта',
+		component: ProductsDetail,
+		isBreadCrumbs: true,
+		containParametrs: true,
+	},
+	{
 		key: 2,
 		path: '/hits',
 		name: 'Хиты продаж',
@@ -27,18 +39,6 @@ export const routes = [
 		path: ['/news/:news', '/news'],
 		name: 'Наши новости',
 		component: News,
-		isBreadCrumbs: true,
-		containParametrs: true,
-	},
-	{
-		key: 5,
-		path: [
-			'/sale/:products',
-			'/hits/:products',
-			'/:mainCategory/:parentCategory/:products',
-		],
-		name: 'Обзор продукта',
-		component: ProductsDetail,
 		isBreadCrumbs: true,
 		containParametrs: true,
 	},

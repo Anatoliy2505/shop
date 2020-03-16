@@ -1,53 +1,64 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useParams } from 'react-router'
 
 import { NewsList, BreadCrumbs } from '../../components'
 import { newsAllSelector } from './redux/selectors'
 import { getNews } from './redux/actions'
 import { NewsItem } from './components'
 
-const News = ({
-	news: { data, isLoading, errorMsg },
-	match: { params },
-	getNews,
-}) => {
+const News = ({ news: { data, isLoading, errorMsg }, getNews }) => {
 	useEffect(() => {
 		if (!data) {
 			getNews()
 		}
 	}, [data, getNews])
 
-	const selectNews = (news, id) =>
-		news.find(item => Number(item.id) === Number(id))
+	const { news } = useParams()
 
-	let routes = null,
-		lastElementName = null
+	const selectNews = (news, field, data) =>
+		news.find(item => String(item[field]) === String(data))
 
-	const choiceElement = (data, id, routes, lastElementName) => {
-		if (id) {
-			const item = selectNews(data, id)
-			if (item) {
-				routes = [{ path: '/news', title: 'Наши новости' }]
-				lastElementName = item.title
-				return <NewsItem {...item} />
+	let newsElement = null
+	let issetParams = false
+	let newsItem = null
+
+	if (data) {
+		if (news) {
+			newsItem = !isNaN(news)
+				? selectNews(data, 'id', news)
+				: selectNews(data, 'name', news)
+			issetParams = true
+			if (newsItem) {
+				newsElement = <NewsItem {...newsItem} />
 			} else {
-				return <div className={'error'}>Новость не найдена</div>
+				newsElement = <div className={'empty'}>Новость не найдена</div>
 			}
+		} else {
+			newsElement = <NewsList data={data} />
 		}
-		return <NewsList data={data} />
 	}
 
 	return (
 		<section className={'news'}>
-			<BreadCrumbs lastElementName={'Наши новости'} />
+			<BreadCrumbs
+				routes={issetParams ? [{ path: '/news', title: 'Наши новости' }] : null}
+				lastElementName={
+					!issetParams
+						? 'Наши новости'
+						: newsItem
+						? newsItem.title
+						: 'Новость не найдена'
+				}
+			/>
 			{isLoading ? (
 				<div className={'loading'}>Loading...</div>
-			) : data ? (
-				choiceElement(data, params.news, routes, lastElementName)
 			) : errorMsg ? (
 				<div className={'error'}>{errorMsg}</div>
+			) : newsElement ? (
+				newsElement
 			) : (
-				<div className={'empty'}>Empty...</div>
+				<div className={'empty'}>Новостей пока нет</div>
 			)}
 		</section>
 	)
