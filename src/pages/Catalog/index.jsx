@@ -3,16 +3,16 @@ import { connect } from 'react-redux'
 import { getAllParentsCategories } from './redux/actions'
 import { catalogSelector } from './redux/selectors'
 import { CategoriesLIst } from './components/CategoriesLIst'
-import { useParams } from 'react-router'
 import { BreadCrumbs } from '../../components'
 
 const Catalog = React.memo(
 	({
 		catalog: { data, isLoading, errorMsg, viewElements },
 		getAllParentsCategories,
+		match: {
+			params: { mainCategory, parentCategory },
+		},
 	}) => {
-		const { mainCategory, parentCategory } = useParams()
-
 		useEffect(() => {
 			if (data && data[mainCategory] && !data[mainCategory].loaded) {
 				getAllParentsCategories(mainCategory)
