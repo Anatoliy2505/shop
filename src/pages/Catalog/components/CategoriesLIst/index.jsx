@@ -6,7 +6,7 @@ import useSetViewList from './useSetViewCat'
 import './CategoriesList.scss'
 
 export const CategoriesLIst = React.memo(
-	({ categories, page, viewElements, mainCategory, parentCategory }) => {
+	({ categories, page, viewElements }) => {
 		const [currentPage, setCurrentPage] = useState(1)
 		const [observer, setObserver] = useState(null)
 

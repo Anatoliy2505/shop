@@ -66,8 +66,6 @@ const Catalog = React.memo(
 						<h1 className={'page-title'}>{title}</h1>
 						<CategoriesLIst
 							categories={categories}
-							mainCategory={mainCategory}
-							parentCategory={parentCategory}
 							viewElements={viewElements}
 						/>
 					</>
