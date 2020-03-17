@@ -10,8 +10,6 @@ export const CategoriesLIst = React.memo(
 		const [currentPage, setCurrentPage] = useState(1)
 		const [observer, setObserver] = useState(null)
 
-		const observeElement = useRef()
-
 		const { viewList, hasMore } = useSetViewList({
 			categories,
 			currentPage,
@@ -19,21 +17,30 @@ export const CategoriesLIst = React.memo(
 		})
 
 		useEffect(() => {
-			setCurrentPage(1)
-			setObserver(null)
-		}, [parentCategory, mainCategory])
+			return () => {
+				if (observer) {
+					setCurrentPage(1)
+					observer.disconnect()
+					setObserver(null)
+				}
+			}
+		}, [observer, categories])
+
+		const observeElement = useRef()
 
 		useEffect(() => {
 			if (!observer && viewList) {
-				const cb = ([entry]) => {
-					if (entry && entry.isIntersecting) {
-						setCurrentPage(cp => cp + 1)
+				const observ = new IntersectionObserver(
+					([entry]) => {
+						if (entry && entry.isIntersecting) {
+							setCurrentPage(currentPage => currentPage + 1)
+						}
+					},
+					{
+						threshold: 1.0,
+						rootMargin: '0px 0px 150px 0px',
 					}
-				}
-				const observ = new IntersectionObserver(cb, {
-					threshold: 1.0,
-					rootMargin: '-50px',
-				})
+				)
 				observeElement.current.style.display = 'block'
 				observ.observe(observeElement.current)
 				setObserver(observ)
@@ -51,14 +58,12 @@ export const CategoriesLIst = React.memo(
 			))
 
 		return (
-			<>
-				<div className="categories__list">
-					{viewList && viewList.length ? categoriesList(viewList) : null}
-					<div className={'categories__list-observe'} ref={observeElement}>
-						<i className={'fas fa-angle-double-down'}></i>
-					</div>
+			<div className="categories__list">
+				{viewList && viewList.length ? categoriesList(viewList) : null}
+				<div className={'categories__list-observe'} ref={observeElement}>
+					<i className={'fas fa-angle-double-down'}></i>
 				</div>
-			</>
+			</div>
 		)
 	}
 )
