@@ -19,10 +19,6 @@ const Catalog = React.memo(
 			}
 		}, [data, mainCategory, getAllParentsCategories])
 
-		let categories = null,
-			title = null,
-			routes = null
-
 		const joinCategories = data => {
 			let categories = []
 			const children = data.children
@@ -32,6 +28,10 @@ const Catalog = React.memo(
 			}
 			return categories
 		}
+
+		let categories = null,
+			title = null,
+			routes = null
 
 		if (data && data[mainCategory] && data[mainCategory].loaded) {
 			if (parentCategory) {

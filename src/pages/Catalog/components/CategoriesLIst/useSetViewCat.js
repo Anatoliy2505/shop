@@ -38,5 +38,5 @@ export default function useSetViewList({
 		setHasMore(currentPage < maxCountPage)
 	}, [hasMore, thisCategiries, viewElements, currentPage, maxCountPage])
 
-	return { viewList, hasMore, setHasMore }
+	return { viewList, hasMore }
 }

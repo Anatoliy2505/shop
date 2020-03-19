@@ -57,10 +57,18 @@ export const CategoriesLIst = React.memo(
 				<CategoryCard key={category.id} {...category} page={page} />
 			))
 
+		const getNewPage = () => {
+			setCurrentPage(prevPage => prevPage + 1)
+		}
+
 		return (
 			<div className="categories__list">
 				{viewList && viewList.length ? categoriesList(viewList) : null}
-				<div className={'categories__list-observe'} ref={observeElement}>
+				<div
+					className={'categories__list-observe'}
+					ref={observeElement}
+					onClick={getNewPage}
+				>
 					<i className={'fas fa-angle-double-down'}></i>
 				</div>
 			</div>

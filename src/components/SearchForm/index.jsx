@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react'
+import { withRouter } from 'react-router'
 
-import './SearchForm.scss';
+import './SearchForm.scss'
 
-const SearchForm = () => {
+const SearchForm = ({ history }) => {
+	const [query, setQuery] = useState('')
+
+	const changeInput = e => {
+		setQuery(e.currentTarget.value)
+	}
+	console.log(history)
+
+	const handleSubmit = e => {
+		e.preventDefault()
+		history.push({
+			pathname: '/search',
+			query,
+		})
+		setQuery('')
+	}
+
 	return (
-		<form className={'search__form'}>
+		<form onSubmit={handleSubmit} className={'search__form'}>
 			<input
 				type={'search'}
-				name={'search'}
+				name={'query'}
+				value={query}
 				placeholder={'Найти товары'}
 				aria-label={'search'}
 				className={'search__form-input'}
+				onChange={changeInput}
 			/>
-			<button type={'submit'} className={'search__form-submit'}>
+			<button className={'search__form-submit'}>
 				<i className={'fas fa-search'} />
 			</button>
 		</form>
-	);
-};
+	)
+}
 
-export { SearchForm };
+export default withRouter(SearchForm)

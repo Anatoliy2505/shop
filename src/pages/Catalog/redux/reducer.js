@@ -7,7 +7,7 @@ export const initialState = {
 	data: null,
 	isLoading: false,
 	errorMsg: null,
-	viewElements: 8,
+	viewElements: 12,
 }
 
 export default (state = initialState, action) => {
