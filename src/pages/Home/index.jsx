@@ -7,17 +7,19 @@ import {
 	HitsSlider,
 	SaleSlider,
 } from './components'
+import { Preloader } from '../../components'
 
 const Home = () => {
 	return (
 		<>
-			<MainSlider />
+			<Preloader />
+			{/* <MainSlider />
 
 			<HomeNews />
 
 			<HitsSlider />
 
-			<SaleSlider />
+			<SaleSlider /> */}
 
 			{/* <VkPosts /> */}
 		</>

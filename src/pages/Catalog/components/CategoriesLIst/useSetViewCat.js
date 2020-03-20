@@ -6,17 +6,17 @@ export default function useSetViewList({
 	viewElements,
 }) {
 	const [hasMore, setHasMore] = useState(true)
-	const [thisCategiries, setThisCategiries] = useState(categories)
-	const [viewList, setViewList] = useState([
-		...categories.slice(0, viewElements),
-	])
+	const [thisCategiries, setThisCategiries] = useState([])
+	const [viewList, setViewList] = useState(
+		categories ? [...categories.slice(0, viewElements)] : []
+	)
 	const [maxCountPage, setMaxCountPage] = useState(
 		Math.ceil(categories.length / viewElements) || 1
 	)
 
 	useEffect(() => {
 		if (currentPage === 1) {
-			if (categories !== thisCategiries) {
+			if (categories && categories !== thisCategiries) {
 				setViewList([...categories.slice(0, viewElements)])
 				setHasMore(currentPage < maxCountPage)
 				setThisCategiries(categories)

@@ -9,7 +9,6 @@ const SearchForm = ({ history }) => {
 	const changeInput = e => {
 		setQuery(e.currentTarget.value)
 	}
-	console.log(history)
 
 	const handleSubmit = e => {
 		e.preventDefault()

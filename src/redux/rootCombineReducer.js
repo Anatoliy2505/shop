@@ -5,6 +5,7 @@ import home from '../pages/Home/redux/reducer'
 import catalog from '../pages/Catalog/redux/reducer'
 import hits from '../pages/Hits/redux/reducer'
 import sale from '../pages/Sale/redux/reducer'
+import search from '../pages/Search/redux/reducer'
 
 export default combineReducers({
 	sidebar,
@@ -13,4 +14,5 @@ export default combineReducers({
 	catalog,
 	hits,
 	sale,
+	search,
 })
