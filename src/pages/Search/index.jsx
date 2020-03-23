@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { BreadCrumbs } from '../../components'
+
+import { BreadCrumbs, Preloader, Error, Empty } from '../../components'
+import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
+
+import { searchSelector } from './redux/selectors'
+import { getViewElementsSelector } from '../Catalog/redux/selectors'
+import { getSearchCategories } from './redux/actions'
 
 import './Search.scss'
-import { searchSelector } from './redux/selectors'
-import { getSearchCategories } from './redux/actions'
-import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
-import { getViewElementsSelector } from '../Catalog/redux/selectors'
 
 const Search = ({
 	searchCategories: { data, isLoading, errorMsg },
@@ -20,7 +22,6 @@ const Search = ({
 		}
 	}, [query, getSearchCategories])
 
-	console.log(data)
 	return (
 		<div className={'search-page'}>
 			<BreadCrumbs lastElementName={'Поисковая страница'} />
@@ -28,19 +29,29 @@ const Search = ({
 			<div>
 				{query ? (
 					<>
-						<h2>По вашему запросу: {query}</h2>
 						{isLoading ? (
-							<h3>Loading...</h3>
+							<Preloader title={'Поиск...'} />
 						) : errorMsg ? (
-							<h3>errorMsg</h3>
+							<Error title={errorMsg} />
 						) : data && data.length ? (
-							<CategoriesLIst categories={data} viewElements={viewElements} />
+							<>
+								<h2 className={'search-query'}>
+									Вы искали <b>"{query}"</b>, найдены варианты:
+								</h2>
+								<CategoriesLIst
+									categories={data}
+									page={'search'}
+									viewElements={viewElements}
+								/>
+							</>
 						) : (
-							<div>Ничего не найдено</div>
+							<Empty title={`По вашему запросу "${query}" нет совпадений`} />
 						)}
 					</>
 				) : (
-					<div>Введите в поисковую строку название необходимого товара!</div>
+					<div className={'search-message'}>
+						Введите в поисковую строку название товара, который Вам нужен!
+					</div>
 				)}
 			</div>
 		</div>

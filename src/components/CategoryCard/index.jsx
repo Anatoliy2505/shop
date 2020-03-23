@@ -17,7 +17,7 @@ export const CategoryCard = ({
 		<div className={'category__item'}>
 			<div className={'category__card'}>
 				<Link
-					to={`/${page || path}/${name}`}
+					to={`/${page || 'catalog/' + path}/${name}`}
 					className={'category__wrap-img'}
 					title={title}
 				>
@@ -25,7 +25,7 @@ export const CategoryCard = ({
 				</Link>
 				<div className="category__desc">
 					<Link
-						to={`/${page || path}/${name}`}
+						to={`/${page || 'catalog/' + path}/${name}`}
 						className={'category__wrap-title'}
 					>
 						<h3 className="category__title">{title}</h3>

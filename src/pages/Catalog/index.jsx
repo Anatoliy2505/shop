@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { getAllParentsCategories } from './redux/actions'
 import { catalogSelector } from './redux/selectors'
 import { CategoriesLIst } from './components/CategoriesLIst'
-import { BreadCrumbs } from '../../components'
+import { BreadCrumbs, Preloader, Empty, Error } from '../../components'
 
 const Catalog = React.memo(
 	({
@@ -13,6 +13,8 @@ const Catalog = React.memo(
 			params: { mainCategory, parentCategory },
 		},
 	}) => {
+		const [categoriesOfMain, setCategoriesOfMain] = useState({})
+
 		useEffect(() => {
 			if (data && data[mainCategory] && !data[mainCategory].loaded) {
 				getAllParentsCategories(mainCategory)
@@ -26,50 +28,57 @@ const Catalog = React.memo(
 				if (children[item].categories.length)
 					categories.push(...children[item].categories)
 			}
-			return categories
+			setCategoriesOfMain(prevState => ({
+				...prevState,
+				[mainCategory]: categories,
+			}))
 		}
 
 		let categories = null,
 			title = null,
 			routes = null
 
-		if (data && data[mainCategory] && data[mainCategory].loaded) {
+		if (data && data[mainCategory]) {
+			title = data[mainCategory].title
 			if (parentCategory) {
 				if (data[mainCategory].children[parentCategory]) {
 					title = data[mainCategory].children[parentCategory].title
-					categories = data[mainCategory].children[parentCategory].categories
-				} else {
-					categories = null
+					if (data[mainCategory].loaded) {
+						categories = data[mainCategory].children[parentCategory].categories
+					}
 				}
-			} else {
-				title = data[mainCategory].title
-				categories = joinCategories(data[mainCategory])
+			} else if (data[mainCategory].loaded) {
+				if (categoriesOfMain[mainCategory]) {
+					categories = categoriesOfMain[mainCategory]
+				} else {
+					joinCategories(data[mainCategory])
+				}
 			}
 		}
 
 		if (parentCategory && data && data[mainCategory]) {
-			routes = [{ path: `/${mainCategory}`, title: data[mainCategory].title }]
+			routes = [
+				{ path: `/catalog/${mainCategory}`, title: data[mainCategory].title },
+			]
 		}
 
 		return (
-			<section className={'catalog page'}>
+			<section className={'catalog-page'}>
+				<h1 className={'hidden'}>Страница каталога товаров</h1>
 				<BreadCrumbs
 					routes={routes}
 					lastElementName={title || 'Категория не найдена'}
 				/>
+				<h2 className={'page-title'}>{title || 'Категория не найдена'}</h2>
 				{isLoading ? (
-					<h1 className={'page-title'}>Loading</h1>
+					<Preloader title={'Загрузка...'} />
 				) : errorMsg && errorMsg[mainCategory] ? (
-					<h1 className={'page-title'}>{errorMsg[mainCategory]}</h1>
+					<Error title={errorMsg[mainCategory]} />
 				) : categories ? (
-					<>
-						<h1 className={'page-title'}>{title}</h1>
-						<CategoriesLIst
-							categories={categories}
-							viewElements={viewElements}
-						/>
-					</>
-				) : null}
+					<CategoriesLIst categories={categories} viewElements={viewElements} />
+				) : (
+					<Empty title={'Нет такой категории...'} />
+				)}
 			</section>
 		)
 	}

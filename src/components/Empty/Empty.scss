@@ -1,0 +1,16 @@
+@import '../../styles/vars';
+
+.empty {
+  &-img {
+    font-size: 3.5em;
+    color: $mainColor;
+    opacity: 0.2;
+  }
+
+  &-title {
+    padding-top: 1rem;
+    text-align: center;
+    font-size: 1em;
+    opacity: 0.6;
+  }
+}

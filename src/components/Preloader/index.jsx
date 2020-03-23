@@ -2,14 +2,15 @@ import React from 'react'
 
 import loader from './img/loader.gif'
 import './Preloader.scss'
+import { MessageWrapper } from '../MessageWrapper'
 
 export const Preloader = ({ title }) => {
 	return (
-		<div className="preloader">
-			<div className="preloader-container">
-				<img src={loader} alt={'Загрузка'} />
-				{title ? <div className="preloader-title">{title}</div> : null}
+		<MessageWrapper>
+			<div className="preloader-wrapper__img">
+				<img className={'preloader-img'} src={loader} alt={'Загрузка'} />
 			</div>
-		</div>
+			{title ? <div className="preloader-title">{title}</div> : null}
+		</MessageWrapper>
 	)
 }

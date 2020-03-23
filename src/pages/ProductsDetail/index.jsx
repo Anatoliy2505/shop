@@ -13,6 +13,8 @@ const ProductsDetail = ({ categories, match: { url, params } }) => {
 		routes = [{ title: 'Хиты продаж', path: '/hits' }]
 	} else if (utlItems[0] === 'sale') {
 		routes = [{ title: 'Товары со скидками', path: '/sale' }]
+	} else if (utlItems[0] === 'search') {
+		routes = [{ title: 'Страница поиска', path: '/search' }]
 	} else if (categories.data) {
 		const { mainCategory, parentCategory } = params
 		routes = createRoutesFromCategiries(

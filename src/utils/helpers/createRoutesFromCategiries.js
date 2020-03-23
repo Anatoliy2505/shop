@@ -6,13 +6,13 @@ export const createRoutesFromCategiries = (
 	let routes = []
 	data.forEach(element => {
 		if (element.name === mainCategory) {
-			routes.push({ title: element.title, path: `/${mainCategory}` })
+			routes.push({ title: element.title, path: `/catalog/${mainCategory}` })
 			if (parentCategory && element.children) {
 				element.children.forEach(element => {
 					if (element.name === parentCategory) {
 						routes.push({
 							title: element.title,
-							path: `/${mainCategory}/${parentCategory}`,
+							path: `/catalog/${mainCategory}/${parentCategory}`,
 						})
 					}
 				})

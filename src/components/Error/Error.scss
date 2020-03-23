@@ -1,13 +1,12 @@
-.preloader {
-  &-wrapper__img {
-    max-width: 135px;
-  }
-
+.error {
   &-img {
-    max-width: 100%;
+    font-size: 3.5em;
+    color: #df4d4d;
+    opacity: 0.2;
   }
 
   &-title {
+    padding-top: 1rem;
     text-align: center;
     font-size: 1em;
     opacity: 0.6;

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { Preloader } from '../../../Preloader'
+import { Empty } from '../../../Empty'
+import { Error } from '../../../Error'
+
 import { sidebarSelector } from '../../../../redux/selectors'
 import { getAllMainCategories } from '../../../../redux/actions'
 
@@ -30,7 +34,10 @@ const CatalogTree = ({
 					}
 				>
 					<div className={'sidebar-catalog__parent-wrap'}>
-						<Link className={'sidebar-catalog__item'} to={'/' + item.name}>
+						<Link
+							className={'sidebar-catalog__item'}
+							to={'/catalog/' + item.name}
+						>
 							<span
 								className={'sidebar-catalog__parent-img'}
 								style={{ backgroundPosition: item.bg_position }}
@@ -49,7 +56,7 @@ const CatalogTree = ({
 								<li key={childrenItem.id}>
 									<Link
 										className={'sidebar-catalog__children-item'}
-										to={`/${item.name}/${childrenItem.name}`}
+										to={`/catalog/${item.name}/${childrenItem.name}`}
 									>
 										{childrenItem.title}
 									</Link>
@@ -71,15 +78,15 @@ const CatalogTree = ({
 				</span>
 			</h2>
 			{isLoading ? (
-				<h3 className={'loading'}>Loading...</h3>
+				<Preloader title={'Загрузка...'} />
 			) : data ? (
 				<ul className={'sidebar-catalog__list'}>
 					{createTree(data, activeItem, onSelectItem)}
 				</ul>
 			) : errorMsg ? (
-				<h3 className={'error'}>{errorMsg}</h3>
+				<Error title={errorMsg} />
 			) : (
-				<div>Empty</div>
+				<Empty title={'Категории не найдены...'} />
 			)}
 		</nav>
 	)

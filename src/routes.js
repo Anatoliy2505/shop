@@ -20,7 +20,8 @@ export const routes = [
 		path: [
 			'/sale/:products',
 			'/hits/:products',
-			'/:mainCategory/:parentCategory/:products',
+			'/search/:products',
+			'/catalog/:mainCategory/:parentCategory/:products',
 		],
 		component: ProductsDetail,
 	},
@@ -46,7 +47,7 @@ export const routes = [
 	},
 	{
 		key: 6,
-		path: ['/:mainCategory/:parentCategory', '/:mainCategory'],
+		path: ['/catalog/:mainCategory/:parentCategory', '/catalog/:mainCategory'],
 		component: Catalog,
 	},
 ]

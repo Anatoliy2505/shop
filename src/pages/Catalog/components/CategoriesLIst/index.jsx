@@ -63,14 +63,18 @@ export const CategoriesLIst = React.memo(
 
 		return (
 			<div className="categories__list">
-				{viewList && viewList.length ? categoriesList(viewList) : null}
-				<div
-					className={'categories__list-observe'}
-					ref={observeElement}
-					onClick={getNewPage}
-				>
-					<i className={'fas fa-angle-double-down'}></i>
-				</div>
+				{viewList && viewList.length ? (
+					<>
+						{categoriesList(viewList)}
+						<div
+							className={'categories__list-observe'}
+							ref={observeElement}
+							onClick={getNewPage}
+						>
+							<i className={'fas fa-angle-double-down'}></i>
+						</div>
+					</>
+				) : null}
 			</div>
 		)
 	}

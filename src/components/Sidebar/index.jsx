@@ -7,6 +7,7 @@ import CatalogTree from './components/CatalogTree'
 const Sidebar = () => {
 	return (
 		<aside className={'sidebar'}>
+			<h1 className={'hidden'}>Сайдбар</h1>
 			<CatalogTree />
 			<div className="sidebar__social">
 				<h3 className="sidebar__social-title">Следите за нами в соцсетях</h3>

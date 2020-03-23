@@ -5,7 +5,7 @@ import { hitsSelector } from './redux/selectors'
 import { getHitsCategories } from './redux/actions'
 import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
 import { getViewElementsSelector } from '../Catalog/redux/selectors'
-import { BreadCrumbs } from '../../components'
+import { BreadCrumbs, Preloader, Error, Empty } from '../../components'
 
 const Hits = ({
 	hitsCategories: { data, errorMsg, isLoading },
@@ -19,21 +19,21 @@ const Hits = ({
 	return (
 		<section className={'hits page'}>
 			<BreadCrumbs lastElementName={'Хиты продаж'} />
+			<h1 className={'page-title'}>Хиты продаж</h1>
 			{isLoading ? (
-				<h1 className={'page-title'}>Loading...</h1>
+				<Preloader title={'Загрузка...'} />
 			) : errorMsg ? (
-				<h1 className={'page-title'}>{errorMsg}</h1>
+				<Error title={errorMsg} />
 			) : data ? (
-				<>
-					<h1 className={'page-title'}>Хиты продаж</h1>
-					<CategoriesLIst
-						mainCategory={'hits'}
-						categories={data}
-						page={'hits'}
-						viewElements={viewElements}
-					/>
-				</>
-			) : null}
+				<CategoriesLIst
+					mainCategory={'hits'}
+					categories={data}
+					page={'hits'}
+					viewElements={viewElements}
+				/>
+			) : (
+				<Empty title={'Хиты продаж не найдены...'} />
+			)}
 		</section>
 	)
 }

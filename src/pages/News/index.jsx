@@ -2,7 +2,13 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router'
 
-import { NewsList, BreadCrumbs } from '../../components'
+import {
+	NewsList,
+	BreadCrumbs,
+	Preloader,
+	Error,
+	Empty,
+} from '../../components'
 import { newsAllSelector } from './redux/selectors'
 import { getNews } from './redux/actions'
 import { NewsItem } from './components'
@@ -22,6 +28,7 @@ const News = ({ news: { data, isLoading, errorMsg }, getNews }) => {
 	let newsElement = null
 	let issetParams = false
 	let newsItem = null
+	let title = 'Страница новостей'
 
 	if (data) {
 		if (news) {
@@ -32,15 +39,22 @@ const News = ({ news: { data, isLoading, errorMsg }, getNews }) => {
 			if (newsItem) {
 				newsElement = <NewsItem {...newsItem} />
 			} else {
-				newsElement = <div className={'empty'}>Новость не найдена</div>
+				newsElement = (
+					<>
+						<h1 className={'page-title'}>Новость не найдена</h1>
+						<Empty title={'Новость не найдена...'} />
+					</>
+				)
 			}
+			title = 'Новость в деталях'
 		} else {
 			newsElement = <NewsList data={data} />
 		}
 	}
 
 	return (
-		<section className={'news'}>
+		<section className={'news-page'}>
+			<h1 className={'hidden'}>{title}</h1>
 			<BreadCrumbs
 				routes={issetParams ? [{ path: '/news', title: 'Наши новости' }] : null}
 				lastElementName={
@@ -52,13 +66,13 @@ const News = ({ news: { data, isLoading, errorMsg }, getNews }) => {
 				}
 			/>
 			{isLoading ? (
-				<div className={'loading'}>Loading...</div>
+				<Preloader title={'Загрузка новостей...'} />
 			) : errorMsg ? (
-				<div className={'error'}>{errorMsg}</div>
+				<Error title={errorMsg} />
 			) : newsElement ? (
 				newsElement
 			) : (
-				<div className={'empty'}>Новостей пока нет</div>
+				<Empty title={'Новостей пока нет'} />
 			)}
 		</section>
 	)

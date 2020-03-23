@@ -27,7 +27,8 @@ function App() {
 	)
 
 	return (
-		<div className="App">
+		<div className={'App'}>
+			<h1 className={'hidden'}>Комания ООО "Сибирский Лов"</h1>
 			<Header />
 			<div className={'container content-wrapper'}>
 				<Sidebar />
