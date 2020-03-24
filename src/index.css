@@ -53,6 +53,10 @@ img {
   .container {
     max-width: 1023px;
   }
+
+  .products-item {
+    flex-basis: 5.86rem;
+  }
 }
 
 @media (max-width: 1023px) {
