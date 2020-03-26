@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 import './CategoriesSlider.scss'
-import { CategoryCard } from '../../../../components/CategoryCard'
+import { CategoryCard } from '../CategoryCard'
 
 const categories = [
 	{
@@ -112,13 +112,17 @@ export const CategoriesSlider = ({ categories, title, href, page }) => {
 				<section className="categories-slider">
 					{title ? (
 						<h2 className={'section-title'}>
-							<Link
-								to={href}
-								className={'section-title__wrap'}
-								title={`Увидеть все ${title}`}
-							>
-								{title}
-							</Link>
+							{href ? (
+								<Link
+									to={href}
+									className={'section-title__wrap'}
+									title={`Увидеть все ${title}`}
+								>
+									{title}
+								</Link>
+							) : (
+								<span className={'section-title__wrap'}>{title}</span>
+							)}
 						</h2>
 					) : null}
 					<Slider {...settings} className={'slick-categories__list'}>

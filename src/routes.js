@@ -6,6 +6,7 @@ import {
 	Hits,
 	Sale,
 	Search,
+	Recommendation,
 } from './pages'
 
 export const routes = [
@@ -21,6 +22,7 @@ export const routes = [
 			'/sale/:products',
 			'/hits/:products',
 			'/search/:products',
+			'/recommendation/:products',
 			'/catalog/:mainCategory/:parentCategory/:products',
 		],
 		component: ProductsDetail,
@@ -39,6 +41,11 @@ export const routes = [
 		key: 3,
 		path: '/search',
 		component: Search,
+	},
+	{
+		key: 4,
+		path: '/recommendation',
+		component: Recommendation,
 	},
 	{
 		key: 4,

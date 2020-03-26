@@ -20,11 +20,11 @@ const CatalogTree = ({
 	}, [data, getAllMainCategories])
 
 	const onSelectItem = e => {
-		const id = Number(e.target.dataset.id)
+		const id = Number(e.currentTarget.dataset.id)
 		activeItem === id ? setActiveItem(null) : setActiveItem(id)
 	}
 
-	const createTree = (data, itemId, cb) => {
+	const createTree = (data, itemId) => {
 		return data.map(item => {
 			return (
 				<li
@@ -47,7 +47,7 @@ const CatalogTree = ({
 						<span
 							className={'sidebar-catalog__parent-open'}
 							data-id={item.id}
-							onClick={cb}
+							onClick={onSelectItem}
 						/>
 					</div>
 					<ul className={'sidebar-catalog__children-list'}>
@@ -81,7 +81,7 @@ const CatalogTree = ({
 				<Preloader title={'Загрузка...'} />
 			) : data ? (
 				<ul className={'sidebar-catalog__list'}>
-					{createTree(data, activeItem, onSelectItem)}
+					{createTree(data, activeItem)}
 				</ul>
 			) : errorMsg ? (
 				<Error title={errorMsg} />

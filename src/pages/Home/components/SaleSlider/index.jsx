@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { saleSelector } from '../../../Sale/redux/selectors'
 import { getSaleCategories } from '../../../Sale/redux/actions'
-import { CategoriesSlider } from '../CategoriesSlider'
+import { CategoriesSlider } from '../../../../components'
 
 const SaleSlider = ({ saleCategories: { data }, getSaleCategories }) => {
 	useEffect(() => {

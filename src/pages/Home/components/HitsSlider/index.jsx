@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { hitsSelector } from '../../../Hits/redux/selectors'
 import { getHitsCategories } from '../../../Hits/redux/actions'
-import { CategoriesSlider } from '../CategoriesSlider'
+import { CategoriesSlider } from '../../../../components'
 
 const HitsSlider = ({ hitsCategories, getHitsCategories }) => {
 	useEffect(() => {
