@@ -66,9 +66,13 @@
       // transition: filter 0.4s;
     }
 
+    &.active {
+      cursor: default;
+    }
+
     &:hover,
     &.active {
-      outline: 2px solid #e0e0e0;
+      outline: 3px solid #e0e0e0;
 
       #{$item}__img {
         filter: grayscale(0) saturate(150%);

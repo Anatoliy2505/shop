@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { BreadCrumbs, CategoriesSlider } from '../../components'
+import {
+	BreadCrumbs,
+	CategoriesSlider,
+	Preloader,
+	Error,
+	Empty,
+} from '../../components'
+import { Properties, AddProductForm } from './components'
+
+import { createRoutes } from '../../utils/helpers/createRoutesForProductDetail'
+
 import { sidebarSelector } from '../../redux/selectors'
-import { createRoutesFromCategiries } from '../../utils/helpers/createRoutesFromCategiries'
-
 import './ProductsDetail.scss'
-import { Properties } from './components'
-
 // const props = {
 // 	isLoading: false,
 // 	errorMsg: null,
@@ -15,6 +21,135 @@ import { Properties } from './components'
 // 	catygoryData: null,
 // 	productsDats: null
 // }
+
+const ProductsDetail = ({
+	isLoading,
+	errorMsg,
+	recomendation,
+	catygoryData,
+	products,
+	categories,
+	match: { url, params },
+}) => {
+	const [productId, setProductId] = useState(
+		products ? Number(products['0'].id) : null
+	)
+	const [productData, setProductData] = useState(
+		productId ? products.find(item => item.id === productId) : null
+	)
+	const [productCount, setProductCount] = useState(1)
+
+	let routes = null
+	const urlItems = url.split('/').slice(1)
+	// const productsCategory = utlItems[urlItems.length - 1]
+	const { mainCategory, parentCategory } = params
+
+	routes = createRoutes(
+		urlItems[0],
+		categories.data,
+		mainCategory,
+		parentCategory
+	)
+
+	const selectProduct = e => {
+		const id = Number(e.currentTarget.dataset.id)
+		if (productId !== id) {
+			setProductId(id)
+			setProductData(products.find(item => item.id === id))
+			setProductCount(1)
+		}
+	}
+
+	const changeProductCount = e => {
+		setProductCount(e.currentTarget.value)
+	}
+
+	const productsItems = () =>
+		products.map(item => (
+			<div
+				key={item.id}
+				className={
+					item.id === productId ? 'products-item active' : 'products-item'
+				}
+				data-id={item.id}
+				onClick={selectProduct}
+			>
+				<img className={'products-item__img'} src={item.img} alt={item.title} />
+				<span className={'products-item__name'}>{item.name}</span>
+			</div>
+		))
+
+	return (
+		<section className={'products'}>
+			<BreadCrumbs
+				routes={routes}
+				lastElementName={catygoryData.title || 'Товар не найден'}
+			/>
+			<h1 className={'page-title'}>
+				{catygoryData.title || 'Товар временно отсутствует'}
+			</h1>
+			{isLoading ? (
+				<Preloader title={'Загрузка товаров'} />
+			) : errorMsg ? (
+				<Error title={errorMsg} />
+			) : products && catygoryData ? (
+				<>
+					<div className={'products-container'}>
+						<div className="products-section one">
+							<div className="products__wrap-img">
+								<img src={productData.img} alt={productData.title} />
+							</div>
+
+							<AddProductForm
+								title={productData.title}
+								productCount={productCount}
+								productPrice={catygoryData.price}
+								changeProductCount={changeProductCount}
+							/>
+						</div>
+
+						<div className="products-section two">
+							<h3 className="products-title">Описание:</h3>
+							<div className="products-description">
+								{catygoryData.description}
+							</div>
+
+							<Properties
+								properties={productData.properties}
+								title={productData.title}
+								name={productData.name}
+								mainField={catygoryData.mainParametr}
+								price={catygoryData.price}
+							/>
+
+							<h3 className="products-title">
+								Выберите {catygoryData.mainParametr}:
+							</h3>
+							<div className="products-items">
+								<div className="products-items__container">
+									{productsItems()}
+								</div>
+							</div>
+						</div>
+					</div>
+					{recomendation && recomendation.length && (
+						<div className="products-recomendation">
+							<CategoriesSlider
+								categories={recomendation}
+								title={'Рекомнедованные товары'}
+								href={'/recommendation'}
+								page={'recommendation'}
+							/>
+						</div>
+					)}
+				</>
+			) : (
+				<Empty title={'Товар временно отсутствует'} />
+			)}
+		</section>
+	)
+}
+
 const props = {
 	isLoading: false,
 	errorMsg: null,
@@ -177,150 +312,6 @@ const props = {
 			],
 		},
 	],
-}
-
-const ProductsDetail = ({
-	isLoading,
-	errorMsg,
-	recomendation,
-	catygoryData,
-	products,
-	categories,
-	match: { url, params },
-}) => {
-	const [productId, setProductId] = useState(
-		products ? Number(products['0'].id) : null
-	)
-	const [productData, setProductData] = useState(
-		productId ? products.find(item => item.id === productId) : null
-	)
-	const [productCount, setProductCount] = useState(1)
-
-	let routes = null
-	const utlItems = url.split('/').slice(1)
-	// const productsCategory = utlItems[utlItems.length - 1]
-
-	if (utlItems[0] === 'hits') {
-		routes = [{ title: 'Хиты продаж', path: '/hits' }]
-	} else if (utlItems[0] === 'sale') {
-		routes = [{ title: 'Товары со скидками', path: '/sale' }]
-	} else if (utlItems[0] === 'search') {
-		routes = [{ title: 'Страница поиска', path: '/search' }]
-	} else if (utlItems[0] === 'recommendation') {
-		routes = [{ title: 'Рекомендации', path: '/recommendation' }]
-	} else if (categories.data) {
-		const { mainCategory, parentCategory } = params
-		routes = createRoutesFromCategiries(
-			categories.data,
-			mainCategory,
-			parentCategory
-		)
-	}
-
-	const selectProduct = e => {
-		const id = Number(e.currentTarget.dataset.id)
-		if (productId !== id) {
-			setProductId(id)
-			setProductData(products.find(item => item.id === id))
-			setProductCount(1)
-		}
-	}
-
-	console.log(productData)
-
-	const changeProductCount = e => {
-		setProductCount(e.currentTarget.value)
-	}
-
-	const productsItems = () =>
-		products.map(item => (
-			<div
-				key={item.id}
-				className={
-					item.id === productId ? 'products-item active' : 'products-item'
-				}
-				data-id={item.id}
-				onClick={selectProduct}
-			>
-				<img className={'products-item__img'} src={item.img} alt={item.title} />
-				<span className={'products-item__name'}>{item.name}</span>
-			</div>
-		))
-
-	return (
-		<section className={'products'}>
-			<BreadCrumbs
-				routes={routes}
-				lastElementName={'Обзор товара' || 'Товар не найден'}
-			/>
-
-			{products && catygoryData ? (
-				<>
-					<h1 className={'page-title'}>{catygoryData.title}</h1>
-					<div className={'products-container'}>
-						<div className="products-section one">
-							<div className="products__wrap-img">
-								<img src={productData.img} alt={productData.title} />
-							</div>
-
-							<form className={'products-actions'}>
-								<h3 className="products-title">{productData.title}</h3>
-								<div className="products-actions__container">
-									<input
-										type={'number'}
-										className={'products-actions__count'}
-										min={'1'}
-										onChange={changeProductCount}
-										value={productCount}
-									/>
-									<button type={'submit'} className={'products-actions__add'}>
-										Добавить в корзину
-									</button>
-								</div>
-								<span className="products-actions__summ">
-									Сумма: {productCount * catygoryData.price} руб
-								</span>
-							</form>
-						</div>
-
-						<div className="products-section two">
-							<h3 className="products-title">Описание:</h3>
-							<div className="products-description">
-								{catygoryData.description}
-							</div>
-
-							<Properties
-								properties={productData.properties}
-								title={productData.title}
-								name={productData.name}
-								mainField={catygoryData.mainParametr}
-								price={catygoryData.price}
-							/>
-
-							<h3 className="products-title">
-								Выберите {catygoryData.mainParametr}:
-							</h3>
-							<div className="products-items">
-								<div className="products-items__container">
-									{products ? productsItems() : null}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="products-recomendation">
-						<CategoriesSlider
-							categories={recomendation}
-							title={'Рекомнедованные товары'}
-							href={'/recommendation'}
-							page={'recommendation'}
-						/>
-					</div>
-				</>
-			) : (
-				<h1 className={'page-title'}>Товар временно отсутствует</h1>
-			)}
-		</section>
-	)
 }
 
 ProductsDetail.defaultProps = props
