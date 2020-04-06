@@ -53,8 +53,6 @@ export const CategoriesLIst = React.memo(
 			}
 		}
 
-		console.log('new')
-
 		const categoriesList = viewList =>
 			viewList.map(category => (
 				<CategoryCard key={category.id} {...category} page={page} />
