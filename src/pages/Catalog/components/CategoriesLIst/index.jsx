@@ -9,6 +9,7 @@ export const CategoriesLIst = React.memo(
 	({ categories, page, viewElements }) => {
 		const [currentPage, setCurrentPage] = useState(1)
 		const [observer, setObserver] = useState(null)
+		const observeElement = useRef(null)
 
 		const { viewList, hasMore } = useSetViewList({
 			categories,
@@ -26,31 +27,33 @@ export const CategoriesLIst = React.memo(
 			}
 		}, [observer, categories])
 
-		const observeElement = useRef()
-
-		useEffect(() => {
-			if (!observer && viewList) {
-				const observ = new IntersectionObserver(
-					([entry]) => {
-						if (entry && entry.isIntersecting) {
-							setCurrentPage(currentPage => currentPage + 1)
-						}
-					},
-					{
-						threshold: 1.0,
-						rootMargin: '0px 0px 150px 0px',
+		if (!observer && viewList) {
+			const observ = new IntersectionObserver(
+				([entry]) => {
+					if (entry && entry.isIntersecting) {
+						setCurrentPage(currentPage => currentPage + 1)
 					}
-				)
+				},
+				{
+					threshold: 1.0,
+					rootMargin: '0px 0px 150px 0px',
+				}
+			)
+			if (observeElement.current && hasMore) {
 				observeElement.current.style.display = 'block'
 				observ.observe(observeElement.current)
 				setObserver(observ)
-			} else {
-				if (!hasMore && observer) {
-					observer.disconnect()
-					observeElement.current.style.display = 'none'
-				}
+			} else if (observeElement.current) {
+				observeElement.current.style.display = 'none'
 			}
-		}, [hasMore, observer, viewList])
+		} else {
+			if (!hasMore && observer) {
+				observer.disconnect()
+				observeElement.current.style.display = 'none'
+			}
+		}
+
+		console.log('new')
 
 		const categoriesList = viewList =>
 			viewList.map(category => (
