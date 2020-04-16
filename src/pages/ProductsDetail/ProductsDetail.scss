@@ -59,10 +59,11 @@
     position: relative;
     height: 8rem;
     outline: 1px solid #e0e0e0;
+    overflow: hidden;
     cursor: pointer;
 
     &__img {
-      filter: grayscale(100%);
+      // filter: grayscale(100%);
       // transition: filter 0.4s;
     }
 
@@ -72,10 +73,12 @@
 
     &:hover,
     &.active {
-      outline: 3px solid #e0e0e0;
+      outline: 3px solid #81cdd4;
 
       #{$item}__img {
-        filter: grayscale(0) saturate(150%);
+        // transform: scale(1.01, 1.01);
+        // transform-origin: center center;
+        filter: saturate(200%);
         // transition: filter 0.5s;
       }
     }
