@@ -1,7 +1,6 @@
 @import '../../styles/vars';
 
-$wh: 40px;
-$b: 20px;
+$b: 14px;
 
 
 .slick-categories__list {
@@ -14,10 +13,10 @@ $b: 20px;
   .slick-prev,
   .slick-next {
     top: 8.75rem;
-    width: $wh;
-    height: $wh;
+    width: 35px;
+    height: 35px;
     background-color: #ffff;
-    border-radius: 50%;
+    // border-radius: 50%;
     opacity: 0.85;
     transition: opacity 0.3s;
     z-index: 1;
@@ -32,31 +31,32 @@ $b: 20px;
       opacity: 1;
       content: '';
       border: $b solid transparent;
-      border-radius: $b;
-      right: 0;
+      // border-radius: $b;
       top: 50%;
       transform: translateY(-50%);
     }
   }
 
   .slick-prev {
-    left: -18px;
+    left: -10px;
 
     &::before {
+      left: 0;
       border-right: $b solid $mainColor;
     }
   }
 
   .slick-next {
-    right: -3px;
+    right: 5px;
 
     &::before {
+      right: 0;
       border-left: $b solid $mainColor;
     }
   }
 
   .slick-disabled {
-    opacity: 0.5;
+    opacity: 0;
 
     &:hover {
       opacity: 0.4;

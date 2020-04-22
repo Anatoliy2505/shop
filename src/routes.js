@@ -7,6 +7,7 @@ import {
 	Sale,
 	Search,
 	Recommendation,
+	Login,
 } from './pages'
 
 export const routes = [
@@ -17,7 +18,7 @@ export const routes = [
 		isExact: true,
 	},
 	{
-		key: 5,
+		key: 2,
 		path: [
 			'/sale/:products',
 			'/hits/:products',
@@ -28,33 +29,38 @@ export const routes = [
 		component: ProductsDetail,
 	},
 	{
-		key: 2,
+		key: 3,
 		path: '/hits',
 		component: Hits,
 	},
 	{
-		key: 3,
+		key: 4,
 		path: '/sale',
 		component: Sale,
 	},
 	{
-		key: 3,
+		key: 5,
 		path: '/search',
 		component: Search,
 	},
 	{
-		key: 4,
+		key: 6,
 		path: '/recommendation',
 		component: Recommendation,
 	},
 	{
-		key: 4,
+		key: 7,
 		path: ['/news/:news', '/news'],
 		component: News,
 	},
 	{
-		key: 6,
+		key: 8,
 		path: ['/catalog/:mainCategory/:parentCategory', '/catalog/:mainCategory'],
 		component: Catalog,
+	},
+	{
+		key: 9,
+		path: '/login',
+		component: Login,
 	},
 ]
