@@ -6,6 +6,7 @@ body {
   font-size: 100%;
   color: #424242;
   min-width: 747px;
+  position: relative;
 }
 
 code {
@@ -16,6 +17,22 @@ img {
   max-width: 100%;
 }
 
+.button {
+  padding: 0.4rem 1rem;
+  outline: none !important;
+  background-color: #08909c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #08909cd9;
+}
+
+.button:active {
+  background-color: #08909c;
+}
 
 .container {
   max-width: 1503px;

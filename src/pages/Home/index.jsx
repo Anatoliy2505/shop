@@ -1,4 +1,5 @@
 import React from 'react'
+import './Home.scss'
 
 import {
 	MainSlider,
@@ -12,7 +13,6 @@ const Home = () => {
 	return (
 		<>
 			<MainSlider />
-
 			<HomeNews />
 
 			<HitsSlider />
