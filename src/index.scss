@@ -115,10 +115,9 @@ img {
   font-size: 1.5em;
   line-height: 1em;
   text-align: left;
-}
-
-.page-title.left {
-  text-align: left;
+  &.left {
+    text-align: left;
+  }
 }
 
 .section-title {
@@ -127,20 +126,80 @@ img {
   line-height: 1em;
   font-weight: 400;
   border-top: 1px solid #e0e0e0;
-}
-
-.section-title__wrap {
-  display: inline-block;
-  padding: 7px 30px;
-  background-color: #08909c;
-  color: #fff;
-  text-decoration: none;
-}
-
-.section-title__wrap:hover {
-  text-decoration: underline;
+  &__wrap {
+    display: inline-block;
+    padding: 7px 30px;
+    background-color: #08909c;
+    color: #fff;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .page .page-title {
   margin-bottom: calc(2rem - 15px);
+}
+
+.auth {
+  &-page {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    padding: 1.1rem 0;
+  }
+  &-form {
+    box-sizing: border-box;
+    width: 400px;
+    padding: 2rem;
+    box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    &__title {
+      text-align: center;
+      font-size: 1.3em;
+      margin: 0;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #9e9e9e
+    }
+    &__wrapper {
+      padding-bottom: 0.8rem;
+      &.wrap-button {
+        padding: 1rem 0;        
+      }
+      &.wrap-redirect {
+        padding-bottom: 0;
+        padding-top: 2.5rem;
+        font-size: 0.9em;        
+      }
+    }
+    &__field-name {
+      display: block;
+      font-size: 0.9em;
+      color: #757575;
+      padding-bottom: 0.2rem;
+    }
+    &__field {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0.3rem 0.4rem;
+    }
+    &__button {
+      width: 100%;
+      font-size: 1em;
+      line-height: 1.2em;
+    }    
+    &__redirect {          
+      &-quetion {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+      &-link {
+        color: #0277bd;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  } 
 }
