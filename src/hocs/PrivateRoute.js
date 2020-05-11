@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 // import PropTypes from './node_modules/prop-types'
 
-import { isAuthSelector } from '../pages/Login/redux/selectors'
+import { isAuthSelector } from '../pages/Auth/redux/selectors'
 
 const PrivateRoure = ({ component: Component, isAuth, ...rest }) => {
 	return (
@@ -16,12 +16,9 @@ const PrivateRoure = ({ component: Component, isAuth, ...rest }) => {
 	)
 }
 
-export default connect(
-	state => ({
-		isAuth: isAuthSelector,
-	}),
-	{}
-)(PrivateRoure)
+export default connect(state => ({
+	isAuth: isAuthSelector,
+}))(PrivateRoure)
 
 // PrivateRoure.propTypes = {
 // 	component: PropTypes.object.isRequired,

@@ -7,7 +7,7 @@ import {
 	Sale,
 	Search,
 	Recommendation,
-	Login,
+	Auth,
 } from './pages'
 
 export const routes = [
@@ -60,7 +60,7 @@ export const routes = [
 	},
 	{
 		key: 9,
-		path: '/login',
-		component: Login,
+		path: ['/login', '/registration'],
+		component: Auth,
 	},
 ]
