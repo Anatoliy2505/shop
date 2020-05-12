@@ -30,7 +30,7 @@ export const Message = ({ children, delay, type }) => {
 			}
 		}
 	}, [children, timerId, data, setTimer])
-	console.log(1)
+
 	return (
 		<>
 			{children && isShown && (

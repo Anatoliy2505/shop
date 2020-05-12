@@ -6,10 +6,11 @@ import { FormItem } from '../FormItem'
 import { validateSignupForm as validate } from '../../../../utils/validators'
 import './SignupForm.scss'
 
-const SignupReduxForm = ({ handleSubmit }) => {
+const SignupReduxForm = ({ handleSubmit, submitting, valid }) => {
 	const submitForm = values => {
 		console.log(values)
 	}
+
 	return (
 		<div>
 			<div className={'auth-page'}>
@@ -24,34 +25,43 @@ const SignupReduxForm = ({ handleSubmit }) => {
 						type={'text'}
 						name={'name'}
 						label={'Имя *'}
+						placeholder={'Ваше имя'}
 					/>
 					<Field
 						component={FormItem}
 						type={'text'}
 						name={'surname'}
 						label={'Фамилия'}
+						placeholder={'Ваша фамилия'}
 					/>
 					<Field
 						component={FormItem}
 						type={'email'}
 						name={'email'}
 						label={'Адрес электронной почты *'}
+						placeholder={'Введите email'}
 					/>
 					<Field
 						component={FormItem}
 						type={'password'}
 						name={'password'}
 						label={'Пароль *'}
+						placeholder={'Введите пароль'}
 					/>
 					<Field
 						component={FormItem}
 						type={'text'}
 						name={'confirmPassword'}
 						label={'Подтвердите пароль *'}
+						placeholder={'Повторите пароль'}
 					/>
 
 					<div className={'auth-form__wrapper wrap-button'}>
-						<button tupe={'submit'} className={'button auth-form__button'}>
+						<button
+							tupe={'submit'}
+							className={'button auth-form__button'}
+							disabled={submitting || !valid}
+						>
 							Зарегистрироваться
 						</button>
 					</div>

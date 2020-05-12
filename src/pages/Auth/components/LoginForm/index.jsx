@@ -2,10 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { reduxForm, Field } from 'redux-form'
 
+import { validateLoginForm as validate } from '../../../../utils/validators'
+
 import { FormItem } from '../FormItem'
 import './LoginForm.scss'
 
-const LoginReduxForm = ({ handleSubmit }) => {
+const LoginReduxForm = ({ handleSubmit, submitting, valid }) => {
 	const submitForm = values => {
 		console.log(values)
 	}
@@ -23,12 +25,14 @@ const LoginReduxForm = ({ handleSubmit }) => {
 						type={'email'}
 						name={'email'}
 						label={'Адрес электронной почты'}
+						placeholder={'Введите email'}
 					/>
 					<Field
 						component={FormItem}
 						type={'password'}
 						name={'password'}
 						label={'Пароль'}
+						placeholder={'Введите пароль'}
 					>
 						<Link
 							to={'/forgot-password'}
@@ -51,7 +55,11 @@ const LoginReduxForm = ({ handleSubmit }) => {
 					</div>
 
 					<div className={'auth-form__wrapper wrap-button'}>
-						<button tupe={'submit'} className={'button auth-form__button'}>
+						<button
+							tupe={'submit'}
+							className={'button auth-form__button'}
+							disabled={submitting || !valid}
+						>
 							Войти
 						</button>
 					</div>
@@ -70,6 +78,6 @@ const LoginReduxForm = ({ handleSubmit }) => {
 	)
 }
 
-const LoginForm = reduxForm({ form: 'login' })(LoginReduxForm)
+const LoginForm = reduxForm({ form: 'login', validate })(LoginReduxForm)
 
 export default LoginForm

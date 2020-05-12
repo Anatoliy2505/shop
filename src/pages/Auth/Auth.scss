@@ -39,11 +39,26 @@
       box-sizing: border-box;
       width: 100%;
       padding: 0.3rem 0.4rem;
+      &.error {
+        outline: 1px solid rgb(252, 16, 16);        
+        border: 1px solid #ddd;
+        outline-offset: -1px;
+        &:focus {
+          outline-offset: 0px;
+        }
+      }
     }
     &__button {
       width: 100%;
       font-size: 1em;
       line-height: 1.2em;
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+        &:hover {
+          background-color: #08909c;
+        }
+      }
     }    
     &__redirect {          
       &-quetion {
@@ -58,4 +73,17 @@
       }
     }
   } 
+  &-text {
+    &__error {
+      display: inline-block;
+      color: rgb(252, 16, 16);
+      font-size: 0.9em;
+      line-height: 0.9em;
+      .fa-exclamation-circle {
+        font-size: 0.9em;
+        display: inline-block;
+        margin-right: 5px;
+      }
+    }
+  }
 }

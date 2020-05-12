@@ -43,3 +43,29 @@ export const postData = (url, data) => {
 		referrer: 'no-referrer',
 	}).then(response => response.json()) // parses response to JSON
 }
+
+export const request = async (
+	endPoint,
+	method = 'GET',
+	body = null,
+	headers = {}
+) => {
+	try {
+		if (body) {
+			body = JSON.stringify(body)
+			headers['Content-Type'] = 'application/json'
+		}
+		const response = await fetch(`${API_ROOT}/${endPoint}`, {
+			method,
+			body,
+			headers,
+		})
+		if (!response.ok) {
+			throw new Error(response.status || 'При запросе что-то пошло не так')
+		}
+		const data = await response.json()
+		return data
+	} catch (e) {
+		throw e
+	}
+}

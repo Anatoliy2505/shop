@@ -1,11 +1,11 @@
 import React from 'react'
 
 export const FormItem = ({
+	input,
 	fieldName = 'input',
-	type,
 	label,
 	name,
-	meta: { touched, error, warning },
+	meta: { touched, error },
 	children,
 	...rest
 }) => {
@@ -15,10 +15,18 @@ export const FormItem = ({
 			<label htmlFor={name} className={'auth-form__field-name'}>
 				{label}
 			</label>
-			<Field {...rest} type={type} name={name} className={'auth-form__field'} />
-			{touched &&
-				((error && <span>{error}</span>) ||
-					(warning && <span>{warning}</span>))}
+			<Field
+				name={name}
+				{...input}
+				className={`auth-form__field${touched && error ? ' error' : ''}`}
+				{...rest}
+			/>
+			{touched && error && (
+				<span className={'auth-text__error'}>
+					<i className={'fas fa-exclamation-circle'}></i>
+					{error}
+				</span>
+			)}
 
 			{children}
 		</div>
