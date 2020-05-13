@@ -1,6 +1,6 @@
 import React from 'react'
 import './Home.scss'
-import { Message } from '../../components'
+import { Message, Toast } from '../../components'
 
 import {
 	MainSlider,
@@ -18,6 +18,13 @@ const Home = () => {
 			<Message delay={6000} type={'success'}>
 				<div>Текст сообщения</div>
 			</Message>
+
+			<Toast
+				data={{
+					title: 'Success',
+					message: 'This is a success toast component',
+				}}
+			/>
 
 			<HomeNews />
 
