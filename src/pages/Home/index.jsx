@@ -9,22 +9,33 @@ import {
 	SaleSlider,
 	// VkPosts,
 } from './components'
+import { useState } from 'react'
 
 const Home = () => {
+	const [message, setMessage] = useState(null)
+	const addToast = message => {
+		setMessage(message)
+	}
+
 	return (
 		<>
 			<MainSlider />
-
+			{/* 
 			<Message delay={6000} type={'success'}>
 				<div>Текст сообщения</div>
-			</Message>
-
-			<Toast
-				data={{
-					title: 'Success',
-					message: 'This is a success toast component',
-				}}
-			/>
+			</Message> */}
+			<button
+				onClick={() =>
+					addToast({
+						title: 'Success',
+						message: 'This is a success toast component',
+						status: 'info',
+					})
+				}
+			>
+				Добавить
+			</button>
+			{message ? <Toast data={message} duration={3000} /> : null}
 
 			<HomeNews />
 
