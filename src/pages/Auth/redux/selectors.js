@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect'
 import { NAME } from './constants'
 
-export const loginRootSelector = state => state[NAME]
+export const authRootSelector = state => state[NAME]
 
-export const isAuthSelector = false
+export const isAuthSelector = createSelector(authRootSelector, ({ isAuth }) =>
+	Boolean(isAuth)
+)
 
-export const postsSelector = createSelector(
-	loginRootSelector,
-	data => data || null
+export const userSelector = createSelector(authRootSelector, ({ user }) =>
+	user ? user : null
 )

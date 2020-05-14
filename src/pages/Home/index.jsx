@@ -1,6 +1,6 @@
 import React from 'react'
 import './Home.scss'
-import { Message, Toast } from '../../components'
+import { Toast } from '../../components'
 
 import {
 	MainSlider,
@@ -19,11 +19,6 @@ const Home = () => {
 
 	return (
 		<>
-			<MainSlider />
-			{/* 
-			<Message delay={6000} type={'success'}>
-				<div>Текст сообщения</div>
-			</Message> */}
 			<button
 				onClick={() =>
 					addToast({
@@ -35,6 +30,7 @@ const Home = () => {
 			>
 				Добавить
 			</button>
+			<MainSlider />
 			{message ? (
 				<Toast
 					data={message}
@@ -43,13 +39,9 @@ const Home = () => {
 					position={'top-right'}
 				/>
 			) : null}
-
 			<HomeNews />
-
 			<HitsSlider />
-
 			<SaleSlider />
-
 			{/* <VkPosts />*/}
 		</>
 	)

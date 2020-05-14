@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import { isAuthSelector, userSelector } from './redux/selectors'
 
 import { LoginForm, SignupForm } from './components'
 
 import './Auth.scss'
 
-const Auth = () => {
+const Auth = ({ isAuth, user: { role }, history }) => {
+	console.log(history)
+	useEffect(() => {
+		if (isAuth) {
+			role === 'admin' ? history.push('/admin') : history.push('/user')
+		}
+	}, [isAuth, role, history])
+
 	return (
 		<section className="auth">
 			<div className="auth-page">
@@ -16,4 +26,12 @@ const Auth = () => {
 	)
 }
 
-export default Auth
+export default withRouter(
+	connect(
+		state => ({
+			isAuth: isAuthSelector(state),
+			user: userSelector(state),
+		}),
+		{}
+	)(Auth)
+)

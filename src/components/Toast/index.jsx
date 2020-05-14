@@ -45,7 +45,7 @@ export const Toast = ({
 		<div
 			key={i}
 			className={`notification toast ${position}${autoDelete &&
-				'-hide'} ${item.status || 'info'}`}
+				'-hide'} ${item.type || 'info'}`}
 			style={{ animationDuration: `${+duration}ms` }}
 		>
 			<span className={'notification-button'} onClick={() => deleteToast(i)}>
@@ -54,16 +54,16 @@ export const Toast = ({
 			<div className={'notification-image'}>
 				<i
 					className={`fas ${
-						item.status === 'error'
+						item.type === 'error'
 							? 'fa-exclamation-circle'
-							: item.status === 'success'
+							: item.type === 'success'
 							? 'fa-check-circle'
 							: 'fa-info-circle'
 					}`}
 				></i>
 			</div>
 			<div className={'notification-info'}>
-				{item.title && <p className="notification-title">{item.title + i}</p>}
+				{item.title && <p className="notification-title">{item.title}</p>}
 				{item.title && <p className="notification-message">{item.message}</p>}
 			</div>
 		</div>

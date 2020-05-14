@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { reduxForm, Field } from 'redux-form'
 
 import { FormItem } from '../FormItem'
 import { validateSignupForm as validate } from '../../../../utils/validators'
 import './SignupForm.scss'
 
-const SignupReduxForm = ({ handleSubmit, submitting, valid }) => {
-	const submitForm = values => {
-		console.log(values)
+import { reduxForm, Field } from 'redux-form'
+import { registrationAction } from '../../redux/actions'
+import { connect } from 'react-redux'
+import { Toast } from '../../../../components'
+
+const SignupReduxForm = ({
+	handleSubmit,
+	submitting,
+	valid,
+	registrationAction,
+}) => {
+	const [message, setMessage] = useState(null)
+
+	const submitForm = body => {
+		console.log(body)
+		registrationAction(body, setMessage)
 	}
 
 	return (
-		<div>
+		<>
 			<div className={'auth-page'}>
+				{message ? <Toast data={message} /> : null}
 				<form
 					onSubmit={handleSubmit(submitForm)}
 					action={'post'}
@@ -76,10 +89,15 @@ const SignupReduxForm = ({ handleSubmit, submitting, valid }) => {
 					</div>
 				</form>
 			</div>
-		</div>
+		</>
 	)
 }
 
 const SignupForm = reduxForm({ form: 'signup', validate })(SignupReduxForm)
 
-export default SignupForm
+export default connect(
+	state => ({
+		state,
+	}),
+	{ registrationAction }
+)(SignupForm)
