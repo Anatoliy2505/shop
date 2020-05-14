@@ -55,8 +55,8 @@ export const request = async (
 			body = JSON.stringify(body)
 			headers['Content-Type'] = 'application/json'
 		}
-		const API_ROOT = 'http://localhost:3002'
-		const response = await fetch(`${API_ROOT}/${endPoint}`, {
+		// const API_ROOT = 'http://localhost:5000'
+		const response = await fetch(`/${endPoint}`, {
 			method,
 			body,
 			headers,

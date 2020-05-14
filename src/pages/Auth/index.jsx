@@ -9,7 +9,6 @@ import { LoginForm, SignupForm } from './components'
 import './Auth.scss'
 
 const Auth = ({ isAuth, user: { role }, history }) => {
-	console.log(history)
 	useEffect(() => {
 		if (isAuth) {
 			role === 'admin' ? history.push('/admin') : history.push('/user')

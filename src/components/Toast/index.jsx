@@ -35,7 +35,6 @@ export const Toast = ({
 			clearInterval(intervalId)
 			return interval
 		})
-		console.log(list)
 		return () => {
 			clearInterval(interval)
 		}
