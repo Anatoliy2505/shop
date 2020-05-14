@@ -10,37 +10,42 @@ export const Toast = ({
 	children,
 }) => {
 	const [list, setList] = useState([])
-	const [intervalId, setIntervalId] = useState(null)
+	const [, setIntervalId] = useState(null)
 
 	useEffect(() => {
 		setList(list => [...list, toast])
 	}, [toast])
 
-	const deleteToast = useCallback(index => {
-		if (intervalId) {
-			clearInterval(intervalId)
-		}
+	const deleteToast = index => {
 		list.splice(index, 1)
 		setList([...list])
+	}
+
+	const autoDeleteToast = useCallback(index => {
+		deleteToast(index)
 	}, [])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (autoDelete && list.length) {
-				deleteToast(0)
+				autoDeleteToast(0)
 			}
 		}, duration)
-		setIntervalId(interval)
-		console.log(interval)
+		setIntervalId(intervalId => {
+			clearInterval(intervalId)
+			return interval
+		})
+		console.log(list)
 		return () => {
 			clearInterval(interval)
 		}
-	}, [autoDelete, deleteToast, duration, list])
+	}, [autoDelete, autoDeleteToast, duration, list])
 
 	const createToastJsxList = list.map((item, i) => (
 		<div
 			key={i}
-			className={`notification toast ${position} ${item.status || 'info'}`}
+			className={`notification toast ${position}${autoDelete &&
+				'-hide'} ${item.status || 'info'}`}
 			style={{ animationDuration: `${+duration}ms` }}
 		>
 			<span className={'notification-button'} onClick={() => deleteToast(i)}>

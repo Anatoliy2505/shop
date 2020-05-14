@@ -35,7 +35,14 @@ const Home = () => {
 			>
 				Добавить
 			</button>
-			{message ? <Toast data={message} duration={3000} /> : null}
+			{message ? (
+				<Toast
+					data={message}
+					duration={2000}
+					autoDelete={true}
+					position={'top-right'}
+				/>
+			) : null}
 
 			<HomeNews />
 
