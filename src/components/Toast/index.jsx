@@ -7,7 +7,6 @@ export const Toast = ({
 	position = 'top-right',
 	autoDelete = true,
 	duration = 3000,
-	children,
 }) => {
 	const [list, setList] = useState([])
 	const [, setIntervalId] = useState(null)
@@ -16,19 +15,17 @@ export const Toast = ({
 		setList(list => [...list, toast])
 	}, [toast])
 
-	const deleteToast = index => {
-		list.splice(index, 1)
-		setList([...list])
-	}
-
-	const autoDeleteToast = useCallback(index => {
-		deleteToast(index)
+	const deleteToast = useCallback(index => {
+		setList(list => {
+			list.splice(index, 1)
+			return [...list]
+		})
 	}, [])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (autoDelete && list.length) {
-				autoDeleteToast(0)
+				deleteToast(0)
 			}
 		}, duration)
 		setIntervalId(intervalId => {
@@ -38,7 +35,7 @@ export const Toast = ({
 		return () => {
 			clearInterval(interval)
 		}
-	}, [autoDelete, autoDeleteToast, duration, list])
+	}, [autoDelete, deleteToast, duration, list])
 
 	const createToastJsxList = list.map((item, i) => (
 		<div
@@ -63,7 +60,8 @@ export const Toast = ({
 			</div>
 			<div className={'notification-info'}>
 				{item.title && <p className="notification-title">{item.title}</p>}
-				{item.title && <p className="notification-message">{item.message}</p>}
+				{item.message && <p className="notification-message">{item.message}</p>}
+				{item.html ? item.html : null}
 			</div>
 		</div>
 	))
@@ -74,7 +72,6 @@ export const Toast = ({
 				<Portal>
 					<div className={`notification-container ${position}`}>
 						{createToastJsxList.reverse()}
-						{children}
 					</div>
 				</Portal>
 			) : null}

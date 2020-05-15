@@ -1,32 +1,33 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { connect } from 'react-redux'
+import { Context } from '../../../../context'
 
+import { isLoadingSelector } from '../../redux/selectors'
+import { registrationAction } from '../../redux/actions'
+
+import { Link } from 'react-router-dom'
 import { FormItem } from '../FormItem'
 import { validateSignupForm as validate } from '../../../../utils/validators'
-import './SignupForm.scss'
 
 import { reduxForm, Field } from 'redux-form'
-import { registrationAction } from '../../redux/actions'
-import { connect } from 'react-redux'
-import { Toast } from '../../../../components'
+import './SignupForm.scss'
 
 const SignupReduxForm = ({
+	isLoading,
 	handleSubmit,
 	submitting,
 	valid,
 	registrationAction,
 }) => {
-	const [message, setMessage] = useState(null)
+	const { setToast } = useContext(Context)
 
 	const submitForm = body => {
-		console.log(body)
-		registrationAction(body, setMessage)
+		registrationAction(body, setToast)
 	}
 
 	return (
 		<>
 			<div className={'auth-page'}>
-				{message ? <Toast data={message} /> : null}
 				<form
 					onSubmit={handleSubmit(submitForm)}
 					action={'post'}
@@ -73,7 +74,7 @@ const SignupReduxForm = ({
 						<button
 							tupe={'submit'}
 							className={'button auth-form__button'}
-							disabled={submitting || !valid}
+							disabled={submitting || !valid || isLoading}
 						>
 							Зарегистрироваться
 						</button>
@@ -97,7 +98,7 @@ const SignupForm = reduxForm({ form: 'signup', validate })(SignupReduxForm)
 
 export default connect(
 	state => ({
-		state,
+		isLoading: isLoadingSelector(state),
 	}),
 	{ registrationAction }
 )(SignupForm)

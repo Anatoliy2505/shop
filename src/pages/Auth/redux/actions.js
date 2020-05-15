@@ -37,9 +37,15 @@ export const loginFailure = (errorMsg = error.connect) => ({
 	error: true,
 })
 
-export const registrationAction = (body, setMessage) => {
+export const registrationAction = (body, setToast) => {
 	return dispatch => {
 		dispatch(registrationRequest())
+		setToast({
+			data: {
+				message: 'Подождите данные отправляются',
+			},
+			duration: 1000,
+		})
 
 		return registration(body)
 			.then(res => {
@@ -49,46 +55,77 @@ export const registrationAction = (body, setMessage) => {
 					for (let key in res.data) {
 						localStorage.setItem(key, res.data[key])
 					}
-					setMessage({
-						type: 'success',
-						title: 'Отлично!',
-						message: res.message,
+					setToast({
+						data: {
+							type: 'success',
+							title: 'Отлично!',
+							message: res.message,
+						},
 					})
 				} else {
 					dispatch(registrationFailure(res.message))
-					setMessage({ type: 'error', title: 'Ошибка!', message: res.message })
+					setToast({
+						data: { type: 'error', title: 'Ошибка!', message: res.message },
+					})
 				}
 			})
 			.catch(() => {
 				dispatch(registrationFailure())
-				setMessage({ type: 'error', title: 'Ошибка!', message: error.connect })
+				setToast({
+					data: { type: 'error', title: 'Ошибка!', message: error.connect },
+				})
 			})
 	}
 }
 
-export const loginAction = body => {
+export const loginAction = (body, setToast) => {
 	return dispatch => {
 		dispatch(loginRequest())
-
+		setToast({
+			data: {
+				message: 'Подождите данные отправляются',
+			},
+			duration: 1000,
+		})
 		return login(body)
 			.then(res => {
 				if (res.ok) {
 					dispatch(loginSuccess(res.data))
 					localStorage.setItem('token', res.token)
+					setToast({
+						data: {
+							type: 'success',
+							title: 'Отлично!',
+							message: res.message,
+						},
+					})
 					for (let key in res.data) {
 						localStorage.setItem(key, res.data[key])
 					}
 				} else {
 					dispatch(loginFailure(res.message))
+					setToast({
+						data: { type: 'error', title: 'Ошибка!', message: res.message },
+					})
 				}
 			})
 			.catch(() => {
 				dispatch(loginFailure())
+				setToast({
+					data: { type: 'error', title: 'Ошибка!', message: error.connect },
+				})
 			})
 	}
 }
 
-export const logoutAction = () => {
+export const logoutAction = setToast => {
+	setToast({
+		data: {
+			type: 'success',
+			title: 'Отлично!',
+			message: 'Вы успешно вышли из кабинета!',
+		},
+	})
 	return dispatch => {
 		localStorage.clear()
 		dispatch({ type: t.LOGOUT })

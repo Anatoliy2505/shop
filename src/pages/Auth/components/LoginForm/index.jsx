@@ -1,15 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { reduxForm, Field } from 'redux-form'
+import React, { useContext } from 'react'
+import { connect } from 'react-redux'
+import { Context } from '../../../../context'
+
+import { isLoadingSelector } from '../../redux/selectors'
+import { loginAction } from '../../redux/actions'
 
 import { validateLoginForm as validate } from '../../../../utils/validators'
 
+import { Link } from 'react-router-dom'
+import { reduxForm, Field } from 'redux-form'
 import { FormItem } from '../FormItem'
 import './LoginForm.scss'
 
-const LoginReduxForm = ({ handleSubmit, submitting, valid }) => {
-	const submitForm = values => {
-		console.log(values)
+const LoginReduxForm = ({
+	isLoading,
+	loginAction,
+	handleSubmit,
+	submitting,
+	valid,
+}) => {
+	const { setToast } = useContext(Context)
+	const submitForm = body => {
+		loginAction(body, setToast)
 	}
 	return (
 		<div>
@@ -58,7 +70,7 @@ const LoginReduxForm = ({ handleSubmit, submitting, valid }) => {
 						<button
 							tupe={'submit'}
 							className={'button auth-form__button'}
-							disabled={submitting || !valid}
+							disabled={submitting || !valid || isLoading}
 						>
 							Войти
 						</button>
@@ -80,4 +92,9 @@ const LoginReduxForm = ({ handleSubmit, submitting, valid }) => {
 
 const LoginForm = reduxForm({ form: 'login', validate })(LoginReduxForm)
 
-export default LoginForm
+export default connect(
+	state => ({
+		isLoading: isLoadingSelector(state),
+	}),
+	{ loginAction }
+)(LoginForm)

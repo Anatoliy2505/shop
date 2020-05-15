@@ -1,13 +1,12 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-
-import { Header, Sidebar, Footer } from './components'
+import { Header, Sidebar, Footer, ContextToast } from './components'
 import { NotFound } from './pages'
 import PrivateRoute from './hocs/PrivateRoute'
 import { routes } from './routes'
 
-function App() {
+const App = () => {
 	const routersSwitch = () => (
 		<Switch>
 			{routes.map(({ key, path, isExact, isPrivate, component }) =>
@@ -29,10 +28,14 @@ function App() {
 	return (
 		<div className={'App'}>
 			<h1 className={'hidden'}>Комания ООО "Сибирский Лов"</h1>
-			<Header />
+			<ContextToast>
+				<Header />
+			</ContextToast>
 			<div className={'container content-wrapper'}>
 				<Sidebar />
-				<main className={'main-content'}>{routersSwitch()}</main>
+				<ContextToast>
+					<main className={'main-content'}>{routersSwitch()}</main>
+				</ContextToast>
 			</div>
 			<Footer />
 		</div>

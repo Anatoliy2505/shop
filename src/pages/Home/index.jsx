@@ -34,7 +34,7 @@ const Home = () => {
 			{message ? (
 				<Toast
 					data={message}
-					duration={2000}
+					duration={5000}
 					autoDelete={true}
 					position={'top-right'}
 				/>
