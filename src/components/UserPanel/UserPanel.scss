@@ -1,0 +1,29 @@
+.user {
+  &-panel {
+    padding: 1rem 0;
+    background-color: rgb(211, 236, 236);
+    margin-bottom: 0.5rem;
+    .container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  &-name {
+    font-size: 1.1em;
+    color: #000;
+    display: inline-block;
+    margin-right: 1rem;
+    text-shadow: -2px 2px 3px rgb(162, 175, 189) ;
+  }
+  &-routes {
+    &__item {
+      display: inline-block;
+      margin-left: 1rem;
+      font-size: 0.9em;
+      color: #000;
+    }
+  }
+  
+}

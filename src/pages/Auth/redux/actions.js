@@ -42,7 +42,7 @@ export const registrationAction = (body, setToast) => {
 		dispatch(registrationRequest())
 		setToast({
 			data: {
-				message: 'Подождите данные отправляются',
+				message: 'Подождите, данные отправляются',
 			},
 			duration: 1000,
 		})
@@ -83,7 +83,7 @@ export const loginAction = (body, setToast) => {
 		dispatch(loginRequest())
 		setToast({
 			data: {
-				message: 'Подождите данные отправляются',
+				message: 'Подождите, данные отправляются',
 			},
 			duration: 1000,
 		})
@@ -123,7 +123,7 @@ export const logoutAction = setToast => {
 		data: {
 			type: 'success',
 			title: 'Отлично!',
-			message: 'Вы успешно вышли из кабинета!',
+			message: 'Вы успешно вышли из кабинета',
 		},
 	})
 	return dispatch => {

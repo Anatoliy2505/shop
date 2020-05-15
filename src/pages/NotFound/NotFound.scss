@@ -1,0 +1,27 @@
+.not-found {
+  &__page {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  &__container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+  }
+  &__title {
+    font-size: 6rem;
+    letter-spacing: 0.1em;
+    margin: 0;
+    margin-bottom: 2rem;
+  }
+  &__description {
+    font-size: 1.2em;
+  }
+  &__link {
+    color: rgb(26, 48, 248);
+  }
+}
