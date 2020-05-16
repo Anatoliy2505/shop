@@ -18,7 +18,6 @@ export const Toast = ({
 	}, [toast])
 
 	const deleteToast = useCallback(index => {
-		console.log(1)
 		setList(list => {
 			list.splice(index, 1)
 			return [...list]
