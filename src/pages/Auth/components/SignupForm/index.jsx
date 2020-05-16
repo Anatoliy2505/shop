@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { Context } from '../../../../context'
+import { useSetToast } from '../../../../hooks'
 
 import { isLoadingSelector } from '../../redux/selectors'
 import { registrationAction } from '../../redux/actions'
@@ -19,7 +19,7 @@ const SignupReduxForm = ({
 	valid,
 	registrationAction,
 }) => {
-	const { setToast } = useContext(Context)
+	const { setToast } = useSetToast()
 
 	const submitForm = body => {
 		registrationAction(body, setToast)

@@ -10,13 +10,14 @@ import { isAuthSelector } from './pages/Auth/redux/selectors'
 const App = ({ isAuth }) => {
 	const routersSwitch = () => (
 		<Switch>
-			{routes.map(({ key, path, isExact, isPrivate, component }) =>
+			{routes.map(({ key, path, isExact, isPrivate, component, owner }) =>
 				isPrivate ? (
 					<PrivateRoute
 						key={key}
 						exact={isExact}
 						path={path}
 						component={component}
+						owner={owner}
 					/>
 				) : (
 					<Route key={key} exact={isExact} path={path} component={component} />

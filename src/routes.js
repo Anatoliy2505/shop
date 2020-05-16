@@ -8,6 +8,8 @@ import {
 	Search,
 	Recommendation,
 	Auth,
+	Admin,
+	User,
 } from './pages'
 
 export const routes = [
@@ -62,5 +64,21 @@ export const routes = [
 		key: 9,
 		path: ['/login', '/registration'],
 		component: Auth,
+	},
+	{
+		key: 10,
+		path: '/admin',
+		isExact: true,
+		component: Admin,
+		isPrivate: true,
+		owner: 'admin',
+	},
+	{
+		key: 11,
+		path: '/user',
+		isExact: true,
+		component: User,
+		owner: 'user',
+		isPrivate: true,
 	},
 ]

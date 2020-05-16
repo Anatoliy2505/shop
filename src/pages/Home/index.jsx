@@ -1,7 +1,5 @@
 import React from 'react'
-import './Home.scss'
-import { Toast } from '../../components'
-
+import { useSetToast } from '../../hooks'
 import {
 	MainSlider,
 	HomeNews,
@@ -9,12 +7,13 @@ import {
 	SaleSlider,
 	// VkPosts,
 } from './components'
-import { useState } from 'react'
+import './Home.scss'
 
 const Home = () => {
-	const [message, setMessage] = useState(null)
+	const { setToast } = useSetToast()
+
 	const addToast = message => {
-		setMessage(message)
+		setToast(message)
 	}
 
 	return (
@@ -22,23 +21,18 @@ const Home = () => {
 			<button
 				onClick={() =>
 					addToast({
-						title: 'Success',
-						message: 'This is a success toast component',
-						status: 'info',
+						data: {
+							title: 'error',
+							message: 'This is a success toast component',
+							type: 'success',
+						},
+						duration: 3000,
 					})
 				}
 			>
 				Добавить
 			</button>
 			<MainSlider />
-			{message ? (
-				<Toast
-					data={message}
-					duration={5000}
-					autoDelete={true}
-					position={'top-right'}
-				/>
-			) : null}
 			<HomeNews />
 			<HitsSlider />
 			<SaleSlider />
