@@ -9,13 +9,16 @@ export const Toast = ({
 	duration = 3000,
 }) => {
 	const [list, setList] = useState([])
+	const [currentTime, setCurrentTime] = useState(+new Date())
 	const [, setIntervalId] = useState(null)
 
 	useEffect(() => {
+		setCurrentTime(+new Date())
 		setList(list => [...list, toast])
 	}, [toast])
 
 	const deleteToast = useCallback(index => {
+		console.log(1)
 		setList(list => {
 			list.splice(index, 1)
 			return [...list]
@@ -27,7 +30,7 @@ export const Toast = ({
 			if (autoDelete && list.length) {
 				deleteToast(0)
 			}
-		}, duration)
+		}, duration - (+new Date() - currentTime))
 		setIntervalId(intervalId => {
 			clearInterval(intervalId)
 			return interval
@@ -35,7 +38,7 @@ export const Toast = ({
 		return () => {
 			clearInterval(interval)
 		}
-	}, [autoDelete, deleteToast, duration, list])
+	}, [autoDelete, deleteToast, duration, list, currentTime])
 
 	const createToastJsxList = list.map((item, i) => (
 		<div
