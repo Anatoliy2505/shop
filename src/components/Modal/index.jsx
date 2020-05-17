@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-
+import PropTypes from 'prop-types'
 import { Portal } from '../Portal'
 
 import './Modal.scss'
 
-export const Modal = ({ children, textButton, classButton = 'button' }) => {
+export const Modal = ({ textButton, classButton = 'button', children }) => {
 	const [isShown, setIsShown] = useState(false)
 	const show = () => setIsShown(true)
 	const hide = () => setIsShown(false)
@@ -28,4 +28,9 @@ export const Modal = ({ children, textButton, classButton = 'button' }) => {
 			)}
 		</>
 	)
+}
+
+Modal.propTypes = {
+	textButton: PropTypes.string.isRequired,
+	classButton: PropTypes.string.isRequired,
 }

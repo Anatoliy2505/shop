@@ -1,13 +1,13 @@
 import * as t from './actionTypes'
 
 const initialState = {
-	isAuth: localStorage.getItem('token') ? true : false,
+	isAuth: !!localStorage.getItem('token'),
 	user: {
 		userId: localStorage.getItem('userId') || null,
 		name: localStorage.getItem('name') || null,
 		surname: localStorage.getItem('surname') || null,
 		role: localStorage.getItem('role') || null,
-		isCheck: localStorage.getItem('check') || false,
+		isCheck: !!localStorage.getItem('check'),
 	},
 	isLoading: false,
 	errorMsg: null,

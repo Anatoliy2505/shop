@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { Context } from '../../context'
 import { isAuthSelector } from '../../pages/Auth/redux/selectors'
 import { logoutAction } from '../../pages/Auth/redux/actions'
 
-import { SearchForm, HeaderCart } from '../'
+import { SearchForm, HeaderCart } from '..'
 import './Header.scss'
 import logo from './img/logo.png'
 
@@ -55,3 +56,8 @@ export default connect(
 	}),
 	{ logoutAction }
 )(Header)
+
+Header.propTypes = {
+	isAuth: PropTypes.bool.isRequired,
+	logoutAction: PropTypes.func.isRequired,
+}

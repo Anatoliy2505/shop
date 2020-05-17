@@ -1,9 +1,8 @@
-import React from 'react';
+import React from 'react'
+import './HeaderCart.scss'
 
-import './HeaderCart.scss';
-
-const HeaderCart = () => {
-	const empty = false;
+export const HeaderCart = () => {
+	const empty = false
 	return (
 		<a href={'/'} className={'cart'}>
 			<i className={'fas fa-shopping-cart fa-lg'} />
@@ -16,7 +15,5 @@ const HeaderCart = () => {
 				</div>
 			)}
 		</a>
-	);
-};
-
-export { HeaderCart };
+	)
+}

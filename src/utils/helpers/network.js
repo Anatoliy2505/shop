@@ -55,14 +55,14 @@ export const request = async (
 			body = JSON.stringify(body)
 			headers['Content-Type'] = 'application/json'
 		}
-		// const API_ROOT = 'http://localhost:5000'
-		const response = await fetch(`/${endPoint}`, {
+		const API_ROOT = 'http://localhost:3000'
+		const response = await fetch(`${API_ROOT}/${endPoint}`, {
 			method,
 			body,
 			headers,
 		})
 		if (!response.ok) {
-			throw new Error(response.status || 'При запросе что-то пошло не так')
+			throw new Error(response.message || 'При запросе что-то пошло не так')
 		}
 		const data = await response.json()
 		return data

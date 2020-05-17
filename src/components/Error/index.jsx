@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import './Error.scss'
 import { MessageWrapper } from '../MessageWrapper'
+import './Error.scss'
 
 export const Error = ({ title }) => {
 	return (
@@ -10,4 +11,8 @@ export const Error = ({ title }) => {
 			{title ? <div className="error-title">{title}</div> : null}
 		</MessageWrapper>
 	)
+}
+
+Error.propTypes = {
+	title: PropTypes.string,
 }

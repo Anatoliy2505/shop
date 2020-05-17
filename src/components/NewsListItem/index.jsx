@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import PropTypes from 'prop-types'
 import './NewsListItem.scss'
 
 export const NewsListItem = ({ id, title, date, imgPath, litleDesc }) => {
@@ -20,4 +20,12 @@ export const NewsListItem = ({ id, title, date, imgPath, litleDesc }) => {
 			</div>
 		</Link>
 	)
+}
+
+NewsListItem.propTypes = {
+	id: PropTypes.number.isRequired,
+	title: PropTypes.string.isRequired,
+	date: PropTypes.string.isRequired,
+	imgPath: PropTypes.string.isRequired,
+	litleDesc: PropTypes.string.isRequired,
 }

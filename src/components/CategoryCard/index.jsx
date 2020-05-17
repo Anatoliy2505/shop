@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import PropTypes from 'prop-types'
+
 import './CategoryCard.scss'
 
 export const CategoryCard = ({
@@ -54,6 +56,17 @@ export const CategoryCard = ({
 			</div>
 		</div>
 	)
+}
+
+CategoryCard.propTypes = {
+	img: PropTypes.string,
+	title: PropTypes.string.isRequired,
+	price: PropTypes.number.isRequired,
+	priceOld: PropTypes.string,
+	count: PropTypes.number,
+	name: PropTypes.string,
+	path: PropTypes.string,
+	page: PropTypes.string,
 }
 
 CategoryCard.defaultProps = {

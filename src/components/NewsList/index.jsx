@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import './NewsList.scss'
 import { NewsListItem } from '../NewsListItem'
 
-const NewsList = ({ data, isHome }) => {
-	const newsItems = news =>
+import './NewsList.scss'
+
+export const NewsList = ({ data, isHome }) => {
+	const createNewsItems = news =>
 		news.map(item => {
 			return <NewsListItem key={item.id} {...item} />
 		})
@@ -26,10 +28,15 @@ const NewsList = ({ data, isHome }) => {
 				) : (
 					<h1 className={'page-title'}>Сибирский Лов - Наши новости</h1>
 				)}
-				{data ? <div className={'news-list'}>{newsItems(data)}</div> : null}
+				{data ? (
+					<div className={'news-list'}>{createNewsItems(data)}</div>
+				) : null}
 			</>
 		</section>
 	)
 }
 
-export { NewsList }
+NewsList.propTypes = {
+	data: PropTypes.arrayOf(PropTypes.object),
+	isHome: PropTypes.bool,
+}

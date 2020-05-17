@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
@@ -132,6 +133,13 @@ export const CategoriesSlider = ({ categories, title, href, page }) => {
 			) : null}
 		</>
 	)
+}
+
+CategoriesSlider.propTipes = {
+	categories: PropTypes.arrayOf(PropTypes.object),
+	title: PropTypes.string,
+	href: PropTypes.string,
+	page: PropTypes.string,
 }
 
 CategoriesSlider.defaultProps = {
