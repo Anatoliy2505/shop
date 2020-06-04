@@ -9,12 +9,12 @@ import App from './App'
 import './index.scss'
 
 import * as serviceWorker from './serviceWorker'
-import ScrollToTop from './components/ScrollToTop'
+// import ScrollToTop from './components/ScrollToTop'
 
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<ScrollToTop />
+			{/* <ScrollToTop /> */}
 			<App />
 		</Router>
 	</Provider>,

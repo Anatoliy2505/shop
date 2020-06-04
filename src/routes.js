@@ -68,7 +68,6 @@ export const routes = [
 	{
 		key: 10,
 		path: '/admin',
-		isExact: true,
 		component: Admin,
 		isPrivate: true,
 		owner: 'admin',
@@ -76,7 +75,6 @@ export const routes = [
 	{
 		key: 11,
 		path: '/user',
-		isExact: true,
 		component: User,
 		owner: 'user',
 		isPrivate: true,

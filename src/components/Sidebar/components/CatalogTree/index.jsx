@@ -50,20 +50,22 @@ const CatalogTree = ({
 							onClick={onSelectItem}
 						/>
 					</div>
-					<ul className={'sidebar-catalog__children-list'}>
-						{item.children.map(childrenItem => {
-							return (
-								<li key={childrenItem.id}>
-									<Link
-										className={'sidebar-catalog__children-item'}
-										to={`/catalog/${item.name}/${childrenItem.name}`}
-									>
-										{childrenItem.title}
-									</Link>
-								</li>
-							)
-						})}
-					</ul>
+					{item.children && (
+						<ul className={'sidebar-catalog__children-list'}>
+							{item.children.map(childrenItem => {
+								return (
+									<li key={childrenItem.id}>
+										<Link
+											className={'sidebar-catalog__children-item'}
+											to={`/catalog/${item.name}/${childrenItem.name}`}
+										>
+											{childrenItem.title}
+										</Link>
+									</li>
+								)
+							})}
+						</ul>
+					)}
 				</li>
 			)
 		})
@@ -79,12 +81,12 @@ const CatalogTree = ({
 			</h2>
 			{isLoading ? (
 				<Preloader title={'Загрузка...'} />
+			) : errorMsg ? (
+				<Error title={errorMsg} />
 			) : data ? (
 				<ul className={'sidebar-catalog__list'}>
 					{createTree(data, activeItem)}
 				</ul>
-			) : errorMsg ? (
-				<Error title={errorMsg} />
 			) : (
 				<Empty title={'Категории не найдены...'} />
 			)}

@@ -1,1 +1,6 @@
-export { NewsItem } from './NewsItem'
+export { Groups } from './Groups'
+export { Collections } from './Collections'
+export { Products } from './Products'
+export { Orders } from './Orders'
+export { Clientele } from './Clientele'
+export { Manual } from './Manual'

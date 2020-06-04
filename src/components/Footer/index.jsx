@@ -1,29 +1,39 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import './Footer.scss';
-import pay_img from './img/pay.png';
-import { Social } from '../Social';
+import './Footer.scss'
+import pay_img from './img/pay.png'
+import { Social } from '../Social'
 
 const Footer = () => {
-	const date = new Date();
-	const year = date.getFullYear();
+	const date = new Date()
+	const year = date.getFullYear()
 	return (
 		<footer className={'footer'}>
 			<div className={'footer-top'}>
 				<div className={'container'}>
 					<div className="flex-container">
 						<div className={'flex-container__item footer-pay'}>
-							<Link to={'/help/delivery'} className={'footer-top__title'} title={'Условия оплаты'}>
+							<Link
+								to={'/help/delivery'}
+								className={'footer-top__title'}
+								title={'Условия оплаты'}
+							>
 								Безопасная оплата
 							</Link>
 							<div className={'footer-top__desc'}>
 								При оплате онлайн, данные банковской карты надежно защищены
 							</div>
-							<Link to={'/help/delivery'} className={'footer-top__img'} title={'Безопасная оплата'}>
+							<Link
+								to={'/help/delivery'}
+								className={'footer-top__img'}
+								title={'Безопасная оплата'}
+							>
 								<img
 									src={pay_img}
-									alt={'При оплате онлайн, данные банковской карты надежно защищены'}
+									alt={
+										'При оплате онлайн, данные банковской карты надежно защищены'
+									}
 								/>
 							</Link>
 						</div>
@@ -53,10 +63,12 @@ const Footer = () => {
 								</li>
 							</ul>
 						</div>
-						<div className={'flex-container__item'}>
-							<div className={'footer-top__title'}>Следите за нами в соцсетях</div>
+						<aside className={'flex-container__item'}>
+							<div className={'footer-top__title'}>
+								Следите за нами в соцсетях
+							</div>
 							<Social />
-						</div>
+						</aside>
 					</div>
 				</div>
 			</div>
@@ -65,22 +77,32 @@ const Footer = () => {
 					<h3 className={'footer-contact__title'}>Наши контакты</h3>
 					<div className="flex-container">
 						<div className={'flex-container__item'}>
-							<div className="footer-contact__item footer-contact__item-title">Торговый зал</div>
-							<div className="footer-contact__item">Кемерово, Проспект Кузнецкий, 36</div>
+							<div className="footer-contact__item footer-contact__item-title">
+								Торговый зал
+							</div>
+							<div className="footer-contact__item">
+								Кемерово, Проспект Кузнецкий, 36
+							</div>
 							<div className="footer-contact__item">650000</div>
 						</div>
 						<div className={'flex-container__item'}>
-							<div className="footer-contact__item footer-contact__item-title">E-mail</div>
+							<div className="footer-contact__item footer-contact__item-title">
+								E-mail
+							</div>
 							<div className="footer-contact__item">sibirskylov@bk.ru</div>
 							<div className="footer-contact__item">sibirskylov@mail.ru</div>
 						</div>
 						<div className={'flex-container__item footer-contact__phone'}>
-							<div className="footer-contact__item footer-contact__item-title">Tel/Viber/WhatsApp</div>
+							<div className="footer-contact__item footer-contact__item-title">
+								Tel/Viber/WhatsApp
+							</div>
 							<div className="footer-contact__item">8-923-621-67-38</div>
 							<div className="footer-contact__item">8-908-952-42-91</div>
 						</div>
 						<div className={'flex-container__item footer-contact__mode'}>
-							<div className="footer-contact__item footer-contact__item-title">Режим работы</div>
+							<div className="footer-contact__item footer-contact__item-title">
+								Режим работы
+							</div>
 							<div className="footer-contact__item">Пн-Пт: 10:00-18:00</div>
 							<div className="footer-contact__item">Сб-Вс: Выходной</div>
 						</div>
@@ -94,16 +116,18 @@ const Footer = () => {
 						© 2017-{year} Sibirskylov — товары для рыбалки и активного отдыха
 					</div>
 					<div className={'footer-copyright__item'}>
-						Получение и обработка персональных данных происходит в соответствии с Федеральным законом от
-						27.07.2006 года №152-ФЗ "О персональных данных", на условиях и для целей, определенных Политикой
+						Получение и обработка персональных данных происходит в соответствии
+						с Федеральным законом от 27.07.2006 года №152-ФЗ "О персональных
+						данных", на условиях и для целей, определенных Политикой
 						конфиденциальности.
 					</div>
 					<div className={'footer-copyright__item'}>
-						Вся информация на сайте собственность интернет-магазина Sibirskylov. Все права защищены.
+						Вся информация на сайте собственность интернет-магазина Sibirskylov.
+						Все права защищены.
 					</div>
 					<div className={'footer-copyright__item'}>
-						Использование информации с сайта без разрешения запрещено. Информация, указанная на сайте, не
-						является публичной офертой.
+						Использование информации с сайта без разрешения запрещено.
+						Информация, указанная на сайте, не является публичной офертой.
 					</div>
 					<div className={'footer-copyright__item footer-copyright__data'}>
 						ООО "Сибирский лов" ИНН: 4205367046 ОГРН: 1184205005830
@@ -111,7 +135,7 @@ const Footer = () => {
 				</div>
 			</div>
 		</footer>
-	);
-};
+	)
+}
 
-export { Footer };
+export { Footer }

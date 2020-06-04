@@ -28,20 +28,18 @@ const App = ({ isAuth }) => {
 	)
 
 	return (
-		<div className={'App'}>
-			<h1 className={'hidden'}>Комания ООО "Сибирский Лов"</h1>
-			{isAuth && <UserPanel />}
-			<ContextToast>
+		<ContextToast>
+			<div className={'App'}>
+				<h1 className={'hidden'}>Комания ООО "Сибирский Лов"</h1>
+				{isAuth && <UserPanel />}
 				<Header />
-			</ContextToast>
-			<div className={'container content-wrapper'}>
-				<Sidebar />
-				<ContextToast>
+				<div className={'container content-wrapper'}>
+					<Sidebar />
 					<main className={'main-content'}>{routersSwitch()}</main>
-				</ContextToast>
+				</div>
+				<Footer />
 			</div>
-			<Footer />
-		</div>
+		</ContextToast>
 	)
 }
 

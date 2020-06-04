@@ -1,0 +1,38 @@
+@import '../../styles/vars';
+
+.wrap-actions__button {
+  .button {
+    &:first-of-type {
+      margin-right: 1rem;
+    }
+    &.inactive {
+      background-color: $textColor;
+      &:hover {
+        background-color: #5a5a5a;
+      }
+    }
+  }
+  
+}
+
+.admin-page {
+  &__nav, &__nav-link {
+    display: flex;
+    align-items: center;    
+  }
+  &__nav {
+    margin-bottom: 2rem;
+    &-link {
+      color: inherit;
+      &:not(:last-of-type) {
+        margin-right: 1rem;
+      }
+      &.active {
+        color: $mainColor;
+      }     
+    }
+    &-img {
+      margin-right: 0.5rem;
+    }
+  }
+}

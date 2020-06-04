@@ -4,17 +4,15 @@ import './Sidebar.scss'
 import { Social } from '../Social'
 import CatalogTree from './components/CatalogTree'
 
-const Sidebar = () => {
+export const Sidebar = () => {
 	return (
-		<aside className={'sidebar'}>
+		<nav className={'sidebar'}>
 			<h1 className={'hidden'}>Сайдбар</h1>
 			<CatalogTree />
-			<div className="sidebar__social">
+			<aside className="sidebar__social">
 				<h3 className="sidebar__social-title">Следите за нами в соцсетях</h3>
 				<Social />
-			</div>
-		</aside>
+			</aside>
+		</nav>
 	)
 }
-
-export { Sidebar }

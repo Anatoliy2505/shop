@@ -1,0 +1,22 @@
+@import '../../../../styles/vars';
+
+.news-one {
+  &__img {
+    width: 100%;
+    max-height: 25rem;
+    object-fit: cover;
+  }
+
+  &__title {
+    margin-bottom: 0.8rem;
+  }
+
+  &__desc {
+    font-size: 0.9em;
+    margin-top: 0;
+  }
+
+  &__date {
+    @extend %date;
+  }
+}
