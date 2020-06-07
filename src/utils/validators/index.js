@@ -53,3 +53,21 @@ export const validateLoginForm = values => {
 
 	return errors
 }
+
+export const validateGroup = values => {
+	const errors = {}
+
+	if (!values['category-title']) {
+		errors['category-title'] = 'Поле обязательно для заполнения'
+	} else if (values['category-title'].length > 30) {
+		errors['category-title'] = 'Длина названия более 30 символов'
+	}
+
+	if (!values['category-name']) {
+		errors['category-name'] = 'Поле обязательно для заполнения'
+	} else if (!/[a-zA-Z\s]/i.test(values['category-name'].trim())) {
+		errors['category-name'] = 'Только английские буквы'
+	}
+
+	return errors
+}

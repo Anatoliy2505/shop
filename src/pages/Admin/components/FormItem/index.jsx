@@ -1,9 +1,9 @@
 import React from 'react'
 
 export const FormItem = ({
-	input,
 	fieldName = 'input',
 	label,
+	input,
 	name,
 	meta: { touched, error },
 	children,
@@ -11,26 +11,26 @@ export const FormItem = ({
 }) => {
 	const Field = `${fieldName}`
 	return (
-		<div className={'auth-form__wrapper'}>
+		<>
 			{label && (
-				<label htmlFor={name} className={'auth-form__field-name'}>
+				<label htmlFor={name} className={'form-label'}>
 					{label}
 				</label>
 			)}
 			<Field
 				name={name}
 				{...input}
-				className={`auth-form__field${touched && error ? ' error' : ''}`}
+				className={`form-field${touched && error ? ' error' : ''}`}
 				{...rest}
-			/>
+			>
+				{children}
+			</Field>
 			{touched && error && (
-				<span className={'auth-text__error'}>
+				<span className={'error-message'}>
 					<i className={'fas fa-exclamation-circle'}></i>
 					{error}
 				</span>
 			)}
-
-			{children}
-		</div>
+		</>
 	)
 }
