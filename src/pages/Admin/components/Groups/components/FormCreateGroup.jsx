@@ -2,7 +2,7 @@ import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { FormItem, OptionsList } from '../../index'
 
-import { validateGroup as validate } from '../../../../../utils/validators'
+import { validateCreateGroup as validate } from '../../../../../utils/validators'
 
 export const FormCreateGroupWithRedux = ({
 	groups,
@@ -21,8 +21,9 @@ export const FormCreateGroupWithRedux = ({
 				fieldName={'select'}
 				component={FormItem}
 				name={'select-parent'}
-				label={'Введите название'}
+				label={'Выберите родителя'}
 			>
+				<option></option>
 				<option value={'0'}>Верхний уровень</option>
 				{groups && <OptionsList groups={groups} />}
 			</Field>

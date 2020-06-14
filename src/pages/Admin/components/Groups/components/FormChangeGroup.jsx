@@ -1,38 +1,98 @@
 import React, { useState } from 'react'
-import { OptionsList } from '../../OptionsList'
+import { reduxForm, Field } from 'redux-form'
+import { FormItem, OptionsList } from '../../index'
 
-export const FormChangeGroup = ({ groups }) => {
+const ReduxFormChangeGroup = ({ groups, handleSubmit, submitting, valid }) => {
 	const [category, changeCategory] = useState(null)
-	const handleSubmit = () => {
+
+	const reduceGroupTree = groups =>
+		groups.reduce((accumulator, currentValue) => {
+			const { children, ...rest } = currentValue
+			if (children) {
+				return [...accumulator, rest, ...children]
+			}
+			return [...accumulator, rest]
+		}, [])
+
+	const [categories] = useState(reduceGroupTree(groups) || null)
+
+	console.log(category)
+
+	const onSubmit = () => {
 		return false
 	}
+
+	const onChangeCategory = event => {
+		const id = event.currentTarget.value
+		if (!!id) {
+			changeCategory(categories.find(item => item.id === +id))
+		} else {
+			changeCategory(null)
+		}
+	}
+
 	return (
-		<form className={'form'} onSubmit={handleSubmit}>
-			<h2 className={'form-title'}>Создать категрорию</h2>
-			<label htmlFor={'select-category'} className={'form-label'}>
-				Выбирите категрорию
-			</label>
-			<select name={'select-category'} className={'form-field'}>
-				{groups && <OptionsList groups={groups} />}
-			</select>
-			<label htmlFor={'select-parent'} className={'form-label'}>
-				Изменить родительскую категрорию
-			</label>
-			<select name={'select-parent'} className={'form-field'}>
-				<option value={'0'}>Верхний уровень</option>
-				{groups && <OptionsList groups={groups} />}
-			</select>
-			<label htmlFor={'category-title'} className={'form-label'}>
-				Измените название
-			</label>
-			<input type={'text'} name={'category-title'} className={'form-field'} />
-			<label htmlFor={'category-name'} className={'form-label'}>
-				Измените название на английском
-			</label>
-			<input type={'text'} name={'category-name'} className={'form-field'} />
-			<button type={'subbmit'} className={'button'}>
-				Сохранить изменения
-			</button>
-		</form>
+		<>
+			{categories ? (
+				<form className={'form'} onSubmit={handleSubmit(onSubmit)}>
+					<h2 className={'form-title'}>Создать категрорию</h2>
+					<Field
+						fieldName={'select'}
+						component={FormItem}
+						name={'select-category'}
+						label={'Выбирите категорию для редактирования'}
+						onChange={onChangeCategory}
+					>
+						<option className={'default-option-name'}>
+							Выбирите из списка
+						</option>
+						{groups && <OptionsList groups={groups} />}
+					</Field>
+					{category && (
+						<>
+							<Field
+								fieldName={'select'}
+								component={FormItem}
+								name={'select-parent'}
+								label={'Выборать родительскую категрорию'}
+							>
+								<option className={'default-option-name'}>
+									Выбирите из списка
+								</option>
+								<option value={'0'}>Верхний уровень</option>
+								{groups && <OptionsList groups={groups} />}
+							</Field>
+							<Field
+								component={FormItem}
+								type={'text'}
+								name={'category-title'}
+								label={'Измените название'}
+								value={category.title}
+							/>
+							<Field
+								component={FormItem}
+								type={'text'}
+								name={'category-name'}
+								label={'Измените название на английском'}
+							/>
+
+							<button
+								type={'subbmit'}
+								className={'button'}
+								disabled={submitting || !valid}
+							>
+								Сохранить изменения
+							</button>
+						</>
+					)}
+				</form>
+			) : (
+				<h2 className={'form-title'}>Добавьте хоть одну категорию</h2>
+			)}
+		</>
 	)
 }
+
+export const FormChangeGroup = reduxForm({ form: 'changeGroup' })(
+	ReduxFormChangeGroup
+)
