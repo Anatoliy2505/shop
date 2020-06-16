@@ -39,6 +39,12 @@ export const FormCreateGroupWithRedux = ({
 				name={'category-name'}
 				label={'Введите название на английском'}
 			/>
+			<Field
+				component={FormItem}
+				type={'text'}
+				name={'category-image'}
+				label={'Укажите кортинку (для верхнего уровня)'}
+			/>
 			<button
 				tupe={'submit'}
 				className={'button'}

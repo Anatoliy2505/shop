@@ -1,4 +1,5 @@
 import React from 'react'
+import './FormItem.scss'
 
 export const FormItem = ({
 	fieldName = 'input',

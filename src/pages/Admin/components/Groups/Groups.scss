@@ -13,7 +13,7 @@
   &-label {
     display: block;
     padding-bottom: 0.3rem;
-    font-size: 0.95em;
+    font-size: 0.9em;
   }
   &-field {
     box-sizing: border-box;
@@ -25,7 +25,14 @@
   }
   .button {
     display: inline-block;
-    margin-top: 0.5rem
+    margin-top: 0.7rem;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+      &:hover {
+        background-color: #08909c;
+      }
+    }
   }
   
 }

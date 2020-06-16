@@ -1,31 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { FormItem, OptionsList } from '../../index'
+import { validateChangeGroup as validate } from '../../../../../utils/validators'
+import { reduceGroupTree } from '../../../../../utils/helpers/reduceGroupTree'
+import { useSetToast } from '../../../../../hooks'
 
-const ReduxFormChangeGroup = ({ groups, handleSubmit, submitting, valid }) => {
-	const [category, changeCategory] = useState(null)
-
-	const reduceGroupTree = groups =>
-		groups.reduce((accumulator, currentValue) => {
-			const { children, ...rest } = currentValue
-			if (children) {
-				return [...accumulator, rest, ...children]
-			}
-			return [...accumulator, rest]
-		}, [])
-
+const ReduxFormChangeGroup = ({
+	groups,
+	handleSubmit,
+	submitting,
+	valid,
+	change,
+}) => {
 	const [categories] = useState(reduceGroupTree(groups) || null)
+	const [category, changeCategory] = useState(null)
+	const { setToast } = useSetToast()
 
-	console.log(category)
+	useEffect(() => {
+		if (category) {
+			change('category-title', category.title)
+			change('category-name', category.name)
+			change('select-parent', category.parentId)
+		}
+	}, [category, change])
 
-	const onSubmit = () => {
-		return false
+	const onSubmit = value => {
+		if (
+			category.parentId === value['select-parent'] &&
+			category.title === value['category-title'] &&
+			category.name === value['category-name']
+		) {
+			setToast({
+				data: {
+					type: 'error',
+					title: 'Ошибка!',
+					message: 'Измените хотя бы одно поле!',
+				},
+			})
+		} else {
+			console.log(value)
+		}
 	}
 
 	const onChangeCategory = event => {
 		const id = event.currentTarget.value
 		if (!!id) {
-			changeCategory(categories.find(item => item.id === +id))
+			changeCategory(categories.find(item => item.id + '' === id))
 		} else {
 			changeCategory(null)
 		}
@@ -35,7 +55,7 @@ const ReduxFormChangeGroup = ({ groups, handleSubmit, submitting, valid }) => {
 		<>
 			{categories ? (
 				<form className={'form'} onSubmit={handleSubmit(onSubmit)}>
-					<h2 className={'form-title'}>Создать категрорию</h2>
+					<h2 className={'form-title'}>Редактировать категорию</h2>
 					<Field
 						fieldName={'select'}
 						component={FormItem}
@@ -67,13 +87,18 @@ const ReduxFormChangeGroup = ({ groups, handleSubmit, submitting, valid }) => {
 								type={'text'}
 								name={'category-title'}
 								label={'Измените название'}
-								value={category.title}
 							/>
 							<Field
 								component={FormItem}
 								type={'text'}
 								name={'category-name'}
 								label={'Измените название на английском'}
+							/>
+							<Field
+								component={FormItem}
+								type={'text'}
+								name={'category-image'}
+								label={'Укажите кортинку (для верхнего уровня)'}
 							/>
 
 							<button
@@ -93,6 +118,6 @@ const ReduxFormChangeGroup = ({ groups, handleSubmit, submitting, valid }) => {
 	)
 }
 
-export const FormChangeGroup = reduxForm({ form: 'changeGroup' })(
+export const FormChangeGroup = reduxForm({ form: 'changeGroup', validate })(
 	ReduxFormChangeGroup
 )

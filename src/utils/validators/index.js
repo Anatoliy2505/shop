@@ -73,15 +73,15 @@ export const validateCreateGroup = values => {
 		errors['category-name'] = 'Только английские буквы'
 	}
 
+	if (values['select-parent'] === '0' && !values['category-image']) {
+		errors['category-image'] = 'Добавьте код картинки'
+	}
+
 	return errors
 }
 
 export const validateChangeGroup = values => {
 	const errors = {}
-
-	if (values['select-category'] !== 0 && !values['select-parent']) {
-		errors['select-category'] = 'Выберите категрию'
-	}
 
 	if (!values['category-title']) {
 		errors['category-title'] = 'Поле обязательно для заполнения'

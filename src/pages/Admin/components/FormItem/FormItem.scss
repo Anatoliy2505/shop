@@ -1,0 +1,23 @@
+.form-field {
+  &.error {
+    outline: 1px solid rgb(252, 16, 16);        
+    border: 1px solid #ddd;
+    outline-offset: -1px;
+    &:focus {
+      outline-offset: 0px;
+    }
+  }
+}
+
+.error-message {
+  display: inline-block;
+  color: rgb(252, 16, 16);
+  font-size: 0.9em;
+  line-height: 0.9em;
+  margin-bottom: 0.3em;
+  .fa-exclamation-circle {
+    font-size: 0.9em;
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
