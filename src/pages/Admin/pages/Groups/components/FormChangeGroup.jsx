@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { reduxForm, Field } from 'redux-form'
-import { FormItem, OptionsList } from '../../index'
+import { FormItem, OptionsList } from '../../../components'
 import { validateChangeGroup as validate } from '../../../../../utils/validators'
 import { reduceGroupTree } from '../../../../../utils/helpers/reduceGroupTree'
 import { useSetToast } from '../../../../../hooks'

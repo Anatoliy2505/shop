@@ -5,7 +5,7 @@ import {
 	Orders,
 	Clientele,
 	Manual,
-} from './components'
+} from './pages'
 
 export const routes = [
 	{

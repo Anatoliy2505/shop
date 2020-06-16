@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
-import { FormItem, OptionsList } from '../../index'
+import { FormItem, OptionsList } from '../../../components'
 
 import { validateCreateGroup as validate } from '../../../../../utils/validators'
 

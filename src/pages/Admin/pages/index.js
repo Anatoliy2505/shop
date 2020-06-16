@@ -1,0 +1,6 @@
+export { default as Groups } from './Groups'
+export { Collections } from '../pages/Collections'
+export { Products } from '../pages/Products'
+export { Orders } from '../pages/Orders'
+export { Clientele } from '../pages/Clientele'
+export { Manual } from '../pages/Manual'
