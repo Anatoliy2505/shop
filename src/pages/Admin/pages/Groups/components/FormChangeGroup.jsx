@@ -11,6 +11,7 @@ const ReduxFormChangeGroup = ({
 	submitting,
 	valid,
 	change,
+	clearAsyncError,
 }) => {
 	const [categories] = useState(reduceGroupTree(groups) || null)
 	const [category, changeCategory] = useState(null)
@@ -18,11 +19,12 @@ const ReduxFormChangeGroup = ({
 
 	useEffect(() => {
 		if (category) {
+			clearAsyncError('category-image')
 			change('category-title', category.title)
 			change('category-name', category.name)
 			change('select-parent', category.parentId)
 		}
-	}, [category, change])
+	}, [category, change, clearAsyncError])
 
 	const onSubmit = value => {
 		if (

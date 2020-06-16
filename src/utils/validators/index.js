@@ -95,5 +95,12 @@ export const validateChangeGroup = values => {
 		errors['category-name'] = 'Только английские буквы'
 	}
 
+	if (
+		(values['select-parent'] === '0' || values['select-parent'] === 0) &&
+		!values['category-image']
+	) {
+		errors['category-image'] = 'Добавьте код картинки'
+	}
+
 	return errors
 }
