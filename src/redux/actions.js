@@ -1,8 +1,8 @@
-import { checkResponse } from '../utils/helpers/checkResponse'
 import { getMainCategories } from '../utils/api/categoriesApi'
 import { error } from './constants'
 import * as t from './actionTypes'
 import { createCatalogTree } from '../pages/Catalog/redux/actions'
+import { createTree } from '../utils/helpers/createTree'
 
 export const categoriesRequest = () => ({
 	type: t.GET_MAIN_CATEGORIES_REQUEST,
@@ -10,7 +10,7 @@ export const categoriesRequest = () => ({
 
 export const categoriesSuccess = data => ({
 	type: t.GET_MAIN_CATEGORIES_SUCCESS,
-	payload: data,
+	payload: { data: createTree(data), dataRaw: data },
 })
 
 export const categoriesFailure = (errorMsg = error.connect) => ({
@@ -27,9 +27,9 @@ export const getAllMainCategories = () => {
 
 		return getMainCategories()
 			.then(res => {
-				if (checkResponse(res)) {
-					dispatch(categoriesSuccess(res.data))
-					dispatch(createCatalogTree(res.data))
+				if (res.ok) {
+					dispatch(categoriesSuccess(res.groups))
+					dispatch(createCatalogTree(createTree(res.groups)))
 				} else {
 					dispatch(categoriesFailure(res.message))
 				}

@@ -16,20 +16,24 @@
 
 export const createCatalogTree = data => {
 	let catalog = {}
-	for (let i = 0; i < data.length; i++) {
-		if ('children' in data[i]) {
-			catalog[data[i].name] = {
-				loaded: false,
-				title: data[i].title,
-				children: createCatalogTree(data[i].children),
-			}
-		} else {
-			catalog[data[i].name] = {
-				id: data[i].id,
-				title: data[i].title,
-				categories: [],
+	if (data) {
+		for (let i = 0; i < data.length; i++) {
+			if ('children' in data[i]) {
+				catalog[data[i].name] = {
+					loaded: false,
+					title: data[i].title,
+					_id: data[i]._id,
+					children: createCatalogTree(data[i].children),
+				}
+			} else {
+				catalog[data[i].name] = {
+					_id: data[i]._id,
+					title: data[i].title,
+					categories: [],
+				}
 			}
 		}
 	}
+
 	return catalog
 }

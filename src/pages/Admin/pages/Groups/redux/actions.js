@@ -1,40 +1,47 @@
-import { checkResponse } from '../../../utils/helpers/checkResponse'
-import { getAll } from '../../../utils/api/newsApi'
+import {
+	setGroup,
+	updateGroup,
+	removeGroup,
+} from '../../../../../utils/api/adminApi'
 import { error } from './constants'
 
-import * as t from './actionTypes'
+import { getAllMainCategories } from '../../../../../redux/actions'
 
-export const newsRequest = () => ({
-	type: t.NEWS_GET_REQUEST,
-})
+const action = (data, setToast, actionType) => dispatch => {
+	setToast({
+		data: {
+			message: 'Подождите, данные отправляются',
+		},
+		duration: 1000,
+	})
+	return actionType(data)
+		.then(res => {
+			if (!res.ok) {
+				return setToast({
+					data: { type: 'error', title: 'Ошибка!', message: res.message },
+				})
+			}
 
-export const newsSuccess = data => ({
-	type: t.NEWS_GET_SUCCESS,
-	payload: data,
-})
-
-export const newsFailure = (errorMsg = error.connect) => ({
-	type: t.NEWS_GET_FAILURE,
-	payload: {
-		errorMsg,
-	},
-	error: true,
-})
-
-export const getNews = () => {
-	return dispatch => {
-		dispatch(newsRequest())
-
-		return getAll()
-			.then(res => {
-				if (checkResponse(res)) {
-					dispatch(newsSuccess(res.data))
-				} else {
-					dispatch(newsFailure(res.message))
-				}
+			dispatch(getAllMainCategories())
+			setToast({
+				data: {
+					type: 'success',
+					title: 'Отлично!',
+					message: res.message,
+				},
 			})
-			.catch(error => {
-				dispatch(newsFailure())
+		})
+		.catch(() => {
+			setToast({
+				data: { type: 'error', title: 'Ошибка!', message: error.connect },
 			})
-	}
+		})
 }
+
+export const setNewGroup = (data, setToast) => action(data, setToast, setGroup)
+
+export const changeGroup = (data, setToast) =>
+	action(data, setToast, updateGroup)
+
+export const deleteGroup = (data, setToast) =>
+	action(data, setToast, removeGroup)

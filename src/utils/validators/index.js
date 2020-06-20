@@ -57,24 +57,24 @@ export const validateLoginForm = values => {
 export const validateCreateGroup = values => {
 	const errors = {}
 
-	if (values['select-parent'] !== 0 && !values['select-parent']) {
-		errors['select-parent'] = 'Выберите родителя'
+	if (values['parentId'] !== 0 && !values['parentId']) {
+		errors['parentId'] = 'Выберите родителя'
 	}
 
-	if (!values['category-title']) {
-		errors['category-title'] = 'Поле обязательно для заполнения'
-	} else if (values['category-title'].length > 30) {
-		errors['category-title'] = 'Длина названия более 30 символов'
+	if (!values['title']) {
+		errors['title'] = 'Поле обязательно для заполнения'
+	} else if (values['title'].length > 30) {
+		errors['title'] = 'Длина названия более 30 символов'
 	}
 
-	if (!values['category-name']) {
-		errors['category-name'] = 'Поле обязательно для заполнения'
-	} else if (!/[a-zA-Z\s]/i.test(values['category-name'].trim())) {
-		errors['category-name'] = 'Только английские буквы'
+	if (!values['name']) {
+		errors['name'] = 'Поле обязательно для заполнения'
+	} else if (!/[a-zA-Z\s]/i.test(values['name'].trim())) {
+		errors['name'] = 'Только английские буквы'
 	}
 
-	if (values['select-parent'] === '0' && !values['category-image']) {
-		errors['category-image'] = 'Добавьте код картинки'
+	if (values['parentId'] === '0' && !values['image']) {
+		errors['image'] = 'Добавьте код картинки'
 	}
 
 	return errors
@@ -83,23 +83,37 @@ export const validateCreateGroup = values => {
 export const validateChangeGroup = values => {
 	const errors = {}
 
-	if (!values['category-title']) {
-		errors['category-title'] = 'Поле обязательно для заполнения'
-	} else if (values['category-title'].length > 30) {
-		errors['category-title'] = 'Длина названия более 30 символов'
+	if (!values['title']) {
+		errors['title'] = 'Поле обязательно для заполнения'
+	} else if (values['title'].length > 30) {
+		errors['title'] = 'Длина названия более 30 символов'
 	}
 
-	if (!values['category-name']) {
-		errors['category-name'] = 'Поле обязательно для заполнения'
-	} else if (!/[a-zA-Z\s]/i.test(values['category-name'].trim())) {
-		errors['category-name'] = 'Только английские буквы'
+	if (!values['name']) {
+		errors['name'] = 'Поле обязательно для заполнения'
+	} else if (!/[a-zA-Z\s]/i.test(values['name'].trim())) {
+		errors['name'] = 'Только английские буквы'
+	}
+
+	if (values['parentId'] === values['categoryId']) {
+		errors['parentId'] = 'Ошибка! Выберите другого родителя'
 	}
 
 	if (
-		(values['select-parent'] === '0' || values['select-parent'] === 0) &&
-		!values['category-image']
+		(values['parentId'] === '0' || values['parentId'] === 0) &&
+		!values['image']
 	) {
-		errors['category-image'] = 'Добавьте код картинки'
+		errors['image'] = 'Добавьте код картинки'
+	}
+
+	return errors
+}
+
+export const validateDeleteGroup = values => {
+	const errors = {}
+
+	if (!values['categoryId']) {
+		errors['categoryId'] = 'Выбирите категорию для удаления'
 	}
 
 	return errors

@@ -1,2 +1,3 @@
-export { FormCreateGroup } from './FormCreateGroup'
-export { FormChangeGroup } from './FormChangeGroup'
+export { CreateGroup } from './CreateGroup'
+export { UpdateGroup } from './UpdateGroup'
+export { DeleteGroup } from './DeleteGroup'

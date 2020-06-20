@@ -2,35 +2,46 @@ import React, { useState, useEffect } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { FormItem, OptionsList } from '../../../components'
 import { validateChangeGroup as validate } from '../../../../../utils/validators'
-import { reduceGroupTree } from '../../../../../utils/helpers/reduceGroupTree'
 import { useSetToast } from '../../../../../hooks'
 
-const ReduxFormChangeGroup = ({
+const FormUpdateGroup = ({
 	groups,
+	rawData,
+	changeGroup,
 	handleSubmit,
 	submitting,
 	valid,
 	change,
 	clearAsyncError,
 }) => {
-	const [categories] = useState(reduceGroupTree(groups) || null)
-	const [category, changeCategory] = useState(null)
+	const [categories, setCategories] = useState(rawData || null)
+	const [category, setCategory] = useState(null)
 	const { setToast } = useSetToast()
 
 	useEffect(() => {
 		if (category) {
-			clearAsyncError('category-image')
-			change('category-title', category.title)
-			change('category-name', category.name)
-			change('select-parent', category.parentId)
+			clearAsyncError('image')
+			change('title', category.title)
+			change('name', category.name)
+			change('image', category.image)
+			change('parentId', category.parentId)
 		}
 	}, [category, change, clearAsyncError])
 
+	useEffect(() => {
+		setCategories(rawData)
+
+		setCategory(category => {
+			if (category) return rawData.find(item => item._id === category._id)
+		})
+	}, [rawData])
+
 	const onSubmit = value => {
 		if (
-			category.parentId === value['select-parent'] &&
-			category.title === value['category-title'] &&
-			category.name === value['category-name']
+			category.parentId === value['parentId'] &&
+			category.title === value['title'] &&
+			category.name === value['name'] &&
+			category.image === value['image']
 		) {
 			setToast({
 				data: {
@@ -40,16 +51,16 @@ const ReduxFormChangeGroup = ({
 				},
 			})
 		} else {
-			console.log(value)
+			changeGroup(value, setToast)
 		}
 	}
 
 	const onChangeCategory = event => {
 		const id = event.currentTarget.value
 		if (!!id) {
-			changeCategory(categories.find(item => item.id + '' === id))
+			setCategory(categories.find(item => item._id === id))
 		} else {
-			changeCategory(null)
+			setCategory(null)
 		}
 	}
 
@@ -61,7 +72,7 @@ const ReduxFormChangeGroup = ({
 					<Field
 						fieldName={'select'}
 						component={FormItem}
-						name={'select-category'}
+						name={'categoryId'}
 						label={'Выбирите категорию для редактирования'}
 						onChange={onChangeCategory}
 					>
@@ -75,7 +86,7 @@ const ReduxFormChangeGroup = ({
 							<Field
 								fieldName={'select'}
 								component={FormItem}
-								name={'select-parent'}
+								name={'parentId'}
 								label={'Выборать родительскую категрорию'}
 							>
 								<option className={'default-option-name'}>
@@ -87,21 +98,23 @@ const ReduxFormChangeGroup = ({
 							<Field
 								component={FormItem}
 								type={'text'}
-								name={'category-title'}
+								name={'title'}
 								label={'Измените название'}
 							/>
 							<Field
 								component={FormItem}
 								type={'text'}
-								name={'category-name'}
+								name={'name'}
 								label={'Измените название на английском'}
 							/>
-							<Field
-								component={FormItem}
-								type={'text'}
-								name={'category-image'}
-								label={'Укажите кортинку (для верхнего уровня)'}
-							/>
+							{category.image && (
+								<Field
+									component={FormItem}
+									type={'text'}
+									name={'image'}
+									label={'Укажите картинку (для верхнего уровня)'}
+								/>
+							)}
 
 							<button
 								type={'subbmit'}
@@ -120,6 +133,6 @@ const ReduxFormChangeGroup = ({
 	)
 }
 
-export const FormChangeGroup = reduxForm({ form: 'changeGroup', validate })(
-	ReduxFormChangeGroup
+export const UpdateGroup = reduxForm({ form: 'apdateGroup', validate })(
+	FormUpdateGroup
 )

@@ -1,17 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { FormItem, OptionsList } from '../../../components'
 
 import { validateCreateGroup as validate } from '../../../../../utils/validators'
 
-export const FormCreateGroupWithRedux = ({
+import { useSetToast } from '../../../../../hooks'
+
+export const FormCreateGroup = ({
 	groups,
+	setNewGroup,
 	handleSubmit,
 	submitting,
 	valid,
 }) => {
+	const [topLavel, setTopLavel] = useState(false)
+	const { setToast } = useSetToast()
+
 	const onSubmit = body => {
-		console.log(body)
+		setNewGroup(body, setToast)
+	}
+
+	const onChangeParent = e => {
+		const id = e.currentTarget.value
+		if (id === '0') {
+			return setTopLavel(true)
+		}
+		setTopLavel(false)
 	}
 
 	return (
@@ -20,8 +34,9 @@ export const FormCreateGroupWithRedux = ({
 			<Field
 				fieldName={'select'}
 				component={FormItem}
-				name={'select-parent'}
+				name={'parentId'}
 				label={'Выберите родителя'}
+				onChange={onChangeParent}
 			>
 				<option></option>
 				<option value={'0'}>Верхний уровень</option>
@@ -30,21 +45,24 @@ export const FormCreateGroupWithRedux = ({
 			<Field
 				component={FormItem}
 				type={'text'}
-				name={'category-title'}
+				name={'title'}
 				label={'Введите название'}
 			/>
 			<Field
 				component={FormItem}
 				type={'text'}
-				name={'category-name'}
+				name={'name'}
 				label={'Введите название на английском'}
 			/>
-			<Field
-				component={FormItem}
-				type={'text'}
-				name={'category-image'}
-				label={'Укажите кортинку (для верхнего уровня)'}
-			/>
+			{topLavel && (
+				<Field
+					component={FormItem}
+					type={'text'}
+					name={'image'}
+					label={'Укажите картинку (для верхнего уровня)'}
+				/>
+			)}
+
 			<button
 				tupe={'submit'}
 				className={'button'}
@@ -56,6 +74,6 @@ export const FormCreateGroupWithRedux = ({
 	)
 }
 
-export const FormCreateGroup = reduxForm({ form: 'createGroup', validate })(
-	FormCreateGroupWithRedux
+export const CreateGroup = reduxForm({ form: 'createGroup', validate })(
+	FormCreateGroup
 )

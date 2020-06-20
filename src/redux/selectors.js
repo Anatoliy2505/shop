@@ -3,14 +3,9 @@ import { NAME } from './constants'
 
 export const sidebarRootSelector = state => state[NAME]
 
-export const sidebarSelector = createSelector(
-	sidebarRootSelector,
-	({ data, isLoading, errorMsg }) => ({
-		data,
-		isLoading,
-		errorMsg,
-	})
-)
+export const sidebarSelector = createSelector(sidebarRootSelector, state => ({
+	...state,
+}))
 
 /* export const getCounts = createSelector(
   getAll,

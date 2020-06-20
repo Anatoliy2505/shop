@@ -54,6 +54,10 @@ export const request = async (
 		if (body) {
 			body = JSON.stringify(body)
 			headers['Content-Type'] = 'application/json'
+			const token = localStorage.getItem('token')
+			if (!!token) {
+				headers['Authorization'] = `Bearer ${token}`
+			}
 		}
 		const API_ROOT = 'http://localhost:3000'
 		const response = await fetch(`${API_ROOT}/${endPoint}`, {
@@ -61,9 +65,6 @@ export const request = async (
 			body,
 			headers,
 		})
-		if (!response.ok) {
-			throw new Error(response.message || 'При запросе что-то пошло не так')
-		}
 		const data = await response.json()
 		return data
 	} catch (e) {

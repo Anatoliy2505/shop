@@ -20,7 +20,7 @@ const CatalogTree = ({
 	}, [data, getAllMainCategories])
 
 	const onSelectItem = e => {
-		const id = Number(e.currentTarget.dataset.id)
+		const id = e.currentTarget.dataset.id
 		activeItem === id ? setActiveItem(null) : setActiveItem(id)
 	}
 
@@ -28,9 +28,9 @@ const CatalogTree = ({
 		return data.map(item => {
 			return (
 				<li
-					key={item.id}
+					key={item._id}
 					className={
-						'sidebar-catalog__parent ' + (itemId === item.id ? 'active' : '')
+						'sidebar-catalog__parent ' + (itemId === item._id ? 'active' : '')
 					}
 				>
 					<div className={'sidebar-catalog__parent-wrap'}>
@@ -40,21 +40,21 @@ const CatalogTree = ({
 						>
 							<span
 								className={'sidebar-catalog__parent-img'}
-								style={{ backgroundPosition: item.bg_position }}
+								style={{ backgroundPosition: item.image }}
 							/>
 							{item.title}
 						</Link>
 						<span
 							className={'sidebar-catalog__parent-open'}
-							data-id={item.id}
+							data-id={item._id}
 							onClick={onSelectItem}
 						/>
 					</div>
-					{item.children && (
+					{item.children && item.children.length > 0 && (
 						<ul className={'sidebar-catalog__children-list'}>
 							{item.children.map(childrenItem => {
 								return (
-									<li key={childrenItem.id}>
+									<li key={childrenItem._id}>
 										<Link
 											className={'sidebar-catalog__children-item'}
 											to={`/catalog/${item.name}/${childrenItem.name}`}

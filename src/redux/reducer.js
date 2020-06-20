@@ -2,6 +2,7 @@ import * as t from './actionTypes'
 
 export const initialState = {
 	data: null,
+	rawData: null,
 	isLoading: false,
 	errorMsg: null,
 }
@@ -17,7 +18,8 @@ export default (state = initialState, action) => {
 		case t.GET_MAIN_CATEGORIES_SUCCESS:
 			return {
 				...state,
-				data: action.payload,
+				data: action.payload.data,
+				rawData: action.payload.dataRaw,
 				isLoading: false,
 			}
 		case t.GET_MAIN_CATEGORIES_FAILURE:

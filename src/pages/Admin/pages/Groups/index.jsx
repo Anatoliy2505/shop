@@ -1,46 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
-import { FormCreateGroup, FormChangeGroup } from './components'
+import { CreateGroup, UpdateGroup, DeleteGroup } from './components'
 import { sidebarSelector } from '../../../../redux/selectors'
+import { setNewGroup, changeGroup, deleteGroup } from './redux/actions'
+import { AdminActions } from '../../components'
 
-import './Groups.scss'
-
-export const Groups = ({ groups: { data } }) => {
-	const [actionName, setActionName] = useState('create')
-
-	const isActive = name => {
-		return name !== actionName ? ' inactive' : ''
-	}
-
-	const choiceForm = () => {
-		if (actionName === 'create') {
-			return <FormCreateGroup groups={data} />
-		} else {
-			return <FormChangeGroup groups={data} />
-		}
-	}
-
+export const Groups = ({
+	groups: { data, rawData },
+	setNewGroup,
+	changeGroup,
+	deleteGroup,
+}) => {
 	return (
-		<div className={'groups-page'}>
-			<h1 className={'page-title'}>Категории для каталога</h1>
-			<div className={'wrap-actions__button'}>
-				<button
-					className={`button${isActive('create')}`}
-					onClick={() => setActionName('create')}
-				>
-					Добавить новую
-				</button>
-				<button
-					className={`button${isActive('apdate')}`}
-					onClick={() => setActionName('apdate')}
-				>
-					Изменить существующую
-				</button>
-
-				{choiceForm()}
-			</div>
-		</div>
+		<AdminActions
+			title={'Категории для каталога'}
+			create={{ component: CreateGroup, groups: data, setNewGroup }}
+			update={{
+				component: UpdateGroup,
+				groups: data,
+				rawData,
+				changeGroup,
+			}}
+			delete={{
+				component: DeleteGroup,
+				groups: data,
+				rawData,
+				deleteGroup,
+			}}
+		/>
 	)
 }
 
@@ -48,5 +36,5 @@ export default connect(
 	state => ({
 		groups: sidebarSelector(state),
 	}),
-	null
+	{ setNewGroup, changeGroup, deleteGroup }
 )(Groups)
