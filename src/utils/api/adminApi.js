@@ -1,15 +1,17 @@
 import { request } from '../helpers/network'
 
-export const setGroup = body => request('api/categories/setGroup', 'POST', body)
+export const setGroup = body => request('api/group/setGroup', 'POST', body)
 
-export const updateGroup = body =>
-	request('api/categories/updateGroup', 'PUT', body)
+export const updateGroup = body => request('api/group/updateGroup', 'PUT', body)
 
 export const removeGroup = body =>
-	request('api/categories/removeGroup', 'DELETE', body)
+	request('api/group/removeGroup', 'DELETE', body)
 
 export const setCollection = body =>
-	request('api/categories/setCollection', 'POST', body)
+	request('api/collection/setCollection', 'POST', body)
 
 export const getCollections = id =>
-	request(`api/categories/getCollections/${id}`, 'GET')
+	request(`api/collection/getCollections/${id}`, 'GET')
+
+export const removeCollection = body =>
+	request('api/collection/removeCollection', 'DELETE', body)

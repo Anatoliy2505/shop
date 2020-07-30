@@ -13,22 +13,24 @@ export const Groups = ({
 	deleteGroup,
 }) => {
 	return (
-		<AdminActions
-			title={'Категории для каталога'}
-			create={{ component: CreateGroup, groups: data, setNewGroup }}
-			update={{
-				component: UpdateGroup,
-				groups: data,
-				rawData,
-				changeGroup,
-			}}
-			delete={{
-				component: DeleteGroup,
-				groups: data,
-				rawData,
-				deleteGroup,
-			}}
-		/>
+		<>
+			<h1 className={'page-title'}>Категории для каталога</h1>
+			<AdminActions
+				create={{ component: CreateGroup, groups: data, setNewGroup }}
+				update={{
+					component: UpdateGroup,
+					groups: data,
+					rawData,
+					changeGroup,
+				}}
+				delete={{
+					component: DeleteGroup,
+					groups: data,
+					rawData,
+					deleteGroup,
+				}}
+			/>
+		</>
 	)
 }
 

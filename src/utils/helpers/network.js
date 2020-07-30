@@ -52,8 +52,11 @@ export const request = async (
 ) => {
 	try {
 		if (body) {
-			body = JSON.stringify(body)
-			headers['Content-Type'] = 'application/json'
+			const formData = new FormData()
+			for (let key in body) {
+				formData.append(key, body[key])
+			}
+			body = formData
 			const token = localStorage.getItem('token')
 			if (!!token) {
 				headers['Authorization'] = `Bearer ${token}`
@@ -66,8 +69,42 @@ export const request = async (
 			headers,
 		})
 		const data = await response.json()
+		if (response.status === 401) {
+			data['auth'] = false
+		}
 		return data
 	} catch (e) {
 		throw e
 	}
 }
+
+// export const request = async (
+// 	endPoint,
+// 	method = 'GET',
+// 	body = null,
+// 	headers = {}
+// ) => {
+// 	try {
+// 		if (body) {
+// 			body = JSON.stringify(body)
+// 			headers['Content-Type'] = 'application/json'
+// 			const token = localStorage.getItem('token')
+// 			if (!!token) {
+// 				headers['Authorization'] = `Bearer ${token}`
+// 			}
+// 		}
+// 		const API_ROOT = 'http://localhost:3000'
+// 		const response = await fetch(`${API_ROOT}/${endPoint}`, {
+// 			method,
+// 			body,
+// 			headers,
+// 		})
+// 		const data = await response.json()
+// 		if (response.status === 401) {
+// 			data['auth'] = false
+// 		}
+// 		return data
+// 	} catch (e) {
+// 		throw e
+// 	}
+// }

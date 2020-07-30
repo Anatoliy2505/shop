@@ -4,7 +4,6 @@ export const AdminActions = ({
 	create: { component: Create, ...createData },
 	update: { component: Update, ...updateData },
 	delete: { component: Delete, ...deleteData },
-	title,
 }) => {
 	const [actionName, setActionName] = useState('create')
 
@@ -26,8 +25,7 @@ export const AdminActions = ({
 	}
 
 	return (
-		<div className={'groups-page'}>
-			<h1 className={'page-title'}>{title}</h1>
+		<>
 			<div className={'wrap-actions__button'}>
 				<button
 					className={`button${isActive('create')}`}
@@ -51,6 +49,6 @@ export const AdminActions = ({
 				</button>
 			</div>
 			{choiceForm()}
-		</div>
+		</>
 	)
 }

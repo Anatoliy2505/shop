@@ -1,7 +1,6 @@
 import { httpGet, request } from '../helpers/network'
 
-export const getMainCategories = () =>
-	request('/api/categories/getGroups', 'GET')
+export const getMainCategories = () => request('/api/group/getGroups', 'GET')
 
 export const getParentsCategories = mainCat => httpGet(mainCat)
 

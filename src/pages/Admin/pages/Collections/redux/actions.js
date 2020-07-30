@@ -1,40 +1,54 @@
-import { checkResponse } from '../../../utils/helpers/checkResponse'
-import { getAll } from '../../../utils/api/newsApi'
+import {
+	setCollection,
+	getCollections,
+	removeCollection,
+} from '../../../../../utils/api/adminApi'
 import { error } from './constants'
 
-import * as t from './actionTypes'
+import { getAllMainCategories } from '../../../../../redux/actions'
+import { logoutSimpleAction } from '../../../../Auth/redux/actions'
 
-export const newsRequest = () => ({
-	type: t.NEWS_GET_REQUEST,
-})
-
-export const newsSuccess = data => ({
-	type: t.NEWS_GET_SUCCESS,
-	payload: data,
-})
-
-export const newsFailure = (errorMsg = error.connect) => ({
-	type: t.NEWS_GET_FAILURE,
-	payload: {
-		errorMsg,
-	},
-	error: true,
-})
-
-export const getNews = () => {
-	return dispatch => {
-		dispatch(newsRequest())
-
-		return getAll()
-			.then(res => {
-				if (checkResponse(res)) {
-					dispatch(newsSuccess(res.data))
-				} else {
-					dispatch(newsFailure(res.message))
+const action = (data, setToast, actionType, reset = () => {}) => dispatch => {
+	setToast({
+		data: {
+			message: 'Подождите, данные отправляются',
+		},
+		duration: 1000,
+	})
+	return actionType(data)
+		.then(res => {
+			if (!res.ok) {
+				if (res.auth === false) {
+					dispatch(logoutSimpleAction())
 				}
+				return setToast({
+					data: { type: 'error', title: 'Ошибка!', message: res.message },
+				})
+			}
+
+			dispatch(getAllMainCategories())
+			setToast({
+				data: {
+					type: 'success',
+					title: 'Отлично!',
+					message: res.message,
+				},
 			})
-			.catch(error => {
-				dispatch(newsFailure())
+
+			reset()
+		})
+		.catch(() => {
+			setToast({
+				data: { type: 'error', title: 'Ошибка!', message: error.connect },
 			})
-	}
+		})
 }
+
+export const setNewCollection = (data, setToast, reset) =>
+	action(data, setToast, setCollection, reset)
+
+export const getAllCollections = (data, setToast) =>
+	action(data, setToast, getCollections)
+
+export const deleteCollection = (data, setToast, reset) =>
+	action(data, setToast, removeCollection, reset)

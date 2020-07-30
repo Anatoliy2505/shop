@@ -131,3 +131,8 @@ export const logoutAction = setToast => {
 		dispatch({ type: t.LOGOUT })
 	}
 }
+
+export const logoutSimpleAction = () => dispatch => {
+	localStorage.clear()
+	dispatch({ type: t.LOGOUT })
+}

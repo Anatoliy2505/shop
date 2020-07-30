@@ -40,8 +40,7 @@ const FormUpdateGroup = ({
 		if (
 			category.parentId === value['parentId'] &&
 			category.title === value['title'] &&
-			category.name === value['name'] &&
-			category.image === value['image']
+			category.name === value['name']
 		) {
 			setToast({
 				data: {
@@ -133,6 +132,6 @@ const FormUpdateGroup = ({
 	)
 }
 
-export const UpdateGroup = reduxForm({ form: 'apdateGroup', validate })(
+export const UpdateGroup = reduxForm({ form: 'updateGroup', validate })(
 	FormUpdateGroup
 )

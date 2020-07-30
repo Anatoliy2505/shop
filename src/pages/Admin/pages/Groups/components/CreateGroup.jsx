@@ -11,13 +11,15 @@ export const FormCreateGroup = ({
 	setNewGroup,
 	handleSubmit,
 	submitting,
+	reset,
 	valid,
 }) => {
 	const [topLavel, setTopLavel] = useState(false)
 	const { setToast } = useSetToast()
 
 	const onSubmit = body => {
-		setNewGroup(body, setToast)
+		setNewGroup(body, setToast, reset)
+		setTopLavel(false)
 	}
 
 	const onChangeParent = e => {
