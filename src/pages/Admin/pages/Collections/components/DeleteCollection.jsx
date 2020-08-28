@@ -29,8 +29,8 @@ const DeleteForm = ({
 	const onChoiceGroup = event => {
 		const id = event.currentTarget.value
 		if (!!id) {
-			const paretnGroup = parentGroup.find(item => item._id === id)
-			setCollectionsList(paretnGroup.collections)
+			const parent = parentGroup.find(item => item._id === id)
+			setCollectionsList(parent.collections)
 		} else {
 			setCollectionsList(null)
 		}
@@ -84,7 +84,7 @@ const DeleteForm = ({
 				onChange={onChoiceGroup}
 			>
 				<option></option>
-				{rawData && <OptionsList groups={parentGroup} />}
+				{<OptionsList groups={parentGroup} />}
 			</Field>
 			{collectionsList ? (
 				<>

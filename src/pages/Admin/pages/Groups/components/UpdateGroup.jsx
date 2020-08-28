@@ -11,8 +11,9 @@ const FormUpdateGroup = ({
 	handleSubmit,
 	submitting,
 	valid,
+	untouch,
+	initialize,
 	change,
-	clearAsyncError,
 }) => {
 	const [categories, setCategories] = useState(rawData || null)
 	const [category, setCategory] = useState(null)
@@ -20,13 +21,18 @@ const FormUpdateGroup = ({
 
 	useEffect(() => {
 		if (category) {
-			clearAsyncError('image')
-			change('title', category.title)
-			change('name', category.name)
-			change('image', category.image)
-			change('parentId', category.parentId)
+			untouch('image')
+			change('image', null)
+			initialize(
+				{
+					title: category.title,
+					name: category.name,
+					parentId: category.parentId,
+				},
+				true
+			)
 		}
-	}, [category, change, clearAsyncError])
+	}, [category, initialize, untouch, change])
 
 	useEffect(() => {
 		setCategories(rawData)

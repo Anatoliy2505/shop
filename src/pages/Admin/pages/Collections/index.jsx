@@ -8,7 +8,11 @@ import {
 	CreateCollection,
 } from './components'
 
-import { setNewCollection, deleteCollection } from './redux/actions'
+import {
+	setNewCollection,
+	deleteCollection,
+	changeCollection,
+} from './redux/actions'
 import { sidebarSelector } from '../../../../redux/selectors'
 
 import './Collections.scss'
@@ -17,6 +21,7 @@ export const Collections = ({
 	groups: { data, rawData },
 	setNewCollection,
 	deleteCollection,
+	changeCollection,
 }) => {
 	return (
 		<>
@@ -31,7 +36,7 @@ export const Collections = ({
 					component: UpdateCollection,
 					groups: data,
 					rawData,
-					changeCollection: () => {},
+					changeCollection,
 				}}
 				delete={{
 					component: DeleteCollection,
@@ -48,5 +53,5 @@ export default connect(
 	state => ({
 		groups: sidebarSelector(state),
 	}),
-	{ setNewCollection, deleteCollection }
+	{ setNewCollection, deleteCollection, changeCollection }
 )(Collections)

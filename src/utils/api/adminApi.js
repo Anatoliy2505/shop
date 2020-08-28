@@ -10,6 +10,9 @@ export const removeGroup = body =>
 export const setCollection = body =>
 	request('api/collection/setCollection', 'POST', body)
 
+export const updateCollection = body =>
+	request('api/collection/updateCollection', 'PUT', body)
+
 export const getCollections = id =>
 	request(`api/collection/getCollections/${id}`, 'GET')
 

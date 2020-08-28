@@ -2,6 +2,7 @@ import {
 	setCollection,
 	getCollections,
 	removeCollection,
+	updateCollection,
 } from '../../../../../utils/api/adminApi'
 import { error } from './constants'
 
@@ -49,6 +50,9 @@ export const setNewCollection = (data, setToast, reset) =>
 
 export const getAllCollections = (data, setToast) =>
 	action(data, setToast, getCollections)
+
+export const changeCollection = (data, setToast, reset) =>
+	action(data, setToast, updateCollection, reset)
 
 export const deleteCollection = (data, setToast, reset) =>
 	action(data, setToast, removeCollection, reset)

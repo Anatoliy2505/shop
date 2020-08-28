@@ -68,6 +68,7 @@ export const request = async (
 			body,
 			headers,
 		})
+
 		const data = await response.json()
 		if (response.status === 401) {
 			data['auth'] = false
