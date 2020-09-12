@@ -12,6 +12,7 @@ const FormDeleteGroup = ({
 	handleSubmit,
 	submitting,
 	valid,
+	reset,
 }) => {
 	const [categories, setCategories] = useState(rawData || null)
 	const [category, setCategory] = useState(null)
@@ -23,18 +24,18 @@ const FormDeleteGroup = ({
 	}, [rawData])
 
 	const onSubmit = value => {
-		const havechildren = isIssetChildren(groups, value.categoryId)
+		const havechildren = isIssetChildren(rawData, value.categoryId)
 		if (havechildren) {
 			return setToast({
 				data: {
 					type: 'error',
 					title: 'Ошибка!',
-					message: 'Переместите дочерние элементы в другую группу!',
+					message: 'Переместите дочерние элементы и коллекции в другую группу!',
 				},
 			})
 		}
 		const data = { ...value, title: category.title }
-		deleteGroup(data, setToast)
+		deleteGroup(data, setToast, reset)
 	}
 
 	const onChangeCategory = event => {
@@ -58,14 +59,12 @@ const FormDeleteGroup = ({
 						label={'Выбирите категорию для удаления'}
 						onChange={onChangeCategory}
 					>
-						<option className={'default-option-name'}>
-							Выбирите из списка
-						</option>
+						<option></option>
 						{groups && <OptionsList groups={groups} />}
 					</Field>
 					{category && (
 						<button
-							type={'subbmit'}
+							type={'submit'}
 							className={'button'}
 							disabled={submitting || !valid}
 						>

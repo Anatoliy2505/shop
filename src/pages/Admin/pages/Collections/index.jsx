@@ -29,6 +29,7 @@ export const Collections = ({
 			<AdminActions
 				create={{
 					component: CreateCollection,
+					groups: data,
 					rawData,
 					setNewCollection,
 				}}
@@ -40,7 +41,6 @@ export const Collections = ({
 				}}
 				delete={{
 					component: DeleteCollection,
-					groups: data,
 					rawData,
 					deleteCollection,
 				}}

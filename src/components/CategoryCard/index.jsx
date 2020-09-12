@@ -6,46 +6,42 @@ import PropTypes from 'prop-types'
 import './CategoryCard.scss'
 
 export const CategoryCard = ({
-	img,
+	image,
 	title,
 	price,
-	priceOld,
-	count,
+	isset,
+	sale,
 	name,
-	path,
+	from,
 	page,
 }) => {
+	const linkTo = `/${page || 'product/' + from}/${name}`
 	return (
 		<div className={'category__item'}>
 			<div className={'category__card'}>
-				<Link
-					to={`/${page || 'catalog/' + path}/${name}`}
-					className={'category__wrap-img'}
-					title={title}
-				>
-					<img src={img} alt={title} className={'category__img'} />
+				<Link to={linkTo} className={'category__wrap-img'} title={title}>
+					<img
+						src={process.env.PUBLIC_URL + image}
+						alt={title}
+						className={'category__img'}
+					/>
 				</Link>
 				<div className="category__desc">
-					<Link
-						to={`/${page || 'catalog/' + path}/${name}`}
-						className={'category__wrap-title'}
-					>
+					<Link to={linkTo} className={'category__wrap-title'}>
 						<h3 className="category__title">{title}</h3>
 					</Link>
 					<span
 						className={
-							'category__existence ' +
-							(!count ? 'category__existence--empty' : '')
+							'category__existence' +
+							(!isset ? ' category__existence--empty' : '')
 						}
 					>
-						{count ? 'В наличии' : 'Временно отсутствует'}
+						{isset ? 'В наличии' : 'Временно отсутствует'}
 					</span>
 					<div className="category__wrap-price">
-						<span className={'category__price-old  category__price-item'}>
-							{priceOld ? (
-								<span className={'category__price-line'}>
-									{priceOld} <span className="category__currency">руб.</span>
-								</span>
+						<span className={'category__price-sale  category__price-item'}>
+							{sale && isset ? (
+								<span className={'category-sale'}>Есть скидки</span>
 							) : null}
 						</span>
 						<span className={'category__price  category__price-item'}>
@@ -59,21 +55,11 @@ export const CategoryCard = ({
 }
 
 CategoryCard.propTypes = {
-	img: PropTypes.string,
+	image: PropTypes.string,
 	title: PropTypes.string.isRequired,
 	price: PropTypes.number.isRequired,
-	priceOld: PropTypes.string,
-	count: PropTypes.number,
+	sale: PropTypes.bool.isRequired,
 	name: PropTypes.string,
-	path: PropTypes.string,
+	from: PropTypes.string,
 	page: PropTypes.string,
-}
-
-CategoryCard.defaultProps = {
-	id: '1',
-	img: 'https://sibirskylov.ru/img/magazin/head/common.png',
-	title: 'Пневматическая Винтовка Daisy 74 CO2',
-	price: '6000',
-	priceOld: '7000',
-	count: 10,
 }

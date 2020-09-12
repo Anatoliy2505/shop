@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { reduxForm, Field } from 'redux-form'
-import { FormItem, OptionsList } from '../../../components'
+import { reduxForm } from 'redux-form'
+import { SelectSectGrCol } from '../../../components'
 import { useSetToast } from '../../../../../hooks'
-
-import findGroupsWithCollections from '../../../../../utils/helpers/findGroupsWithCollections'
 
 const DeleteForm = ({
 	rawData,
@@ -11,36 +9,19 @@ const DeleteForm = ({
 	submitting,
 	valid,
 	deleteCollection,
+	change,
 	reset,
 }) => {
-	const [collectionsList, setCollectionsList] = useState(null)
+	const [collection, setCollection] = useState(null)
+	const [isReset, setIsReset] = useState(false)
 	const { setToast } = useSetToast()
 
 	if (!rawData || rawData.length === 0) {
 		return <h2 className="form-title">Создайте группы и коллекции</h2>
 	}
 
-	const parentGroup = findGroupsWithCollections(rawData)
-
-	if (!parentGroup || parentGroup.length === 0) {
-		return <h2 className="form-title">Пока не создано ни одной коллекции</h2>
-	}
-
-	const onChoiceGroup = event => {
-		const id = event.currentTarget.value
-		if (!!id) {
-			const parent = parentGroup.find(item => item._id === id)
-			setCollectionsList(parent.collections)
-		} else {
-			setCollectionsList(null)
-		}
-	}
-
-	const onSubmit = ({ collectionId }) => {
-		const collectionData = collectionsList.find(
-			item => item._id === collectionId
-		)
-		if (!collectionData) {
+	const onSubmit = () => {
+		if (!collection) {
 			return setToast({
 				data: {
 					type: 'error',
@@ -50,7 +31,7 @@ const DeleteForm = ({
 			})
 		}
 
-		const { title, _id, products, parentId, image } = collectionData
+		const { title, _id, products, parentId, image } = collection
 		if (products.length > 0) {
 			return setToast({
 				data: {
@@ -63,7 +44,8 @@ const DeleteForm = ({
 		}
 		const resetAll = () => {
 			reset()
-			setCollectionsList(null)
+			setIsReset(true)
+			setCollection(null)
 		}
 
 		deleteCollection(
@@ -76,36 +58,23 @@ const DeleteForm = ({
 	return (
 		<form className={'form'} onSubmit={handleSubmit(onSubmit)}>
 			<h2 className="form-title">Удалить коллекцию</h2>
-			<Field
-				fieldName={'select'}
-				component={FormItem}
-				name={'groupId'}
-				label={'Выберите родителя'}
-				onChange={onChoiceGroup}
-			>
-				<option></option>
-				{<OptionsList groups={parentGroup} />}
-			</Field>
-			{collectionsList ? (
-				<>
-					<Field
-						fieldName={'select'}
-						component={FormItem}
-						name={'collectionId'}
-						label={'Выберите коллекцию для удаления'}
-					>
-						<option></option>
-						<OptionsList groups={collectionsList} />
-					</Field>
+			<SelectSectGrCol
+				rawData={rawData}
+				reset={reset}
+				change={change}
+				resetAll={isReset}
+				getCollection={setCollection}
+				setIsReset={setIsReset}
+			/>
 
-					<button
-						tupe={'submit'}
-						className={'button'}
-						disabled={submitting || !valid}
-					>
-						Удалить
-					</button>
-				</>
+			{collection ? (
+				<button
+					type={'submit'}
+					className={'button'}
+					disabled={submitting || !valid}
+				>
+					Удалить
+				</button>
 			) : null}
 		</form>
 	)

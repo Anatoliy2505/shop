@@ -11,11 +11,12 @@
     color: $mainColor;
     font-size: 0.9em;
 
-    &:last-of-type {
-      color: $textColor
+    &:last-child {
+      color: $textColor;
+      padding-left: 0.5rem;
     }
 
-    &:not(:last-of-type) {
+    &:not(:last-child) {
       padding-right: 1rem;
 
       &::after {

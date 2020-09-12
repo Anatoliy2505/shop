@@ -16,7 +16,7 @@ export const Groups = ({
 		<>
 			<h1 className={'page-title'}>Категории для каталога</h1>
 			<AdminActions
-				create={{ component: CreateGroup, groups: data, setNewGroup }}
+				create={{ component: CreateGroup, groups: rawData, setNewGroup }}
 				update={{
 					component: UpdateGroup,
 					groups: data,

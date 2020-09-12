@@ -1,6 +1,6 @@
 export { default as Groups } from './Groups'
 export { default as Collections } from './Collections'
-export { Products } from './Products'
+export { default as Products } from './Products'
 export { Orders } from './Orders'
 export { Clientele } from './Clientele'
 export { Manual } from './Manual'

@@ -4,10 +4,9 @@ import { validateCreateCollection as validate } from '../../../../../utils/valid
 
 import { FormItem, OptionsList } from '../../../components'
 import { useSetToast } from '../../../../../hooks'
-import { getParentList } from '../../../../../utils/helpers/getParentList'
 
 const CreateForm = ({
-	rawData,
+	groups,
 	handleSubmit,
 	submitting,
 	valid,
@@ -36,7 +35,7 @@ const CreateForm = ({
 				label={'Выберите родителя'}
 			>
 				<option></option>
-				{rawData && <OptionsList groups={getParentList(rawData)} />}
+				{groups && <OptionsList groups={groups} parentIsDisabled={true} />}
 			</Field>
 			<Field
 				component={FormItem}
@@ -52,7 +51,7 @@ const CreateForm = ({
 			/>
 			<Field
 				component={FormItem}
-				type={'text'}
+				type={'number'}
 				name={'price'}
 				label={'Укажите цену'}
 			/>
@@ -70,6 +69,24 @@ const CreateForm = ({
 			/>
 			<Field
 				component={FormItem}
+				type={'text'}
+				name={'container'}
+				label={'Упаковка и количество'}
+			/>
+			<Field
+				component={FormItem}
+				type={'text'}
+				name={'properties'}
+				label={'Введите св.-знач./св.-зн./для коллекции'}
+			/>
+			<Field
+				component={FormItem}
+				type={'number'}
+				name={'sort'}
+				label={'Укажите позицию'}
+			/>
+			<Field
+				component={FormItem}
 				type={'checkbox'}
 				name={'sale'}
 				label={'Есть ли товары со скидкой'}
@@ -82,12 +99,18 @@ const CreateForm = ({
 			/>
 			<Field
 				component={FormItem}
+				type={'checkbox'}
+				name={'isset'}
+				label={'Есть товары'}
+			/>
+			<Field
+				component={FormItem}
 				type={'file'}
 				name={'image'}
 				label={'Загрузите картинку'}
 			/>
 			<button
-				tupe={'submit'}
+				type={'submit'}
 				className={'button'}
 				disabled={submitting || !valid}
 			>
@@ -99,5 +122,9 @@ const CreateForm = ({
 
 export const CreateCollection = reduxForm({
 	form: 'createCollection',
+	initialValues: {
+		sort: 999,
+		isset: true,
+	},
 	validate,
 })(CreateForm)

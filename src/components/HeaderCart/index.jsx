@@ -1,19 +1,32 @@
 import React from 'react'
-import './HeaderCart.scss'
+import { connect } from 'react-redux'
+import { getCartSelector } from '../../pages/Cart/redux/selectors'
 
-export const HeaderCart = () => {
-	const empty = false
+import './HeaderCart.scss'
+import { NavLink } from 'react-router-dom'
+
+const HeaderCart = ({ cartData: { totalCount, totalPrice } }) => {
+	let empty = false
+	if (!totalCount) empty = true
+
 	return (
-		<a href={'/'} className={'cart'}>
+		<NavLink to={'/cart'} className={'cart'}>
 			<i className={'fas fa-shopping-cart fa-lg'} />
 			{empty ? (
 				<span className={'cart__text'}>Корзина</span>
 			) : (
 				<div className="cart__wrapper">
-					<span className={'cart__count'}>10 шт.</span>
-					<span className={'cart__summ'}>10000 руб.</span>
+					<span className={'cart__count'}>{totalCount} шт.</span>
+					<span className={'cart__summ'}>{totalPrice} руб.</span>
 				</div>
 			)}
-		</a>
+		</NavLink>
 	)
 }
+
+export default connect(
+	state => ({
+		cartData: getCartSelector(state),
+	}),
+	{}
+)(HeaderCart)

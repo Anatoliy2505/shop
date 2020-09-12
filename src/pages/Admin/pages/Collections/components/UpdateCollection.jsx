@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { reduxForm, Field } from 'redux-form'
-import { FormItem, OptionsList } from '../../../components'
+import { FormItem, OptionsList, SelectSectGrCol } from '../../../components'
 
 import { useSetToast } from '../../../../../hooks'
-import findGroupsWithCollections from '../../../../../utils/helpers/findGroupsWithCollections'
-import { getParentList } from '../../../../../utils/helpers/getParentList'
 
 import { validateChangeCollection as validate } from '../../../../../utils/validators'
 
 import '../Collections.scss'
 
 const FormUpdateCollection = ({
+	groups,
 	rawData,
 	handleSubmit,
 	submitting,
@@ -21,48 +20,23 @@ const FormUpdateCollection = ({
 	initialize,
 	untouch,
 }) => {
-	const [sectionList, setSectionList] = useState(null)
-	const [groupList, setGroupList] = useState(null)
-	const [collectionList, setCollectionList] = useState(null)
 	const [collection, setCollection] = useState(null)
 	const [isVisibleImage, setIsVisibleImage] = useState(false)
 	const [isInitialize, setIsInitialize] = useState(false)
+	const [isReset, setIsReset] = useState(false)
 
 	const { setToast } = useSetToast()
-
-	useEffect(() => {
-		if (rawData && rawData.length > 0 && !sectionList) {
-			setSectionList(rawData.filter(item => item.parentId === '0'))
-		}
-	}, [rawData, sectionList])
 
 	useEffect(() => {
 		if (collection && !isInitialize) {
 			untouch('image')
 			change('image', null)
-			const {
-				name,
-				title,
-				content,
-				price,
-				mainParameter,
-				sale,
-				hit,
-				image,
-				parentId,
-			} = collection
+			const { image, ...rest } = collection
 			initialize(
 				{
-					name,
-					title,
-					content,
-					price,
-					mainParameter,
-					sale,
-					hit,
-					parentId,
 					isNewImage: false,
 					oldImage: image,
+					...rest,
 				},
 				true
 			)
@@ -73,49 +47,17 @@ const FormUpdateCollection = ({
 		}
 	}, [collection, initialize, untouch, isInitialize, change])
 
-	if (!sectionList || sectionList.length === 0) {
-		return <h2 className="form-title">Создайте группы и коллекции</h2>
-	}
-
-	const parentGroup = findGroupsWithCollections(rawData)
-
-	const onChoiceSection = event => {
-		const id = event.currentTarget.value
-		reset()
-		setCollectionList(null)
-		setCollection(null)
-		if (!!id) {
-			const list = parentGroup.filter(item => item.parentId === id)
-			setGroupList(list && list.length > 0 ? list : null)
-		} else {
-			setGroupList(null)
-		}
-	}
-
-	const onChoiceGroup = event => {
-		const id = event.currentTarget.value
-		change('collectionId', null)
-		setCollection(null)
-		if (!!id) {
-			const parent = parentGroup.find(item => item._id === id)
-			setCollectionList(parent.collections)
-		} else {
-			setCollectionList(null)
-		}
-	}
-
-	const onChoiceCollection = event => {
-		const id = event.currentTarget.value
-		const collectionData = collectionList.find(item => item._id === id)
-		setCollection(collectionData)
+	const getCollection = data => {
+		setCollection(data)
 		setIsInitialize(false)
 	}
 
 	const resetAll = () => {
 		reset()
-		setGroupList(null)
-		setCollectionList(null)
+		setIsVisibleImage(null)
+		setIsInitialize(null)
 		setCollection(null)
+		setIsReset(true)
 	}
 
 	const onSubmit = value => {
@@ -155,41 +97,14 @@ const FormUpdateCollection = ({
 	return (
 		<form className={'form'} onSubmit={handleSubmit(onSubmit)}>
 			<h2 className="form-title">Изменить коллекцию</h2>
-			<Field
-				fieldName={'select'}
-				component={FormItem}
-				name={'sectionId'}
-				label={'Выберите раздел'}
-				onChange={onChoiceSection}
-			>
-				<option></option>
-				{<OptionsList groups={sectionList} />}
-			</Field>
-			{groupList && (
-				<Field
-					fieldName={'select'}
-					component={FormItem}
-					name={'groupId'}
-					label={'Выберите родительскую группу'}
-					onChange={onChoiceGroup}
-				>
-					<option></option>
-					{<OptionsList groups={groupList} />}
-				</Field>
-			)}
-
-			{collectionList && (
-				<Field
-					fieldName={'select'}
-					component={FormItem}
-					name={'collectionId'}
-					label={'Выберите коллекцию для изменения'}
-					onChange={onChoiceCollection}
-				>
-					<option></option>
-					<OptionsList groups={collectionList} />
-				</Field>
-			)}
+			<SelectSectGrCol
+				rawData={rawData}
+				reset={reset}
+				change={change}
+				getCollection={getCollection}
+				resetAll={isReset}
+				setIsReset={setIsReset}
+			/>
 			{collection && (
 				<>
 					<Field
@@ -199,7 +114,7 @@ const FormUpdateCollection = ({
 						label={'Измените родительскую группу'}
 					>
 						<option></option>
-						<OptionsList groups={getParentList(rawData)} />
+						<OptionsList groups={groups} parentIsDisabled={true} />
 					</Field>
 					<Field
 						component={FormItem}
@@ -215,7 +130,7 @@ const FormUpdateCollection = ({
 					/>
 					<Field
 						component={FormItem}
-						type={'text'}
+						type={'number'}
 						name={'price'}
 						label={'Измените цену'}
 					/>
@@ -233,6 +148,24 @@ const FormUpdateCollection = ({
 					/>
 					<Field
 						component={FormItem}
+						type={'text'}
+						name={'container'}
+						label={'Упаковка и количество'}
+					/>
+					<Field
+						component={FormItem}
+						type={'text'}
+						name={'properties'}
+						label={'Измените св.-знач./св.-зн./для коллекции'}
+					/>
+					<Field
+						component={FormItem}
+						type={'number'}
+						name={'sort'}
+						label={'Укажите позицию'}
+					/>
+					<Field
+						component={FormItem}
 						type={'checkbox'}
 						name={'sale'}
 						label={'Есть ли товары со скидкой'}
@@ -242,6 +175,12 @@ const FormUpdateCollection = ({
 						type={'checkbox'}
 						name={'hit'}
 						label={'Это хит продаж'}
+					/>
+					<Field
+						component={FormItem}
+						type={'checkbox'}
+						name={'isset'}
+						label={'Есть товары'}
 					/>
 					<Field component={'input'} type={'hidden'} name={'oldImage'} />
 					<div className={'preview-image'}>
@@ -271,7 +210,7 @@ const FormUpdateCollection = ({
 					)}
 
 					<button
-						tupe={'submit'}
+						type={'submit'}
 						className={'button'}
 						disabled={submitting || !valid}
 					>

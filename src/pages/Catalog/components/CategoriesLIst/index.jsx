@@ -6,7 +6,7 @@ import useSetViewList from './useSetViewCat'
 import './CategoriesList.scss'
 
 export const CategoriesLIst = React.memo(
-	({ categories, page, viewElements }) => {
+	({ categories, page, viewElements, from }) => {
 		const [currentPage, setCurrentPage] = useState(1)
 		const [observer, setObserver] = useState(null)
 		const observeElement = useRef(null)
@@ -55,7 +55,12 @@ export const CategoriesLIst = React.memo(
 
 		const categoriesList = viewList =>
 			viewList.map(category => (
-				<CategoryCard key={category._id} {...category} page={page} />
+				<CategoryCard
+					key={category._id}
+					{...category}
+					page={page}
+					from={from}
+				/>
 			))
 
 		const getNewPage = () => {

@@ -33,7 +33,11 @@ const CatalogTree = ({
 						'sidebar-catalog__parent ' + (itemId === item._id ? 'active' : '')
 					}
 				>
-					<div className={'sidebar-catalog__parent-wrap'}>
+					<div
+						className={'sidebar-catalog__parent-wrap'}
+						data-id={item._id}
+						onClick={onSelectItem}
+					>
 						<Link
 							className={'sidebar-catalog__item'}
 							to={'/catalog/' + item.name}
@@ -44,11 +48,7 @@ const CatalogTree = ({
 							/>
 							{item.title}
 						</Link>
-						<span
-							className={'sidebar-catalog__parent-open'}
-							data-id={item._id}
-							onClick={onSelectItem}
-						/>
+						<span className={'sidebar-catalog__parent-open'} />
 					</div>
 					{item.children && item.children.length > 0 && (
 						<ul className={'sidebar-catalog__children-list'}>

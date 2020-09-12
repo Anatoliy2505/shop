@@ -22,6 +22,11 @@ export const FormCreateGroup = ({
 		setTopLavel(false)
 	}
 
+	const getTopLavelGroups = () => {
+		const topLavelGroups = groups.filter(item => item.parentId === '0')
+		return topLavelGroups
+	}
+
 	const onChangeParent = e => {
 		const id = e.currentTarget.value
 		if (id === '0') {
@@ -42,7 +47,7 @@ export const FormCreateGroup = ({
 			>
 				<option></option>
 				<option value={'0'}>Верхний уровень</option>
-				{groups && <OptionsList groups={groups} />}
+				{groups && <OptionsList groups={getTopLavelGroups()} />}
 			</Field>
 			<Field
 				component={FormItem}
@@ -66,7 +71,7 @@ export const FormCreateGroup = ({
 			)}
 
 			<button
-				tupe={'submit'}
+				type={'submit'}
 				className={'button'}
 				disabled={submitting || !valid}
 			>

@@ -9,8 +9,12 @@ import hits from '../pages/Hits/redux/reducer'
 import sale from '../pages/Sale/redux/reducer'
 import search from '../pages/Search/redux/reducer'
 import auth from '../pages/Auth/redux/reducer'
+import collectionDetail from '../pages/ProductsDetail/redux/reducer'
+import products from '../pages/Admin/pages/Products/redux/reducer'
+import cart from '../pages/Cart/redux/reducer'
 
 export default combineReducers({
+	cart,
 	auth,
 	sidebar,
 	home,
@@ -19,5 +23,7 @@ export default combineReducers({
 	hits,
 	sale,
 	search,
+	collectionDetail,
+	products,
 	form: formReducer,
 })

@@ -10,6 +10,7 @@ import {
 	Auth,
 	Admin,
 	User,
+	Cart,
 } from './pages'
 
 export const routes = [
@@ -22,13 +23,19 @@ export const routes = [
 	{
 		key: 2,
 		path: [
-			'/sale/:products',
-			'/hits/:products',
-			'/search/:products',
-			'/recommendation/:products',
-			'/catalog/:mainCategory/:parentCategory/:products',
+			'/sale/:collectionName',
+			'/hits/:collectionName',
+			'/search/:collectionName',
+			'/recommendation/:collectionName',
+			'/product/:section/:group/:collectionName',
+			'/product/:section/:collectionName',
 		],
 		component: ProductsDetail,
+	},
+	{
+		key: 12,
+		path: '/cart',
+		component: Cart,
 	},
 	{
 		key: 3,
@@ -57,7 +64,7 @@ export const routes = [
 	},
 	{
 		key: 8,
-		path: ['/catalog/:mainCategory/:parentCategory', '/catalog/:mainCategory'],
+		path: ['/catalog/:section/:group', '/catalog/:section'],
 		component: Catalog,
 	},
 	{

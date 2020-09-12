@@ -1,3 +1,3 @@
 export const checkResponse = res => {
-	return res.ok
+	return res.ok === true
 }

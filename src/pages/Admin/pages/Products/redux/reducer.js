@@ -1,30 +1,36 @@
 import * as t from './actionTypes'
 
-const initialState = {
-	data: null,
+export const initialState = {
+	products: null,
 	isLoading: false,
 	errorMsg: null,
 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case t.NEWS_GET_REQUEST:
+		case t.GET_PRODUCTS_REQUEST:
 			return {
-				...state,
-				errorMsg: null,
+				products: null,
 				isLoading: true,
+				errorMsg: null,
 			}
-		case t.NEWS_GET_SUCCESS:
+		case t.GET_PRODUCTS_SUCCESS:
 			return {
 				...state,
+				products: action.payload.products,
 				isLoading: false,
-				data: action.payload,
 			}
-		case t.NEWS_GET_FAILURE:
+		case t.GET_PRODUCTS_FAILURE:
 			return {
-				...state,
+				products: null,
 				isLoading: false,
 				errorMsg: action.payload.errorMsg,
+			}
+		case t.RESET:
+			return {
+				products: null,
+				isLoading: false,
+				errorMsg: null,
 			}
 		default:
 			return state

@@ -15,10 +15,14 @@
 		flex-flow: column;
 		align-items: center;
 		justify-content: center;
-		margin-left: 1.5rem;
+		margin-left: 1rem;
 	}
 	&__count, &__summ {
 		color: $mainColor;
 		font-weight: 600;
+	}
+	&__text {
+		display: inline-block;
+		padding-left: 0.5rem;
 	}
 }

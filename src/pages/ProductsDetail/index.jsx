@@ -1,321 +1,85 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { connect } from 'react-redux'
-import {
-	BreadCrumbs,
-	CategoriesSlider,
-	Preloader,
-	Error,
-	Empty,
-} from '../../components'
-import { Properties, AddProductForm } from './components'
+import { ViewProducts } from './components'
 
-import { createRoutes } from '../../utils/helpers/createRoutesForProductDetail'
+import { BreadCrumbs, Preloader, Error, Empty } from '../../components'
 
+import { getCollection } from './redux/actions'
 import { sidebarSelector } from '../../redux/selectors'
+import { collectionDataSelector } from './redux/selectors'
+
+import { createRoutes } from '../../utils/helpers/createRoutes'
+import { addProductToCart } from '../Cart/redux/actions'
+
 import './ProductsDetail.scss'
-// const props = {
-// 	isLoading: false,
-// 	errorMsg: null,
-// 	categoryName: null,
-// 	recomendation: null,
-// 	catygoryData: null,
-// 	productsDats: null
-// }
 
 const ProductsDetail = ({
-	isLoading,
-	errorMsg,
-	recomendation,
-	catygoryData,
-	products,
-	categories,
-	match: { url, params },
+	data: { collection, recomendation, products, isLoading, errorMsg },
+	getCollection,
+	groups: { rawData },
+	addProductToCart,
+	match: {
+		url,
+		params: { group, section, collectionName },
+	},
 }) => {
-	const [productId, setProductId] = useState(
-		products ? Number(products['0'].id) : null
-	)
-	const [productData, setProductData] = useState(
-		productId ? products.find(item => item.id === productId) : null
-	)
-	const [productCount, setProductCount] = useState(1)
+	const collName = useRef(null)
+	const [routes, setRoutes] = useState(null)
 
-	let routes = null
-	const urlItems = url.split('/').slice(1)
-	// const productsCategory = utlItems[urlItems.length - 1]
-	const { mainCategory, parentCategory } = params
-
-	routes = createRoutes(
-		urlItems[0],
-		categories.data,
-		mainCategory,
-		parentCategory
-	)
-
-	const selectProduct = e => {
-		const id = Number(e.currentTarget.dataset.id)
-		if (productId !== id) {
-			setProductId(id)
-			setProductData(products.find(item => item.id === id))
-			setProductCount(1)
+	useEffect(() => {
+		if (collectionName !== collName) {
+			collName.current = collectionName
+			getCollection(collectionName)
 		}
-	}
+	}, [getCollection, collName, collectionName])
 
-	const changeProductCount = e => {
-		setProductCount(e.currentTarget.value)
-	}
+	const newRouts = useMemo(() => {
+		const urlItems = url.split('/').slice(1)
+		if (!!collName && !!rawData) {
+			const routs = createRoutes(urlItems[0], section, group, rawData)
+			return routs
+		}
+		return null
+	}, [section, group, rawData, url, collName])
 
-	const productsItems = () =>
-		products.map(item => (
-			<div
-				key={item.id}
-				className={
-					item.id === productId ? 'products-item active' : 'products-item'
-				}
-				data-id={item.id}
-				onClick={selectProduct}
-			>
-				<img className={'products-item__img'} src={item.img} alt={item.title} />
-				<span className={'products-item__name'}>{item.name}</span>
-			</div>
-		))
+	useEffect(() => {
+		if (!!newRouts) {
+			setRoutes(() => newRouts)
+		}
+	}, [newRouts])
+
+	let collectionTitle = isLoading
+		? 'Поиск товаров...'
+		: (collection && collection.title) || 'Товары не найдены'
 
 	return (
 		<section className={'products'}>
-			<BreadCrumbs
-				routes={routes}
-				lastElementName={catygoryData.title || 'Товар не найден'}
-			/>
-			<h1 className={'page-title'}>
-				{catygoryData.title || 'Товар временно отсутствует'}
-			</h1>
+			<BreadCrumbs routes={routes} lastElementName={collectionTitle} />
+			<h1 className={'page-title'}>{collectionTitle}</h1>
 			{isLoading ? (
 				<Preloader title={'Загрузка товаров'} />
 			) : errorMsg ? (
 				<Error title={errorMsg} />
-			) : products && catygoryData ? (
+			) : products && products.length > 0 ? (
 				<>
-					<div className={'products-container'}>
-						<div className="products-section one">
-							<div className="products__wrap-img">
-								<img src={productData.img} alt={productData.title} />
-							</div>
-
-							<AddProductForm
-								title={productData.title}
-								productCount={productCount}
-								productPrice={catygoryData.price}
-								changeProductCount={changeProductCount}
-							/>
-						</div>
-
-						<div className="products-section two">
-							<h3 className="products-title">Описание:</h3>
-							<div className="products-description">
-								{catygoryData.description}
-							</div>
-
-							<Properties
-								properties={productData.properties}
-								title={productData.title}
-								name={productData.name}
-								mainField={catygoryData.mainParametr}
-								price={catygoryData.price}
-							/>
-
-							<h3 className="products-title">
-								Выберите {catygoryData.mainParametr}:
-							</h3>
-							<div className="products-items">
-								<div className="products-items__container">
-									{productsItems()}
-								</div>
-							</div>
-						</div>
-					</div>
-					{recomendation && recomendation.length && (
-						<div className="products-recomendation">
-							<CategoriesSlider
-								categories={recomendation}
-								title={'Рекомнедованные товары'}
-								href={'/recommendation'}
-								page={'recommendation'}
-							/>
-						</div>
-					)}
+					<ViewProducts
+						products={products}
+						collection={collection}
+						recomendation={recomendation}
+						addProductToCart={addProductToCart}
+					/>
 				</>
 			) : (
-				<Empty title={'Товар временно отсутствует'} />
+				<Empty title={'Товары временно отсутствуют'} />
 			)}
 		</section>
 	)
 }
 
-const props = {
-	isLoading: false,
-	errorMsg: null,
-	recomendation: [
-		{
-			id: 21,
-			name: 'fishing_equipment',
-			parent_id: 20,
-			img: 'https://sibirskylov.ru/img/magazin/head/common.png',
-			title: 'Рыболовные снасти',
-			price: 6000,
-			priceOld: null,
-			count: 10,
-		},
-		{
-			id: 22,
-			parent_id: 21,
-			name: 'fishing_equipment',
-			img: 'https://sibirskylov.ru/img/magazin/head/common.png',
-			title: 'Пневматическая Винтовка Daisy 74 CO2',
-			price: 6000,
-			priceOld: null,
-			count: 10,
-		},
-		{
-			id: 23,
-			parent_id: 22,
-			name: 'fishing_equipment',
-			img: 'https://sibirskylov.ru/img/magazin/head/common.png',
-			title: 'Пневматическая Винтовка Daisy 74 CO2',
-			price: 6000,
-			priceOld: null,
-			count: 10,
-		},
-		{
-			id: 24,
-			parent_id: 23,
-			name: 'fishing_equipment',
-			img: 'https://sibirskylov.ru/img/magazin/head/common.png',
-			title: 'Пневматическая Винтовка Daisy 74 CO2',
-			price: 6000,
-			priceOld: null,
-			count: 10,
-		},
-		{
-			id: 25,
-			parent_id: 24,
-			name: 'fishing_equipment',
-			img: 'https://sibirskylov.ru/img/magazin/head/common.png',
-			title: 'Пневматическая Винтовка Daisy 74 CO2',
-			price: 6000,
-			priceOld: null,
-			count: 10,
-		},
-		{
-			id: 26,
-			parent_id: 25,
-			name: 'fishing_equipment',
-			img: 'https://sibirskylov.ru/img/magazin/head/common.png',
-			title: 'Пневматическая Винтовка Daisy 74 CO2',
-			price: 6000,
-			priceOld: null,
-			count: 10,
-		},
-	],
-	catygoryData: {
-		id: 28,
-		name: 'headers',
-		title: 'Латунные головки',
-		mainParametr: 'цвет',
-		description:
-			'Головки из сплава латуни. Представлены в диаметрах 2,5 и 3мм.	Головки 2,5 мм подходят к крючкам номер 16,14,12. Головки 3мм	подходят к крючкам номер 12,10,8,6. Вес головки 2,5 мм – 0,03	грамма. Вес головки 3мм – 0,05 грамма. Представлены в трех цветах:	Желтый, Белый, Никель. Одна пачка – 100 штук. Для заказа вам нужно выбрать Диаметр, Цвет и Количество упаковок.',
-		price: 150,
-		newPrice: 100,
-	},
-	products: [
-		{
-			id: 1,
-			title: 'Золотые головки',
-			price: 150,
-			img: 'https://sibirskylov.ru/img/magazin/head/gold.png',
-			name: 'Золотой',
-			properties: [
-				{
-					title: 'Диаметр',
-					value: '3 мм',
-				},
-				{
-					title: 'Вес',
-					value: '3 гр',
-				},
-			],
-		},
-		{
-			id: 2,
-			title: 'Серебрянные головки',
-			price: 150,
-			img: 'https://sibirskylov.ru/img/magazin/head/silver.png',
-			name: 'Серебро',
-			properties: [
-				{
-					title: 'Диаметр',
-					value: '3 мм',
-				},
-				{
-					title: 'Вес',
-					value: '3 гр',
-				},
-			],
-		},
-		{
-			id: 3,
-			title: 'Тёмные головки',
-			price: 150,
-			img: 'https://sibirskylov.ru/img/magazin/head/black.png',
-			name: 'Тёмный никель',
-			properties: [
-				{
-					title: 'Диаметр',
-					value: '3 мм',
-				},
-				{
-					title: 'Вес',
-					value: '3 гр',
-				},
-			],
-		},
-		{
-			id: 4,
-			title: 'Бронзовые головки',
-			price: 150,
-			img: 'https://sibirskylov.ru/img/magazin/head/gold.png',
-			name: 'Бронза',
-			properties: [
-				{
-					title: 'Диаметр',
-					value: '3 мм',
-				},
-				{
-					title: 'Вес',
-					value: '3 гр',
-				},
-			],
-		},
-		{
-			id: 5,
-			title: 'Латунные головки',
-			price: 150,
-			img: 'https://sibirskylov.ru/img/magazin/head/silver.png',
-			name: 'Латунь',
-			properties: [
-				{
-					title: 'Диаметр',
-					value: '3 мм',
-				},
-				{
-					title: 'Вес',
-					value: '3 гр',
-				},
-			],
-		},
-	],
-}
-
-ProductsDetail.defaultProps = props
-
-export default connect(state => ({
-	categories: sidebarSelector(state),
-}))(ProductsDetail)
+export default connect(
+	state => ({
+		groups: sidebarSelector(state),
+		data: collectionDataSelector(state),
+	}),
+	{ getCollection, addProductToCart }
+)(ProductsDetail)

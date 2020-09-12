@@ -1,40 +1,63 @@
-import { checkResponse } from '../../../utils/helpers/checkResponse'
-import { getAll } from '../../../utils/api/newsApi'
-import { error } from './constants'
-
 import * as t from './actionTypes'
+import { error } from './constants'
+import {
+	removeProduct,
+	updateProduct,
+	setProduct,
+	getProductsFromCollection,
+} from '../../../../../utils/api/adminApi'
 
-export const newsRequest = () => ({
-	type: t.NEWS_GET_REQUEST,
+import { action } from '../../../../../utils/helpers/action'
+import { checkResponse } from '../../../../../utils/helpers/checkResponse'
+
+export const setNewProduct = (data, setToast, reset) =>
+	action(data, setToast, setProduct, reset)
+
+export const changeProduct = (data, setToast, reset) =>
+	action(data, setToast, updateProduct, reset)
+
+export const deleteProduct = (data, setToast, reset) =>
+	action(data, setToast, removeProduct, reset)
+
+export const getProductsRequest = () => ({
+	type: t.GET_PRODUCTS_REQUEST,
 })
 
-export const newsSuccess = data => ({
-	type: t.NEWS_GET_SUCCESS,
-	payload: data,
+export const getProductsSuccess = products => ({
+	type: t.GET_PRODUCTS_SUCCESS,
+	payload: {
+		products,
+	},
 })
 
-export const newsFailure = (errorMsg = error.connect) => ({
-	type: t.NEWS_GET_FAILURE,
+export const getProductsFailure = (errorMsg = error.connect) => ({
+	type: t.GET_PRODUCTS_FAILURE,
 	payload: {
 		errorMsg,
 	},
 	error: true,
 })
 
-export const getNews = () => {
+export const getProducts = collectionId => {
 	return dispatch => {
-		dispatch(newsRequest())
-
-		return getAll()
+		dispatch(getProductsRequest())
+		return getProductsFromCollection(collectionId)
 			.then(res => {
 				if (checkResponse(res)) {
-					dispatch(newsSuccess(res.data))
+					dispatch(getProductsSuccess(res.products))
 				} else {
-					dispatch(newsFailure(res.message))
+					dispatch(getProductsFailure(res.message))
 				}
 			})
 			.catch(error => {
-				dispatch(newsFailure())
+				dispatch(getProductsFailure())
+				console.log(error)
 			})
 	}
+}
+
+export const resetProducts = () => dispatch => {
+	dispatch({
+		type: t.RESET,
+	})
 }

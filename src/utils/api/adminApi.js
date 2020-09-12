@@ -13,8 +13,17 @@ export const setCollection = body =>
 export const updateCollection = body =>
 	request('api/collection/updateCollection', 'PUT', body)
 
-export const getCollections = id =>
-	request(`api/collection/getCollections/${id}`, 'GET')
-
 export const removeCollection = body =>
 	request('api/collection/removeCollection', 'DELETE', body)
+
+export const setProduct = body =>
+	request('api/product/setProduct', 'POST', body)
+
+export const updateProduct = body =>
+	request('api/product/updateProduct', 'PUT', body)
+
+export const removeProduct = body =>
+	request('api/product/removeProduct', 'DELETE', body)
+
+export const getProductsFromCollection = collectionId =>
+	request(`api/product/getProducts/${collectionId}`, 'GET')

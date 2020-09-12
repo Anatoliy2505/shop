@@ -29,7 +29,7 @@ export const createCatalogTree = data => {
 				catalog[data[i].name] = {
 					_id: data[i]._id,
 					title: data[i].title,
-					categories: [],
+					collections: data[i].collections,
 				}
 			}
 		}

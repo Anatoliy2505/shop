@@ -1,4 +1,4 @@
-import { getMainCategories } from '../utils/api/categoriesApi'
+import { getGroups } from '../utils/api/categoriesApi'
 import { error } from './constants'
 import * as t from './actionTypes'
 import { createCatalogTree } from '../pages/Catalog/redux/actions'
@@ -25,7 +25,7 @@ export const getAllMainCategories = () => {
 	return dispatch => {
 		dispatch(categoriesRequest())
 
-		return getMainCategories()
+		return getGroups()
 			.then(res => {
 				if (res.ok) {
 					dispatch(categoriesSuccess(res.groups))

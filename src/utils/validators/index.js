@@ -99,10 +99,7 @@ export const validateChangeGroup = values => {
 		errors['parentId'] = 'Ошибка! Выберите другого родителя'
 	}
 
-	if (
-		(values['parentId'] === '0' || values['parentId'] === 0) &&
-		!values['image']
-	) {
+	if (values['parentId'] === '0' && !values['image']) {
 		errors['image'] = 'Добавьте код картинки'
 	}
 
@@ -138,8 +135,8 @@ export const validateCreateCollection = values => {
 		errors['parentId'] = 'Ошибка! Выберите родителя'
 	}
 
-	if (!values['price']) {
-		errors['price'] = 'Необходимо указать цену'
+	if (!values['price'] || values['price'] === '0') {
+		errors['price'] = 'Необходимо указать цену отличную от 0'
 	} else if (!/^\d+$/i.test(values['price'])) {
 		errors['price'] = 'Используйте только цифры'
 	}
@@ -153,6 +150,18 @@ export const validateCreateCollection = values => {
 		errors['content'] = 'Добавьте описание'
 	} else if (values['content'].length > 1000) {
 		errors['content'] = 'Длина описания более 1000 символов'
+	}
+
+	if (!values['container']) {
+		errors['container'] = 'Укажите упаковку и количество в ней товара'
+	} else if (values['title'].length > 100) {
+		errors['container'] = 'Длина поля более 100 символов'
+	}
+
+	if (values['sort'] !== '0' && !values['sort']) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
 	}
 
 	if (!values['image']) {
@@ -183,11 +192,18 @@ export const validateChangeCollection = values => {
 		errors['parentId'] = 'Ошибка! Выберите родителя'
 	}
 
-	if (!values['price']) {
-		errors['price'] = 'Необходимо указать цену'
+	if (!values['price'] || values['price'] === '0') {
+		errors['price'] = 'Необходимо указать цену отличную от 0'
 	} else if (!/^\d+$/i.test(values['price'])) {
 		errors['price'] = 'Используйте только цифры'
 	}
+
+	if (!values['container']) {
+		errors['container'] = 'Укажите упаковку и количество в ней товара'
+	} else if (values['title'].length > 100) {
+		errors['container'] = 'Длина поля более 100 символов'
+	}
+
 	if (!values['mainParameter']) {
 		errors['mainParameter'] = 'Укажите отличительный параметр'
 	} else if (values['mainParameter'].length > 30) {
@@ -200,12 +216,132 @@ export const validateChangeCollection = values => {
 		errors['content'] = 'Длина описания более 1000 символов'
 	}
 
+	if (values['sort'] !== '0' && !values['sort']) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
+	}
+
 	if (
 		values['isNewImage'] &&
 		!!values['image'] &&
 		values['image'].length === 0
 	) {
 		errors['image'] = 'Добавьте картинку'
+	}
+
+	return errors
+}
+
+export const validateCreateProduct = values => {
+	const errors = {}
+
+	if (!values['title']) {
+		errors['title'] = 'Поле обязательно для заполнения'
+	} else if (values['title'].length > 30) {
+		errors['title'] = 'Длина названия более 30 символов'
+	}
+
+	if (!values['name']) {
+		errors['name'] = 'Поле обязательно для заполнения'
+	} else if (!/[a-zA-Z\s\d]/i.test(values['name'].trim())) {
+		errors['name'] = 'Только английские буквы'
+	}
+
+	if (!values['collectionId']) {
+		errors['collectionId'] = 'Ошибка! Выберите родителя'
+	}
+
+	if (!values['price'] || values['price'] === '0') {
+		errors['price'] = 'Необходимо указать цену отличную от 0'
+	} else if (!/^\d+$/i.test(values['price'])) {
+		errors['price'] = 'Используйте только положительные цифры'
+	}
+	if (!values['mainParameter']) {
+		errors['mainParameter'] = 'Укажите отличительный параметр'
+	} else if (values['mainParameter'].length > 50) {
+		errors['mainParameter'] = 'Длина параметра более 50 символов'
+	}
+
+	if (values['salePrice'] !== 0 && !values['salePrice']) {
+		errors['salePrice'] = 'Укажите 0 или цену со скидкой'
+	} else if (!/^\d+$/i.test(values['salePrice'])) {
+		errors['salePrice'] = 'Используйте только положительные цифры'
+	}
+
+	if (values['sort'] !== 0 && !values['sort']) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
+	}
+
+	if (!values['image']) {
+		errors['image'] = 'Добавьте картинку'
+	} else if (values['image'].length === 0) {
+		errors['image'] = 'Добавьте картинку'
+	}
+
+	return errors
+}
+
+export const validateUpdateProduct = values => {
+	const errors = {}
+
+	if (!values['title']) {
+		errors['title'] = 'Поле обязательно для заполнения'
+	} else if (values['title'].length > 30) {
+		errors['title'] = 'Длина названия более 30 символов'
+	}
+
+	if (!values['name']) {
+		errors['name'] = 'Поле обязательно для заполнения'
+	} else if (!/[a-zA-Z\s\d]/i.test(values['name'].trim())) {
+		errors['name'] = 'Только английские буквы'
+	}
+
+	if (!values['collectionId']) {
+		errors['collectionId'] = 'Ошибка! Выберите родителя'
+	}
+
+	if (!Number(values['price'])) {
+		errors['price'] = 'Необходимо указать цену отличную от 0'
+	} else if (!/^\d+$/i.test(values['price'])) {
+		errors['price'] = 'Используйте только положительные цифры'
+	}
+	if (!values['mainParameter']) {
+		errors['mainParameter'] = 'Укажите отличительный параметр'
+	} else if (values['mainParameter'].length > 50) {
+		errors['mainParameter'] = 'Длина параметра более 50 символов'
+	}
+
+	if (!Number(values['salePrice']) && Number(values['salePrice']) !== 0) {
+		errors['salePrice'] = 'Укажите 0 или цену со скидкой'
+	} else if (!/^\d+$/i.test(values['salePrice'])) {
+		errors['salePrice'] = 'Используйте только положительные цифры'
+	}
+
+	if (!Number(values['sort']) && Number(values['sort']) !== 0) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
+	}
+
+	if (!values['image']) {
+		errors['image'] = 'Выберите новую картинку'
+	} else if (values['image'].length === 0) {
+		errors['image'] = 'Выберите новую картинку'
+	}
+
+	if (!values['newGroupId']) {
+		errors['newGroupId'] = 'Выберите новую родительскую группу'
+	}
+
+	if (!values['newParentId']) {
+		errors['newParentId'] = 'Выберите новую родительскую коллекцию'
+	}
+
+	if (!values['productId']) {
+		errors['productId'] = 'Выберите товар для изменения'
 	}
 
 	return errors

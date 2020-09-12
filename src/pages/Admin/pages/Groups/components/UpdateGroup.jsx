@@ -14,20 +14,25 @@ const FormUpdateGroup = ({
 	untouch,
 	initialize,
 	change,
+	reset,
 }) => {
 	const [categories, setCategories] = useState(rawData || null)
 	const [category, setCategory] = useState(null)
+	const [isVisibleImage, setIsVisibleImage] = useState(false)
 	const { setToast } = useSetToast()
 
 	useEffect(() => {
 		if (category) {
 			untouch('image')
-			change('image', null)
+			if (category.parentId !== '0') {
+				change('image', '')
+			}
 			initialize(
 				{
 					title: category.title,
 					name: category.name,
 					parentId: category.parentId,
+					image: category.image,
 				},
 				true
 			)
@@ -36,17 +41,31 @@ const FormUpdateGroup = ({
 
 	useEffect(() => {
 		setCategories(rawData)
-
 		setCategory(category => {
 			if (category) return rawData.find(item => item._id === category._id)
 		})
 	}, [rawData])
 
-	const onSubmit = value => {
+	const getTopLavelGroups = () => {
+		const topLavelGroups = categories.filter(
+			item => item.parentId === '0' && item._id !== category._id
+		)
+		return topLavelGroups
+	}
+
+	const resetAll = () => {
+		setCategory(null)
+		setIsVisibleImage(false)
+		reset()
+	}
+
+	const onSubmit = values => {
+		const image = 'image' in values ? values.image : ''
 		if (
-			category.parentId === value['parentId'] &&
-			category.title === value['title'] &&
-			category.name === value['name']
+			category.parentId === values['parentId'] &&
+			category.title === values['title'] &&
+			category.name === values['name'] &&
+			category.image === image
 		) {
 			setToast({
 				data: {
@@ -56,16 +75,39 @@ const FormUpdateGroup = ({
 				},
 			})
 		} else {
-			changeGroup(value, setToast)
+			changeGroup(values, setToast, resetAll)
+		}
+	}
+
+	const isIssetImage = (id, image) => {
+		if (id === '0') {
+			setIsVisibleImage(true)
+			change('image', image)
+		} else {
+			setIsVisibleImage(false)
+			change('image', '')
 		}
 	}
 
 	const onChangeCategory = event => {
 		const id = event.currentTarget.value
 		if (!!id) {
-			setCategory(categories.find(item => item._id === id))
+			const group = categories.find(item => item._id === id)
+			isIssetImage(group.parentId, group.image)
+			setCategory(group)
 		} else {
 			setCategory(null)
+		}
+	}
+
+	const onChangeParent = event => {
+		const id = event.currentTarget.value
+		if (id === '0') {
+			setIsVisibleImage(true)
+			change('image', category.image)
+		} else {
+			setIsVisibleImage(false)
+			change('image', '')
 		}
 	}
 
@@ -81,9 +123,7 @@ const FormUpdateGroup = ({
 						label={'Выбирите категорию для редактирования'}
 						onChange={onChangeCategory}
 					>
-						<option className={'default-option-name'}>
-							Выбирите из списка
-						</option>
+						<option></option>
 						{groups && <OptionsList groups={groups} />}
 					</Field>
 					{category && (
@@ -93,12 +133,11 @@ const FormUpdateGroup = ({
 								component={FormItem}
 								name={'parentId'}
 								label={'Выборать родительскую категрорию'}
+								onChange={onChangeParent}
 							>
-								<option className={'default-option-name'}>
-									Выбирите из списка
-								</option>
+								<option></option>
 								<option value={'0'}>Верхний уровень</option>
-								{groups && <OptionsList groups={groups} />}
+								{rawData && <OptionsList groups={getTopLavelGroups()} />}
 							</Field>
 							<Field
 								component={FormItem}
@@ -112,7 +151,7 @@ const FormUpdateGroup = ({
 								name={'name'}
 								label={'Измените название на английском'}
 							/>
-							{category.image && (
+							{isVisibleImage && (
 								<Field
 									component={FormItem}
 									type={'text'}
@@ -122,7 +161,7 @@ const FormUpdateGroup = ({
 							)}
 
 							<button
-								type={'subbmit'}
+								type={'submit'}
 								className={'button'}
 								disabled={submitting || !valid}
 							>
