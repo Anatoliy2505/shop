@@ -1,38 +1,39 @@
 import { checkResponse } from '../../../utils/helpers/checkResponse'
-import { getHitsCategoriesApi } from '../../../utils/api/categoriesApi'
+import { getHitsApi } from '../../../utils/api/collectionApi'
 import { error } from './constants'
 import * as t from './actionTypes'
 
-export const hitsCategoriesRequest = () => ({
-	type: t.GET_HITS_CATEGORIES_REQUEST,
+export const getHitsCollectionsRequest = () => ({
+	type: t.GET_HITS_COLLECTIONS_REQUEST,
 })
 
-export const hitsCategoriesSuccess = data => ({
-	type: t.GET_HITS_CATEGORIES_SUCCESS,
-	payload: data,
+export const getHitsCollectionsSuccess = collections => ({
+	type: t.GET_HITS_COLLECTIONS_SUCCESS,
+	collections,
 })
 
-export const hitsCategoriesFailure = (errorMsg = error.connect) => ({
-	type: t.GET_HITS_CATEGORIES_FAILURE,
+export const getHitsCollectionsFailure = (errorMsg = error.connect) => ({
+	type: t.GET_HITS_COLLECTIONS_FAILURE,
 	payload: {
 		errorMsg,
 	},
 	error: true,
 })
 
-export const getHitsCategories = () => {
+export const getHitsCollections = () => {
 	return dispatch => {
-		dispatch(hitsCategoriesRequest())
-		return getHitsCategoriesApi()
+		dispatch(getHitsCollectionsRequest())
+
+		return getHitsApi()
 			.then(res => {
 				if (checkResponse(res)) {
-					dispatch(hitsCategoriesSuccess(res.data))
+					dispatch(getHitsCollectionsSuccess(res.collections))
 				} else {
-					dispatch(hitsCategoriesFailure(res.message || error.request))
+					dispatch(getHitsCollectionsFailure(res.message || error.request))
 				}
 			})
 			.catch(error => {
-				dispatch(hitsCategoriesFailure())
+				dispatch(getHitsCollectionsFailure())
 				console.log(error)
 			})
 	}

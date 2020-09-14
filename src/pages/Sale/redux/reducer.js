@@ -8,19 +8,19 @@ export const initialState = {
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case t.GET_SALE_CATEGORIES_REQUEST:
+		case t.GET_SALE_COLLECTIONS_REQUEST:
 			return {
 				...state,
 				isLoading: true,
 				errorMsg: null,
 			}
-		case t.GET_SALE_CATEGORIES_SUCCESS:
+		case t.GET_SALE_COLLECTIONS_SUCCESS:
 			return {
 				...state,
-				data: action.payload,
+				data: action.collections,
 				isLoading: false,
 			}
-		case t.GET_SALE_CATEGORIES_FAILURE:
+		case t.GET_SALE_COLLECTIONS_FAILURE:
 			return {
 				...state,
 				errorMsg: action.payload.errorMsg,

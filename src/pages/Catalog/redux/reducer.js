@@ -21,10 +21,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-				errorMsg: {
-					...state.errorMsg,
-					[action.payload.mainCat]: null,
-				},
+				errorMsg: null,
 			}
 		case t.GET_PARENTS_CATEGORIES_SUCCESS:
 			return {
@@ -40,12 +37,10 @@ export default (state = initialState, action) => {
 				isLoading: false,
 			}
 		case t.GET_PARENTS_CATEGORIES_FAILURE:
+			console.log(111)
 			return {
 				...state,
-				errorMsg: {
-					...state.errorMsg,
-					[action.payload.mainCat]: action.payload.errorMsg,
-				},
+				errorMsg: action.payload.errorMsg,
 				isLoading: false,
 			}
 		default:

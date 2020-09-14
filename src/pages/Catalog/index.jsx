@@ -4,12 +4,22 @@ import { connect } from 'react-redux'
 import { catalogSelector } from './redux/selectors'
 import { BreadCrumbs, Preloader, Empty, Error } from '../../components'
 import { routes } from './routes'
+import { useEffect } from 'react'
 
 const Catalog = ({
 	catalog: { data, isLoading, errorMsg, viewElements = 5 },
 }) => {
 	const [title, setTitle] = useState('Поиск...')
 	const [breacCrumbsRoutes, setRoutes] = useState(null)
+
+	useEffect(() => {
+		if (!isLoading && !data) {
+			setTitle('Нет данных')
+		}
+		if (errorMsg) {
+			setTitle(errorMsg)
+		}
+	}, [errorMsg, data, isLoading])
 
 	const routesSwitch = () =>
 		routes.length &&

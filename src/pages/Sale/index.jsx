@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { saleSelector } from './redux/selectors'
-import { getSaleCategories } from './redux/actions'
+import { getSaleCollections } from './redux/actions'
 import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
 import { getViewElementsSelector } from '../Catalog/redux/selectors'
 import { BreadCrumbs, Preloader, Empty, Error } from '../../components'
@@ -10,11 +10,11 @@ import { BreadCrumbs, Preloader, Empty, Error } from '../../components'
 const Sale = ({
 	saleCategories: { data, errorMsg, isLoading },
 	viewElements,
-	getSaleCategories,
+	getSaleCollections,
 }) => {
 	useEffect(() => {
-		if (!data) getSaleCategories()
-	}, [data, getSaleCategories])
+		if (!data) getSaleCollections()
+	}, [data, getSaleCollections])
 
 	return (
 		<section className={'sale page'}>
@@ -44,6 +44,6 @@ export default connect(
 		viewElements: getViewElementsSelector(state),
 	}),
 	{
-		getSaleCategories,
+		getSaleCollections,
 	}
 )(Sale)

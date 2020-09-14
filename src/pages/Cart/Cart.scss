@@ -68,6 +68,11 @@
 
     &-desc {    
       padding: 0 1rem;
+      .product-title {
+        font-weight: 600;
+        display: inline-block;
+        padding-right: 0.5rem;
+      }
     }
     &-price {
       width: 5rem;
@@ -131,11 +136,10 @@
   }
 }
 
-.wrap-product__properties {
-  display: inline-block;
-  padding-left: 1rem;
-}
 .product-property {
   display: inline-block;
-  padding: 0 0.25rem;
+  white-space: pre;
+  &:not(:last-of-type) {    
+    padding: 0 0.5rem;
+  }
 }

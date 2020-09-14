@@ -183,7 +183,6 @@ export default (state = initialState, action) => {
 			const productsData = action.productsData
 			const newIds = state.productsIds.filter(id => {
 				const item = productsData.find(item => item._id === id)
-				console.log(item)
 				const product = products[id]
 				if (!item || (item && !item.isset) || (item && !item.parentId.isset)) {
 					count -= product.count

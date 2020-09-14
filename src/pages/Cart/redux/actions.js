@@ -70,11 +70,9 @@ export const getProductsDataFailure = errorMsg => ({
 export const getProductsForCart = (productsIds, setToast) => {
 	return dispatch => {
 		dispatch(getProductsDataRequest())
-		console.log(productsIds)
 		return getProducsDataFromIds(productsIds)
 			.then(res => {
 				if (checkResponse(res)) {
-					console.log(res.products)
 					dispatch(getProductsDataSuccess(res.products))
 				} else {
 					dispatch(getProductsDataFailure(res.message))

@@ -6,3 +6,9 @@ export const getCollectionData = collectionName =>
 		${collectionName}`,
 		'GET'
 	)
+
+export const getHitsApi = () =>
+	request('api/collection/getHitCollections', 'GET')
+
+export const getSaleApi = () =>
+	request('api/collection/getSaleCollections', 'GET')

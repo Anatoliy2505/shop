@@ -1,40 +1,60 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 export default function useSetViewList({
 	categories,
 	currentPage,
-	viewElements,
+	viewElements = 12,
+	setCurrentPage,
 }) {
 	const [hasMore, setHasMore] = useState(false)
-	const [thisCategiries, setThisCategiries] = useState([])
+	const thisCategiries = useRef([])
 	const [viewList, setViewList] = useState([])
-	const [maxCountPage, setMaxCountPage] = useState(1)
+	const [maxCountPage, setMaxCountPage] = useState(
+		() => Math.ceil(categories.length / viewElements) || 1
+	)
 
 	useEffect(() => {
-		if (currentPage === 1) {
-			if (categories && categories !== thisCategiries) {
-				setViewList([...categories.slice(0, viewElements)])
-				setThisCategiries(categories)
-				setMaxCountPage(Math.ceil(categories.length / viewElements) || 1)
-			}
-		}
-		return () => {
+		if (!!categories && categories !== thisCategiries.current) {
+			setCurrentPage(() => 1)
+			setViewList(() => [...categories.slice(0, viewElements)])
+			setMaxCountPage(() => {
+				const maxCount = Math.ceil(categories.length / viewElements)
+				if (maxCount > 1) {
+					setHasMore(true)
+					return maxCount
+				}
+				setHasMore(false)
+				return 1
+			})
+			thisCategiries.current = categories
+		} else {
 			setHasMore(false)
 		}
-	}, [currentPage, viewElements, categories, maxCountPage, thisCategiries])
+	}, [categories, viewElements, setCurrentPage])
+
+	const setCategories = useCallback(
+		pageNamber => {
+			if (hasMore && pageNamber > 1) {
+				setViewList(prev => [
+					...prev,
+					...thisCategiries.current.slice(
+						(pageNamber - 1) * viewElements,
+						pageNamber * viewElements
+					),
+				])
+			}
+		},
+		[hasMore, thisCategiries, viewElements]
+	)
 
 	useEffect(() => {
-		if (thisCategiries.length > 0 && hasMore && currentPage > 1) {
-			setViewList(viewList => [
-				...viewList,
-				...thisCategiries.slice(
-					(currentPage - 1) * viewElements,
-					currentPage * viewElements
-				),
-			])
+		if (currentPage <= maxCountPage) {
+			setCategories(currentPage)
+			if (currentPage === maxCountPage) {
+				setHasMore(() => false)
+			}
 		}
-		setHasMore(currentPage < maxCountPage)
-	}, [hasMore, thisCategiries, viewElements, currentPage, maxCountPage])
+	}, [currentPage, maxCountPage, setCategories])
 
 	return { viewList, hasMore }
 }

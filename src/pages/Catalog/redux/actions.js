@@ -21,13 +21,9 @@ export const selectParentsCategoriesSuccess = (data, mainCat) => ({
 	},
 })
 
-export const selectParentsCategoriesFailure = (
-	mainCat,
-	errorMsg = error.connect
-) => ({
+export const selectParentsCategoriesFailure = (errorMsg = error.connect) => ({
 	type: t.GET_PARENTS_CATEGORIES_FAILURE,
 	payload: {
-		mainCat,
 		errorMsg,
 	},
 	error: true,
@@ -39,18 +35,14 @@ export const getAllParentsCategories = mainCat => {
 		return getParentsCategories(mainCat)
 			.then(res => {
 				if (checkResponse(res)) {
+					console.log(res.data)
 					dispatch(selectParentsCategoriesSuccess(res.data, mainCat))
 				} else {
-					dispatch(
-						selectParentsCategoriesFailure(
-							mainCat,
-							res.message || error.request
-						)
-					)
+					dispatch(selectParentsCategoriesFailure(res.message || error.request))
 				}
 			})
 			.catch(error => {
-				dispatch(selectParentsCategoriesFailure(mainCat))
+				dispatch(selectParentsCategoriesFailure())
 				console.log(error)
 			})
 	}

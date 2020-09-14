@@ -16,7 +16,7 @@ export const Group = ({
 	const [collections, setCollection] = useState(null)
 
 	useEffect(() => {
-		if (data[section]) {
+		if (data && data[section]) {
 			setRoutes([{ path: `/catalog/${section}`, title: data[section].title }])
 			if (!!data[section].children[group]) {
 				const groupData = data[section].children[group]

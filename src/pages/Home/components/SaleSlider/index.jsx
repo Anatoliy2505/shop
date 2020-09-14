@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { saleSelector } from '../../../Sale/redux/selectors'
-import { getSaleCategories } from '../../../Sale/redux/actions'
+import { getSaleCollections } from '../../../Sale/redux/actions'
 import { CategoriesSlider } from '../../../../components'
 
-const SaleSlider = ({ saleCategories: { data }, getSaleCategories }) => {
+const SaleSlider = ({ saleCategories: { data }, getSaleCollections }) => {
 	useEffect(() => {
-		if (!data) getSaleCategories()
-	}, [data, getSaleCategories])
+		if (!data) getSaleCollections()
+	}, [data, getSaleCollections])
 
 	return (
 		<>
@@ -28,5 +28,5 @@ export default connect(
 	state => ({
 		saleCategories: saleSelector(state),
 	}),
-	{ getSaleCategories }
+	{ getSaleCollections }
 )(SaleSlider)

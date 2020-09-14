@@ -105,7 +105,7 @@ export const CategoriesSlider = ({ categories, title, href, page }) => {
 		],
 	}
 	const sliderItems = categories.map(item => (
-		<CategoryCard key={item.id} page={page} {...item} />
+		<CategoryCard key={item._id} page={page} from={'/hits'} {...item} />
 	))
 	return (
 		<>

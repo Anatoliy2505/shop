@@ -2,22 +2,22 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { hitsSelector } from '../../../Hits/redux/selectors'
-import { getHitsCategories } from '../../../Hits/redux/actions'
+import { getHitsCollections } from '../../../Hits/redux/actions'
 import { CategoriesSlider } from '../../../../components'
 
-const HitsSlider = ({ hitsCategories, getHitsCategories }) => {
+const HitsSlider = ({ hitsCategories: { data }, getHitsCollections }) => {
 	useEffect(() => {
-		if (!hitsCategories.data) getHitsCategories()
-	}, [hitsCategories.data, getHitsCategories])
+		if (!data) getHitsCollections()
+	}, [data, getHitsCollections])
 
 	return (
 		<>
-			{hitsCategories.data ? (
+			{data ? (
 				<CategoriesSlider
 					page={'hits'}
 					title={'Хиты продаж'}
 					href={'/hits'}
-					categories={hitsCategories.data}
+					categories={data}
 				/>
 			) : null}
 		</>
@@ -28,5 +28,5 @@ export default connect(
 	state => ({
 		hitsCategories: hitsSelector(state),
 	}),
-	{ getHitsCategories }
+	{ getHitsCollections }
 )(HitsSlider)

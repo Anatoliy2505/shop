@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { hitsSelector } from './redux/selectors'
-import { getHitsCategories } from './redux/actions'
+import { getHitsCollections } from './redux/actions'
 import { CategoriesLIst } from '../Catalog/components/CategoriesLIst'
 import { getViewElementsSelector } from '../Catalog/redux/selectors'
 import { BreadCrumbs, Preloader, Error, Empty } from '../../components'
@@ -10,11 +10,11 @@ import { BreadCrumbs, Preloader, Error, Empty } from '../../components'
 const Hits = ({
 	hitsCategories: { data, errorMsg, isLoading },
 	viewElements,
-	getHitsCategories,
+	getHitsCollections,
 }) => {
 	useEffect(() => {
-		if (!data) getHitsCategories()
-	}, [data, getHitsCategories])
+		if (!data) getHitsCollections()
+	}, [data, getHitsCollections])
 
 	return (
 		<section className={'hits page'}>
@@ -44,6 +44,6 @@ export default connect(
 		viewElements: getViewElementsSelector(state),
 	}),
 	{
-		getHitsCategories,
+		getHitsCollections,
 	}
 )(Hits)

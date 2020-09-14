@@ -1,38 +1,38 @@
-import { checkResponse } from '../../../utils/helpers/checkResponse'
-import { getSaleCategoriesApi } from '../../../utils/api/categoriesApi'
-import { error } from './constants'
 import * as t from './actionTypes'
+import { error } from './constants'
+import { checkResponse } from '../../../utils/helpers/checkResponse'
+import { getSaleApi } from '../../../utils/api/collectionApi'
 
-export const saleCategoriesRequest = () => ({
-	type: t.GET_SALE_CATEGORIES_REQUEST,
+export const getSaleCollectionsRequest = () => ({
+	type: t.GET_SALE_COLLECTIONS_REQUEST,
 })
 
-export const saleCategoriesSuccess = data => ({
-	type: t.GET_SALE_CATEGORIES_SUCCESS,
-	payload: data,
+export const getSaleCollectionsSuccess = collections => ({
+	type: t.GET_SALE_COLLECTIONS_SUCCESS,
+	collections,
 })
 
-export const saleCategoriesFailure = (errorMsg = error.connect) => ({
-	type: t.GET_SALE_CATEGORIES_FAILURE,
+export const getSaleCollectionsFailure = (errorMsg = error.connect) => ({
+	type: t.GET_SALE_COLLECTIONS_FAILURE,
 	payload: {
 		errorMsg,
 	},
 	error: true,
 })
 
-export const getSaleCategories = () => {
+export const getSaleCollections = () => {
 	return dispatch => {
-		dispatch(saleCategoriesRequest())
-		return getSaleCategoriesApi()
+		dispatch(getSaleCollectionsRequest())
+		return getSaleApi()
 			.then(res => {
 				if (checkResponse(res)) {
-					dispatch(saleCategoriesSuccess(res.data))
+					dispatch(getSaleCollectionsSuccess(res.collections))
 				} else {
-					dispatch(saleCategoriesFailure(res.message || error.request))
+					dispatch(getSaleCollectionsFailure(res.message || error.request))
 				}
 			})
 			.catch(error => {
-				dispatch(saleCategoriesFailure())
+				dispatch(getSaleCollectionsFailure())
 				console.log(error)
 			})
 	}

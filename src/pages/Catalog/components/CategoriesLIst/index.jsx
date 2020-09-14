@@ -1,37 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 
 import { CategoryCard } from '../../../../components'
 import useSetViewList from './useSetViewCat'
 
 import './CategoriesList.scss'
+import { useMemo } from 'react'
 
-export const CategoriesLIst = React.memo(
-	({ categories, page, viewElements, from }) => {
-		const [currentPage, setCurrentPage] = useState(1)
-		const [observer, setObserver] = useState(null)
-		const observeElement = useRef(null)
+export const CategoriesLIst = ({ categories, page, viewElements, from }) => {
+	const [currentPage, setCurrentPage] = useState(1)
+	const [observer, setObserver] = useState(null)
+	const [issetObserver, setIssetObserver] = useState(false)
+	const observeElement = useRef(null)
 
-		const { viewList, hasMore } = useSetViewList({
-			categories,
-			currentPage,
-			viewElements,
-		})
+	const { viewList, hasMore } = useSetViewList({
+		categories,
+		currentPage,
+		viewElements,
+		setCurrentPage,
+	})
 
-		useEffect(() => {
-			return () => {
-				if (observer) {
-					setCurrentPage(1)
-					observer.disconnect()
-					setObserver(null)
-				}
-			}
-		}, [observer, categories])
-
-		if (!observer && viewList) {
+	const observerMangager = useCallback(() => {
+		if (!issetObserver && hasMore && !!observeElement.current) {
 			const observ = new IntersectionObserver(
 				([entry]) => {
 					if (entry && entry.isIntersecting) {
-						setCurrentPage(currentPage => currentPage + 1)
+						setCurrentPage(prev => prev + 1)
 					}
 				},
 				{
@@ -39,21 +32,32 @@ export const CategoriesLIst = React.memo(
 					rootMargin: '0px 0px 150px 0px',
 				}
 			)
-			if (observeElement.current && hasMore) {
-				observeElement.current.style.display = 'block'
-				observ.observe(observeElement.current)
-				setObserver(observ)
-			} else if (observeElement.current) {
-				observeElement.current.style.display = 'none'
-			}
+			observ.observe(observeElement.current)
+			setObserver(observ)
+			setIssetObserver(true)
 		} else {
-			if (!hasMore && observer) {
+			if (issetObserver && !hasMore) {
 				observer.disconnect()
-				observeElement.current.style.display = 'none'
+				setObserver(null)
+				setIssetObserver(false)
+				setCurrentPage(1)
 			}
 		}
+	}, [observer, hasMore, issetObserver, observeElement])
 
-		const categoriesList = viewList =>
+	useEffect(() => {
+		observerMangager()
+		return () => {
+			if (observer) {
+				observer.disconnect()
+				setIssetObserver(false)
+				setObserver(null)
+			}
+		}
+	}, [categories, observerMangager, observer])
+
+	const categoriesList = useMemo(
+		() =>
 			viewList.map(category => (
 				<CategoryCard
 					key={category._id}
@@ -61,17 +65,21 @@ export const CategoriesLIst = React.memo(
 					page={page}
 					from={from}
 				/>
-			))
+			)),
+		[viewList, page, from]
+	)
 
-		const getNewPage = () => {
-			setCurrentPage(prevPage => prevPage + 1)
-		}
+	const getNewPage = () => {
+		setCurrentPage(prevPage => prevPage + 1)
+	}
 
-		return (
-			<div className="categories__list">
-				{viewList && viewList.length ? (
-					<>
-						{categoriesList(viewList)}
+	return (
+		<div className="categories__list">
+			{viewList && viewList.length > 0 ? (
+				<>
+					{categoriesList}
+
+					{hasMore && (
 						<div
 							className={'categories__list-observe'}
 							ref={observeElement}
@@ -79,9 +87,9 @@ export const CategoriesLIst = React.memo(
 						>
 							<i className={'fas fa-angle-double-down'}></i>
 						</div>
-					</>
-				) : null}
-			</div>
-		)
-	}
-)
+					)}
+				</>
+			) : null}
+		</div>
+	)
+}

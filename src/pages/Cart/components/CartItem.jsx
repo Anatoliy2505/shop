@@ -21,15 +21,15 @@ export const CartItem = ({
 		const lengthProp = properties.length
 		if (lengthProp > 0) {
 			const items = properties.map((item, index) => (
-				<span className={'product-property'}>
+				<span key={index + lengthProp}>
 					{index === lengthProp - 1 ? (
-						<>
+						<span className={'product-property'}>
 							{item.title}: {item.value}
-						</>
+						</span>
 					) : (
-						<>
-							{item.title}: {item.value},
-						</>
+						<span className={'product-property'}>
+							{item.title}: {item.value},{' '}
+						</span>
 					)}
 				</span>
 			))
@@ -43,12 +43,8 @@ export const CartItem = ({
 				<img src={process.env.PUBLIC_URL + image} alt={'img'} />
 			</td>
 			<td className={'main-cart__item-desc'}>
-				{title}
-				{propertiesElements ? (
-					<span className={'wrap-product__properties'}>
-						({propertiesElements})
-					</span>
-				) : null}
+				<span className={'product-title'}>{title}</span>
+				{propertiesElements ? <>({propertiesElements})</> : null}
 			</td>
 			<td className={'main-cart__item-price'}>{price}</td>
 			<td className="main-cart__item-count">

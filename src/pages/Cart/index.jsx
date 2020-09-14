@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { getCartSelector } from './redux/selectors'
 import {
@@ -9,9 +9,10 @@ import {
 	getProductsForCart,
 	resetProductsData,
 } from './redux/actions'
+
 import { CartItem } from './components/CartItem'
-import './Cart.scss'
 import { Preloader, Empty, Error } from '../../components'
+import './Cart.scss'
 
 const Cart = ({
 	cartData: {
@@ -51,7 +52,7 @@ const Cart = ({
 		}
 	}, [loadedData, errorMsg, productsIds, getProductsForCart])
 
-	const getOrderProducts = () => {
+	const getOrderProducts = useCallback(() => {
 		const orderProducts = productsIds.map(id => {
 			return (
 				<CartItem
@@ -65,7 +66,14 @@ const Cart = ({
 			)
 		})
 		return orderProducts
-	}
+	}, [
+		productsIds,
+		products,
+		addOneProductToCart,
+		subtractOneProductFromCart,
+		removeOneProductFromCart,
+	])
+
 	return (
 		<div className={'page-cart'}>
 			<h1 className={'page-title'}>Ваша корзина</h1>
