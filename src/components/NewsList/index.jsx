@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
 import { NewsListItem } from '../NewsListItem'
+import { BreadCrumbs } from '../BreadCrumbs'
+
+import PropTypes from 'prop-types'
 
 import './NewsList.scss'
 
-export const NewsList = ({ data, isHome }) => {
-	const createNewsItems = news =>
-		news.map(item => {
-			return <NewsListItem key={item.id} {...item} />
-		})
+export const NewsList = ({ data, isHome = false }) => {
+	const createNewsItems = useCallback(
+		() =>
+			data.map(item => {
+				return <NewsListItem key={item._id} {...item} />
+			}),
+		[data]
+	)
 
 	return (
 		<section className={'news'}>
@@ -26,9 +31,12 @@ export const NewsList = ({ data, isHome }) => {
 						</Link>
 					</h2>
 				) : (
-					<h1 className={'page-title'}>Сибирский Лов - Наши новости</h1>
+					<>
+						<BreadCrumbs routes={null} lastElementName={'Наши новости'} />
+						<h1 className={'page-title'}>Сибирский Лов - Наши новости</h1>
+					</>
 				)}
-				{data ? (
+				{data && data.length > 0 ? (
 					<div className={'news-list'}>{createNewsItems(data)}</div>
 				) : null}
 			</>

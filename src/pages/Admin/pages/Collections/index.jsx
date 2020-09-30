@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { AdminActions } from '../../components'
 import {
-	UpdateCollection,
+	UpdateCollectionPage,
 	DeleteCollection,
 	CreateCollection,
 } from './components'
@@ -12,6 +12,8 @@ import {
 	setNewCollection,
 	deleteCollection,
 	changeCollection,
+	deleteRecommendations,
+	addRecommendations,
 } from './redux/actions'
 import { sidebarSelector } from '../../../../redux/selectors'
 
@@ -22,6 +24,8 @@ export const Collections = ({
 	setNewCollection,
 	deleteCollection,
 	changeCollection,
+	deleteRecommendations,
+	addRecommendations,
 }) => {
 	return (
 		<>
@@ -34,10 +38,12 @@ export const Collections = ({
 					setNewCollection,
 				}}
 				update={{
-					component: UpdateCollection,
+					component: UpdateCollectionPage,
 					groups: data,
 					rawData,
 					changeCollection,
+					deleteRecommendations,
+					addRecommendations,
 				}}
 				delete={{
 					component: DeleteCollection,
@@ -53,5 +59,11 @@ export default connect(
 	state => ({
 		groups: sidebarSelector(state),
 	}),
-	{ setNewCollection, deleteCollection, changeCollection }
+	{
+		setNewCollection,
+		deleteCollection,
+		changeCollection,
+		deleteRecommendations,
+		addRecommendations,
+	}
 )(Collections)

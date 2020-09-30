@@ -9,3 +9,8 @@ export const collectionDataSelector = createSelector(
 		...state,
 	})
 )
+
+export const recommendationSelector = createSelector(
+	collectionRootSelector,
+	({ recommendation }) => recommendation
+)

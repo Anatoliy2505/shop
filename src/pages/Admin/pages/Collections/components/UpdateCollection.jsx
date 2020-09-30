@@ -11,10 +11,10 @@ import '../Collections.scss'
 const FormUpdateCollection = ({
 	groups,
 	rawData,
+	changeCollection,
 	handleSubmit,
 	submitting,
 	valid,
-	changeCollection,
 	reset,
 	change,
 	initialize,

@@ -143,3 +143,36 @@
     padding: 0 0.5rem;
   }
 }
+
+.modal-container {
+  .form-title {
+    margin-top: 0 !important;
+    text-align: center;
+    color: #aaa;
+  }
+  .form-title.item {
+    color: #424242;
+    font-size: 1em;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  textarea {
+    max-width: 100% !important;
+    height: 4.5em;
+    resize: none;
+  }
+}
+
+.button-wrapper {
+  max-width: 100%;
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  justify-content: space-between;
+}
+
+.stage {
+  display: none;
+  &.active {
+    display: block
+  }
+}

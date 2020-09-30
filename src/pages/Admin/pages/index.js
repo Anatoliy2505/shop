@@ -1,6 +1,8 @@
 export { default as Groups } from './Groups'
 export { default as Collections } from './Collections'
 export { default as Products } from './Products'
+export { default as Slider } from './Slider'
+export { default as News } from './News'
 export { Orders } from './Orders'
 export { Clientele } from './Clientele'
 export { Manual } from './Manual'

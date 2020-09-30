@@ -1,6 +1,9 @@
 @import '../../styles/vars';
 
 .wrap-actions__button {
+  &.recommendations {
+    padding-bottom: 1rem;
+  }
   .button {   
     &:not(:last-of-type) {
       margin-right: 1rem;
@@ -11,32 +14,6 @@
         background-color: #5a5a5a;
       }
     }
-  }
-  
-}
-
-.form {
-  display: flex;
-  flex-flow: column;
-  align-items: flex-start;
-  width: auto;
-  &-title {
-    font-size: 1.2em;
-    margin: 1.5rem 0 1rem 0;
-    line-height: 1em;
-  }
-  &-label {
-    display: block;
-    padding-bottom: 0.3rem;
-    font-size: 0.9em;
-  }
-  &-field {
-    box-sizing: border-box;
-    display: inline-block;
-    width: 300px;
-    margin-bottom: 0.5rem;
-    font-size: 0.9em;
-    padding: 0.2rem 0.3rem;
   }
   
 }
@@ -55,10 +32,12 @@
 .admin-page {
   &__nav, &__nav-link {
     display: flex;
+    flex-flow: row wrap;
     align-items: center;    
+    padding-bottom: 0.5rem;
   }
   &__nav {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     &-link {
       color: inherit;
       &:not(:last-of-type) {

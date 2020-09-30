@@ -133,13 +133,47 @@ img {
     background-color: #08909c;
     color: #fff;
     text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
   }
+}
+
+a.section-title__wrap:hover {
+  text-decoration: underline;
 }
 
 .page .page-title {
   margin-bottom: calc(2rem - 15px);
+}
+
+input[type=file] {
+  cursor: pointer;
+}
+
+.form {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  max-width: 300px;
+  &-title {
+    width: 100%;
+    font-size: 1.2em;
+    margin: 1.5rem 0 1rem 0;
+    line-height: 1em;
+  }
+  &-label {
+    display: block;
+    padding-bottom: 0.2rem;
+    font-size: 0.9em;
+    line-height: 1em;
+  }
+  &-field {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 300px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9em;
+    padding: 0.2rem 0.3rem;
+  }
+  
 }
 

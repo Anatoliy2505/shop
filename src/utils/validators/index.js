@@ -346,3 +346,179 @@ export const validateUpdateProduct = values => {
 
 	return errors
 }
+
+export const validateCreateSlide = values => {
+	const errors = {}
+
+	if (!values['title']) {
+		errors['title'] = 'Введите название слайда'
+	} else if (values['title'].length > 100) {
+		errors['title'] = 'Длина названия более 100 символов'
+	}
+
+	if (!values['description']) {
+		errors['description'] = 'Необходимо описание'
+	} else if (values['description'].length > 1000) {
+		errors['description'] = 'Длина названия более 1000 символов'
+	}
+
+	if (!Number(values['sort']) && Number(values['sort']) !== 0) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
+	}
+
+	if (!values['image']) {
+		errors['image'] = 'Выберите новую картинку'
+	} else if (values['image'].length === 0) {
+		errors['image'] = 'Выберите новую картинку'
+	}
+
+	return errors
+}
+
+export const validateUpdateSlide = values => {
+	const errors = {}
+
+	if (!values['title']) {
+		errors['title'] = 'Введите название слайда'
+	} else if (values['title'].length > 100) {
+		errors['title'] = 'Длина названия более 100 символов'
+	}
+
+	if (!values['description']) {
+		errors['description'] = 'Необходимо описание'
+	} else if (values['description'].length > 1000) {
+		errors['description'] = 'Длина названия более 1000 символов'
+	}
+
+	if (!Number(values['sort']) && Number(values['sort']) !== 0) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
+	}
+
+	if (values['isNewImage'] && !values['image']) {
+		errors['image'] = 'Выберите новую картинку'
+	} else if (values['isNewImage'] && values['image'].length === 0) {
+		errors['image'] = 'Выберите новую картинку'
+	}
+
+	return errors
+}
+
+export const validateCreateNews = values => {
+	const errors = {}
+
+	if (!values['title']) {
+		errors['title'] = 'Введите название слайда'
+	} else if (values['title'].length > 100) {
+		errors['title'] = 'Длина названия более 100 символов'
+	}
+
+	if (!values['name']) {
+		errors['name'] = 'Поле обязательно для заполнения'
+	} else if (!/[a-zA-Z\s\d]/i.test(values['name'].trim())) {
+		errors['name'] = 'Только английские буквы'
+	}
+
+	if (!values['litleDesc']) {
+		errors['litleDesc'] = 'Необходимо краткое описание'
+	} else if (values['litleDesc'].length > 500) {
+		errors['litleDesc'] = 'Длина названия более 500 символов'
+	}
+
+	if (!values['description']) {
+		errors['description'] = 'Необходимо описание'
+	} else if (values['description'].length > 20000) {
+		errors['description'] = 'Длина названия более 20000 символов'
+	}
+
+	if (!values['date']) {
+		errors['date'] = 'Укажите дату'
+	}
+
+	if (!Number(values['sort']) && Number(values['sort']) !== 0) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
+	}
+
+	if (!values['image']) {
+		errors['image'] = 'Выберите картинку'
+	} else if (values['image'].length === 0) {
+		errors['image'] = 'Выберите картинку'
+	}
+
+	return errors
+}
+
+export const validateUpdateNews = values => {
+	const errors = {}
+
+	if (!values['title']) {
+		errors['title'] = 'Введите название слайда'
+	} else if (values['title'].length > 100) {
+		errors['title'] = 'Длина названия более 100 символов'
+	}
+
+	if (!values['name']) {
+		errors['name'] = 'Поле обязательно для заполнения'
+	} else if (!/[a-zA-Z\s\d]/i.test(values['name'].trim())) {
+		errors['name'] = 'Только английские буквы'
+	}
+
+	if (!values['litleDesc']) {
+		errors['litleDesc'] = 'Необходимо краткое описание'
+	} else if (values['litleDesc'].length > 500) {
+		errors['litleDesc'] = 'Длина названия более 500 символов'
+	}
+
+	if (!values['description']) {
+		errors['description'] = 'Необходимо описание'
+	} else if (values['description'].length > 20000) {
+		errors['description'] = 'Длина названия более 20000 символов'
+	}
+
+	if (!values['date']) {
+		errors['date'] = 'Укажите дату'
+	}
+
+	if (!Number(values['sort']) && Number(values['sort']) !== 0) {
+		errors['sort'] = 'Укажите порядковый номер'
+	} else if (!/^\d+$/i.test(values['sort'])) {
+		errors['sort'] = 'Используйте только положительные цифры'
+	}
+
+	if (values['isNewImage'] && !values['image']) {
+		errors['image'] = 'Выберите новую картинку'
+	} else if (values['isNewImage'] && values['image'].length === 0) {
+		errors['image'] = 'Выберите новую картинку'
+	}
+
+	return errors
+}
+
+export const validateAddRecommendations = values => {
+	const errors = {}
+
+	if (!values['parentsIds'] || values['parentsIds'].length === 0) {
+		errors['parentsIds'] = 'Выберите родительские категории'
+	}
+
+	if (!values['collectionsIds'] || values['collectionsIds'].length === 0) {
+		errors['collectionsIds'] = 'Выберите коллекции для добавления'
+	}
+
+	return errors
+}
+
+export const validateRemoveRecommendations = values => {
+	const errors = {}
+
+	if (!values['collectionsIds'] || values['collectionsIds'].length === 0) {
+		errors['collectionsIds'] = 'Выберите коллекции для удаления'
+	}
+
+	return errors
+}

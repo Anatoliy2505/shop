@@ -1,0 +1,6 @@
+export { UserData } from './UserData'
+export { Address } from './Address'
+export { Avatar } from './Avatar'
+export { ChangeAvatar } from './ChangeAvatar'
+export { ChangeAddress } from './ChangeAddress'
+export { ChangeUser } from './ChangeUser'

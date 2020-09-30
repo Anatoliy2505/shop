@@ -1,39 +1,40 @@
-import { checkResponse } from '../../../utils/helpers/checkResponse'
-import { getSearchCategoriesApi } from '../../../utils/api/categoriesApi'
-import { error } from './constants'
 import * as t from './actionTypes'
+import { error } from './constants'
+import { checkResponse } from '../../../utils/helpers/checkResponse'
+import { searchCollectionsApi } from '../../../utils/api/searchApi'
 
-export const searchCategoriesRequest = () => ({
-	type: t.GET_SEARCH_CATEGORIES_REQUEST,
+export const searchCollectionsRequest = query => ({
+	type: t.SEARCH_COLLECTIONS_REQUEST,
+	query,
 })
 
-export const searchCategoriesSuccess = data => ({
-	type: t.GET_SEARCH_CATEGORIES_SUCCESS,
+export const searchCollectionsSuccess = data => ({
+	type: t.SEARCH_COLLECTIONS_SUCCESS,
 	payload: data,
 })
 
-export const searchCategoriesFailure = (errorMsg = error.connect) => ({
-	type: t.GET_SEARCH_CATEGORIES_FAILURE,
+export const searchCollectionsFailure = (errorMsg = error.connect) => ({
+	type: t.SEARCH_COLLECTIONS_FAILURE,
 	payload: {
 		errorMsg,
 	},
 	error: true,
 })
 
-export const getSearchCategories = query => {
+export const searchCollections = query => {
 	return dispatch => {
-		dispatch(searchCategoriesRequest())
-		return getSearchCategoriesApi(query)
+		dispatch(searchCollectionsRequest(query))
+
+		return searchCollectionsApi(query)
 			.then(res => {
-				const newRes = { status: 'ok', data: res }
-				if (checkResponse(newRes)) {
-					dispatch(searchCategoriesSuccess(newRes.data))
+				if (checkResponse(res)) {
+					dispatch(searchCollectionsSuccess(res.collections))
 				} else {
-					dispatch(searchCategoriesFailure(newRes.message || error.request))
+					dispatch(searchCollectionsFailure(res.message || error.request))
 				}
 			})
 			.catch(error => {
-				dispatch(searchCategoriesFailure())
+				dispatch(searchCollectionsFailure())
 				console.log(error)
 			})
 	}

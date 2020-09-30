@@ -10,11 +10,12 @@
 }
 
 .error-message {
-  display: inline-block;
+  display: block;
   color: rgb(252, 16, 16);
   font-size: 0.9em;
   line-height: 0.9em;
-  margin-bottom: 0.3em;
+  margin-top: -0.2em;
+  margin-bottom: 0.4em;
   .fa-exclamation-circle {
     font-size: 0.9em;
     display: inline-block;

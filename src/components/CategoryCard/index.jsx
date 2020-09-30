@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 
@@ -15,11 +15,16 @@ export const CategoryCard = ({
 	from,
 	page,
 }) => {
+	const location = useLocation()
 	const linkTo = `/${page || 'product/' + from}/${name}`
 	return (
 		<div className={'category__item'}>
 			<div className={'category__card'}>
-				<Link to={linkTo} className={'category__wrap-img'} title={title}>
+				<Link
+					to={{ pathname: linkTo, state: { prevPath: location.pathname } }}
+					className={'category__wrap-img'}
+					title={title}
+				>
 					<img
 						src={process.env.PUBLIC_URL + image}
 						alt={title}
@@ -27,7 +32,10 @@ export const CategoryCard = ({
 					/>
 				</Link>
 				<div className="category__desc">
-					<Link to={linkTo} className={'category__wrap-title'}>
+					<Link
+						to={{ pathname: linkTo, state: { prevPath: location.pathname } }}
+						className={'category__wrap-title'}
+					>
 						<h3 className="category__title">{title}</h3>
 					</Link>
 					<span

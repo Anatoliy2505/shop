@@ -11,6 +11,7 @@
   &-item {
     text-decoration: none;
     color: inherit;
+    position: relative;
 
     &* {
       color: inherit;
@@ -36,10 +37,14 @@
     &__desc {
       font-size: 0.9em;
       padding-top: 10px;
+      padding-bottom: 2rem;
     }
 
     &__date {
       @extend %date;
+      position: absolute;
+      bottom: 1rem;
+      right: 15px;
     }
   }
 }

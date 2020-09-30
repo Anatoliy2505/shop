@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { catalogSelector } from './redux/selectors'
 import { BreadCrumbs, Preloader, Empty, Error } from '../../components'
@@ -21,28 +21,31 @@ const Catalog = ({
 		}
 	}, [errorMsg, data, isLoading])
 
-	const routesSwitch = () =>
-		routes.length &&
-		routes.map(route => {
-			const Component = route.component
-			return (
-				<Route
-					key={route.link}
-					path={route.link}
-					render={props => (
-						<Component
-							data={data}
-							viewElements={viewElements}
-							{...props}
-							setTitle={setTitle}
-							setRoutes={setRoutes}
-							title={title}
+	const routesSwitch = () => (
+		<Switch>
+			{routes.length &&
+				routes.map(route => {
+					const Component = route.component
+					return (
+						<Route
+							key={route.link}
+							path={route.link}
+							render={props => (
+								<Component
+									data={data}
+									viewElements={viewElements}
+									{...props}
+									setTitle={setTitle}
+									setRoutes={setRoutes}
+									title={title}
+								/>
+							)}
+							exact
 						/>
-					)}
-					exact
-				/>
-			)
-		})
+					)
+				})}
+		</Switch>
+	)
 
 	return (
 		<section className={'catalog-page'}>

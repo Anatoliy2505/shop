@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { getCartSelector } from './redux/selectors'
+import { userDataSelector } from '../User/redux/selectors'
+import { isAuthSelector } from '../Auth/redux/selectors'
+import { getUserData } from '../User/redux/actions'
 import {
 	addOneProductToCart,
 	subtractOneProductFromCart,
@@ -10,8 +13,8 @@ import {
 	resetProductsData,
 } from './redux/actions'
 
-import { CartItem } from './components/CartItem'
-import { Preloader, Empty, Error } from '../../components'
+import { CartItem, Order } from './components'
+import { Preloader, Empty, Error, Modal } from '../../components'
 import './Cart.scss'
 
 const Cart = ({
@@ -24,12 +27,15 @@ const Cart = ({
 		isLoading,
 		errorMsg,
 	},
+	isAuth,
+	userData: { user, address },
 	addOneProductToCart,
 	subtractOneProductFromCart,
 	removeOneProductFromCart,
 	removeAllProductsFromCart,
 	getProductsForCart,
 	resetProductsData,
+	getUserData,
 }) => {
 	const didMount = useRef(false)
 
@@ -51,6 +57,12 @@ const Cart = ({
 			didMount.current = true
 		}
 	}, [loadedData, errorMsg, productsIds, getProductsForCart])
+
+	useEffect(() => {
+		if (isAuth && !user && !address) {
+			getUserData()
+		}
+	}, [user, address, getUserData, isAuth])
 
 	const getOrderProducts = useCallback(() => {
 		const orderProducts = productsIds.map(id => {
@@ -109,7 +121,9 @@ const Cart = ({
 						</tfoot>
 					</table>
 					<div className="wrap-button">
-						<button className={'button'}>Заказать</button>
+						<Modal textButton={'Заказать'}>
+							<Order user={user} address={address} products={products} />
+						</Modal>
 						<button className={'button'} onClick={removeAllProductsFromCart}>
 							Очистить
 						</button>
@@ -125,6 +139,8 @@ const Cart = ({
 export default connect(
 	state => ({
 		cartData: getCartSelector(state),
+		userData: userDataSelector(state),
+		isAuth: isAuthSelector(state),
 	}),
 	{
 		addOneProductToCart,
@@ -133,5 +149,6 @@ export default connect(
 		removeAllProductsFromCart,
 		getProductsForCart,
 		resetProductsData,
+		getUserData,
 	}
 )(Cart)

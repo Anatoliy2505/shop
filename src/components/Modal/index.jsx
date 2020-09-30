@@ -9,6 +9,12 @@ export const Modal = ({ textButton, classButton = 'button', children }) => {
 	const [isShown, setIsShown] = useState(false)
 	const show = () => setIsShown(true)
 	const hide = () => setIsShown(false)
+	const childrenBindModal = React.Children.map(children, child => {
+		return React.cloneElement(child, {
+			hide,
+		})
+	})
+
 	return (
 		<>
 			<button className={classButton} onClick={show}>
@@ -19,9 +25,9 @@ export const Modal = ({ textButton, classButton = 'button', children }) => {
 					<div className={'modal-window'}>
 						<div className={'modal-container'}>
 							<span className={'modal-close'} onClick={hide}>
-								<i className={'fas fa-times'}></i>
+								<i className={'far fa-times-circle'}></i>
 							</span>
-							{children}
+							{childrenBindModal}
 						</div>
 					</div>
 				</Portal>
@@ -32,5 +38,5 @@ export const Modal = ({ textButton, classButton = 'button', children }) => {
 
 Modal.propTypes = {
 	textButton: PropTypes.string.isRequired,
-	classButton: PropTypes.string.isRequired,
+	classButton: PropTypes.string,
 }

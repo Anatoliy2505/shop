@@ -1,3 +1,3 @@
-import { httpGet } from '../helpers/network'
+import { request } from '../helpers/network'
 
-export const getAll = () => httpGet('news')
+export const getNewsApi = () => request('api/news/getNews', 'GET')

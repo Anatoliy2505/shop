@@ -1,7 +1,9 @@
-import { registration, login } from '../../../utils/api/authApi'
-import { error } from './constants'
-
 import * as t from './actionTypes'
+import { error } from './constants'
+import { registration, login } from '../../../utils/api/authApi'
+
+import { checkResponse } from '../../../utils/helpers/checkResponse'
+import { userDataReset } from '../../User/redux/actions'
 
 export const registrationRequest = () => ({
 	type: t.REGISTRATION_POST_REQUEST,
@@ -49,7 +51,7 @@ export const registrationAction = (body, setToast) => {
 
 		return registration(body)
 			.then(res => {
-				if (res.ok) {
+				if (checkResponse(res)) {
 					dispatch(registrationSuccess(res.data))
 					localStorage.setItem('token', res.token)
 					for (let key in res.data) {
@@ -127,12 +129,20 @@ export const logoutAction = setToast => {
 		},
 	})
 	return dispatch => {
-		localStorage.clear()
+		const localStorageKeys = ['id', 'token', 'email', 'name', 'surname', 'role']
+		for (let val of localStorageKeys) {
+			localStorage.removeItem(val)
+		}
+		dispatch(userDataReset())
 		dispatch({ type: t.LOGOUT })
 	}
 }
 
 export const logoutSimpleAction = () => dispatch => {
-	localStorage.clear()
+	const localStorageKeys = ['id', 'token', 'email', 'name', 'surname', 'role']
+	for (let val of localStorageKeys) {
+		localStorage.removeItem(val)
+	}
+	dispatch(userDataReset())
 	dispatch({ type: t.LOGOUT })
 }

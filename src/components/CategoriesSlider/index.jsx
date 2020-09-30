@@ -77,7 +77,7 @@ const categories = [
 
 export const CategoriesSlider = ({ categories, title, href, page }) => {
 	const settings = {
-		// autoplay: true,
+		autoplay: false,
 		infinite: false,
 		arrows: true,
 		speed: 500,

@@ -7,7 +7,7 @@ import { CategoriesSlider } from '../../../../components'
 export const ViewProducts = ({
 	products,
 	collection,
-	recomendation,
+	recommendation,
 	addProductToCart,
 }) => {
 	const [productId, setProductId] = useState(null)
@@ -185,16 +185,15 @@ export const ViewProducts = ({
 							</div>
 						</div>
 					</div>
-					{recomendation && recomendation.length && (
+					{recommendation && recommendation.length > 0 ? (
 						<div className="products-recomendation">
 							<CategoriesSlider
-								categories={recomendation}
+								categories={recommendation}
 								title={'Рекомнедованные товары'}
-								href={'/recommendation'}
 								page={'recommendation'}
 							/>
 						</div>
-					)}
+					) : null}
 				</>
 			) : null}
 		</>

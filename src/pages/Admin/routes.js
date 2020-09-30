@@ -5,6 +5,8 @@ import {
 	Orders,
 	Clientele,
 	Manual,
+	Slider,
+	News,
 } from './pages'
 
 export const routes = [
@@ -43,5 +45,17 @@ export const routes = [
 		component: Clientele,
 		title: 'Клиенты',
 		img: 'fas fa-users',
+	},
+	{
+		link: '/admin/slider',
+		component: Slider,
+		title: 'Слайдер',
+		img: 'far fa-images',
+	},
+	{
+		link: '/admin/news',
+		component: News,
+		title: 'Новости',
+		img: 'far fa-newspaper',
 	},
 ]

@@ -16,6 +16,12 @@ export const updateCollection = body =>
 export const removeCollection = body =>
 	request('api/collection/removeCollection', 'DELETE', body)
 
+export const removeRecommendationsApi = body =>
+	request('api/collection/removeRecommendations', 'PUT', body)
+
+export const addRecommendationsApi = body =>
+	request('api/collection/addRecommendations', 'PUT', body)
+
 export const setProduct = body =>
 	request('api/product/setProduct', 'POST', body)
 
@@ -27,3 +33,24 @@ export const removeProduct = body =>
 
 export const getProductsFromCollection = collectionId =>
 	request(`api/product/getProducts/${collectionId}`, 'GET')
+
+export const getAllSlidesApi = () => request('api/slide/getAllSlides', 'GET')
+
+export const createSlideApi = body =>
+	request('api/slide/createSlide', 'POST', body)
+
+export const updateSlideApi = body =>
+	request('api/slide/updateSlide', 'PUT', body)
+
+export const removeSlideApi = body =>
+	request('api/slide/removeSlide', 'DELETE', body)
+
+export const getAllNewsApi = () => request('api/news/getAllNews', 'GET')
+
+export const createNewsApi = body =>
+	request('api/news/createNews', 'POST', body)
+
+export const updateNewsApi = body => request('api/news/updateNews', 'PUT', body)
+
+export const removeNewsApi = body =>
+	request('api/news/removeNews', 'DELETE', body)

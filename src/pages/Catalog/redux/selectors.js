@@ -3,17 +3,11 @@ import { NAME } from './constants'
 
 export const catalogRootSelector = state => state[NAME]
 
-export const catalogSelector = createSelector(
-	catalogRootSelector,
-	({ data, isLoading, errorMsg, viewElements }) => ({
-		data,
-		isLoading,
-		errorMsg,
-		viewElements,
-	})
-)
+export const catalogSelector = createSelector(catalogRootSelector, state => ({
+	...state,
+}))
 
 export const getViewElementsSelector = createSelector(
 	catalogRootSelector,
-	({ viewElements }) => viewElements || 5
+	({ viewElements }) => viewElements || 12
 )

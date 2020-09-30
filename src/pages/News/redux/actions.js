@@ -1,20 +1,20 @@
 import { checkResponse } from '../../../utils/helpers/checkResponse'
-import { getAll } from '../../../utils/api/newsApi'
+import { getNewsApi } from '../../../utils/api/newsApi'
 import { error } from './constants'
 
 import * as t from './actionTypes'
 
-export const newsRequest = () => ({
-	type: t.NEWS_GET_REQUEST,
+export const getNewsRequest = () => ({
+	type: t.GET_NEWS_REQUEST,
 })
 
-export const newsSuccess = data => ({
-	type: t.NEWS_GET_SUCCESS,
-	payload: data,
+export const getNewsSuccess = news => ({
+	type: t.GET_NEWS_SUCCESS,
+	news,
 })
 
-export const newsFailure = (errorMsg = error.connect) => ({
-	type: t.NEWS_GET_FAILURE,
+export const getNewsFailure = (errorMsg = error.connect) => ({
+	type: t.GET_NEWS_FAILURE,
 	payload: {
 		errorMsg,
 	},
@@ -23,18 +23,18 @@ export const newsFailure = (errorMsg = error.connect) => ({
 
 export const getNews = () => {
 	return dispatch => {
-		dispatch(newsRequest())
+		dispatch(getNewsRequest())
 
-		return getAll()
+		return getNewsApi()
 			.then(res => {
 				if (checkResponse(res)) {
-					dispatch(newsSuccess(res.data))
+					dispatch(getNewsSuccess(res.news))
 				} else {
-					dispatch(newsFailure(res.message))
+					dispatch(getNewsFailure(res.message || error.request))
 				}
 			})
 			.catch(error => {
-				dispatch(newsFailure())
+				dispatch(getNewsFailure())
 			})
 	}
 }

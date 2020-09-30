@@ -4,6 +4,7 @@ const initialState = {
 	isAuth: !!localStorage.getItem('token'),
 	user: {
 		userId: localStorage.getItem('userId') || null,
+		email: localStorage.getItem('email') || null,
 		name: localStorage.getItem('name') || null,
 		surname: localStorage.getItem('surname') || null,
 		role: localStorage.getItem('role') || null,
@@ -28,6 +29,7 @@ export default (state = initialState, action) => {
 				isLoading: false,
 				user: {
 					userId: action.payload.userId,
+					email: action.payload.email,
 					name: action.payload.name,
 					surname: action.payload.surname,
 					role: action.payload.role,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
+import { useLocation } from 'react-router'
 import { connect } from 'react-redux'
 import { ViewProducts } from './components'
 
@@ -14,7 +15,7 @@ import { addProductToCart } from '../Cart/redux/actions'
 import './ProductsDetail.scss'
 
 const ProductsDetail = ({
-	data: { collection, recomendation, products, isLoading, errorMsg },
+	data: { collection, recommendation, products, isLoading, errorMsg },
 	getCollection,
 	groups: { rawData },
 	addProductToCart,
@@ -23,6 +24,7 @@ const ProductsDetail = ({
 		params: { group, section, collectionName },
 	},
 }) => {
+	const location = useLocation()
 	const collName = useRef(null)
 	const [routes, setRoutes] = useState(null)
 
@@ -35,12 +37,19 @@ const ProductsDetail = ({
 
 	const newRouts = useMemo(() => {
 		const urlItems = url.split('/').slice(1)
-		if (!!collName && !!rawData) {
-			const routs = createRoutes(urlItems[0], section, group, rawData)
+		if (!!rawData && !!collection) {
+			const routs = createRoutes({
+				firstUrlItem: urlItems[0],
+				collection,
+				rawData,
+				backPath: location && location.state ? location.state.prevPath : false,
+				section,
+				group,
+			})
 			return routs
 		}
 		return null
-	}, [section, group, rawData, url, collName])
+	}, [section, group, rawData, url, collection, location])
 
 	useEffect(() => {
 		if (!!newRouts) {
@@ -65,7 +74,7 @@ const ProductsDetail = ({
 					<ViewProducts
 						products={products}
 						collection={collection}
-						recomendation={recomendation}
+						recommendation={recommendation}
 						addProductToCart={addProductToCart}
 					/>
 				</>
