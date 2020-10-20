@@ -10,6 +10,8 @@ import {
 	Admin,
 	User,
 	Cart,
+	Orders,
+	VideosPage,
 } from './pages'
 
 export const routes = [
@@ -82,10 +84,24 @@ export const routes = [
 		owner: 'admin',
 	},
 	{
+		key: 6,
+		path: '/orders',
+		component: Orders,
+		owner: 'user',
+		isPrivate: true,
+	},
+	{
 		key: 11,
 		path: '/user',
 		component: User,
 		owner: 'user',
+		isExact: true,
 		isPrivate: true,
+	},
+	{
+		key: 12,
+		path: '/video',
+		component: VideosPage,
+		isExact: true,
 	},
 ]

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Empty, Error, Preloader } from '../../components'
+import { useSetToast } from '../../hooks'
 import {
 	UserData,
 	Address,
@@ -27,6 +28,13 @@ const User = ({
 	changeUserData,
 }) => {
 	const [openFormName, setOpenFormName] = useState('')
+	const { setToast } = useSetToast()
+
+	useEffect(() => {
+		if (!user) {
+			getUserData(setToast)
+		}
+	}, [setToast, user, getUserData])
 
 	const closeForm = () => {
 		setOpenFormName('')
@@ -67,12 +75,6 @@ const User = ({
 			</>
 		)
 	}
-
-	useEffect(() => {
-		if (!user) {
-			getUserData()
-		}
-	}, [user, getUserData])
 
 	return (
 		<section className={'user-page'}>

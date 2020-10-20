@@ -1,0 +1,57 @@
+.track {
+  padding-bottom: 0.5rem;
+  .status {
+    &__name {
+      color: #979595;
+    }
+    &__operation {
+      font-weight: 600;
+    }
+  }
+  &-wrap__number {
+    color:  #979595;
+  }
+  &-number {
+    color:#1238d9;
+  }
+  &-info {
+    $self: &;
+    max-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: max-height 1.5s;
+    &.visible {
+      padding-top: 1rem;
+      max-height: 1000px;
+    }
+    &__status {
+      padding-left: 1rem;
+    }
+    &__item:not(:first-of-type) {
+      #{$self}__border {
+        padding: 0.5rem 0;
+        border-left: 1px solid #aaa;
+        position: relative;
+        margin-left: 0.5rem;
+        &::after, &::before {
+          content: '';
+          display: inline-block;
+          border-bottom: 1px solid #aaa;
+          position: absolute;
+          width: 0.5rem;
+          bottom: 0;
+          left: -0.25rem;
+        }
+        &::after {
+          transform: rotate(70deg) translate(-50%, 50%);
+        }
+        &::before {
+          transform: rotate(-70deg) translate(50%, -50%);
+          
+        }
+      }
+    }
+    
+  }
+
+}

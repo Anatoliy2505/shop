@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { isAuthSelector, userSelector } from './redux/selectors'
@@ -9,11 +9,17 @@ import { LoginForm, SignupForm } from './components'
 import './Auth.scss'
 
 const Auth = ({ isAuth, user: { role }, history }) => {
+	const location = useLocation()
+
 	useEffect(() => {
 		if (isAuth) {
-			role === 'admin' ? history.push('/admin') : history.push('/user')
+			if (location && location.state && location.state.prevLocation) {
+				history.push(location.state.prevLocation)
+			} else {
+				role === 'admin' ? history.push('/admin') : history.push('/user')
+			}
 		}
-	}, [isAuth, role, history])
+	}, [isAuth, role, history, location])
 
 	return (
 		<section className="auth">

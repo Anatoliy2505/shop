@@ -1,0 +1,17 @@
+.customer {
+  padding: 0;
+  padding-bottom: 1.5rem;
+  &-data {
+    &__item {
+      line-height: 1.25em;  
+    }
+  }
+  &-field {
+    &__name {
+      display: inline-block;
+      padding-right: 0.5rem;
+      color: #979595;
+    }
+  }
+  
+}

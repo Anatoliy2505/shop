@@ -7,6 +7,7 @@ import {
 	Manual,
 	Slider,
 	News,
+	Videos,
 } from './pages'
 
 export const routes = [
@@ -57,5 +58,11 @@ export const routes = [
 		component: News,
 		title: 'Новости',
 		img: 'far fa-newspaper',
+	},
+	{
+		link: '/admin/videos',
+		component: Videos,
+		title: 'Видео',
+		img: 'fab fa-youtube',
 	},
 ]

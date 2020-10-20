@@ -20,7 +20,6 @@ const ProductsDetail = ({
 	groups: { rawData },
 	addProductToCart,
 	match: {
-		url,
 		params: { group, section, collectionName },
 	},
 }) => {
@@ -35,8 +34,12 @@ const ProductsDetail = ({
 		}
 	}, [getCollection, collName, collectionName])
 
+	const link = useMemo(() => {
+		return location && location.pathname
+	}, [location])
+
 	const newRouts = useMemo(() => {
-		const urlItems = url.split('/').slice(1)
+		const urlItems = link.split('/').slice(1)
 		if (!!rawData && !!collection) {
 			const routs = createRoutes({
 				firstUrlItem: urlItems[0],
@@ -49,7 +52,7 @@ const ProductsDetail = ({
 			return routs
 		}
 		return null
-	}, [section, group, rawData, url, collection, location])
+	}, [section, group, rawData, link, collection, location])
 
 	useEffect(() => {
 		if (!!newRouts) {
@@ -76,6 +79,7 @@ const ProductsDetail = ({
 						collection={collection}
 						recommendation={recommendation}
 						addProductToCart={addProductToCart}
+						link={link}
 					/>
 				</>
 			) : (

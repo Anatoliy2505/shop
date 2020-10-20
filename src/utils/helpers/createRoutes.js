@@ -28,6 +28,12 @@ export const createRoutes = ({
 			]
 		}
 		default: {
+			if (
+				!!backPath &&
+				(/(orders)+/gi.test(backPath) || /(cart)+/gi.test(backPath))
+			) {
+				return [{ title: 'Назад', path: backPath }]
+			}
 			if (section && rawData) {
 				const sectionData = rawData.find(item => item.name === section)
 				if (group) {

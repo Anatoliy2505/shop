@@ -81,6 +81,12 @@ const CreateForm = ({
 			/>
 			<Field
 				component={FormItem}
+				type={'text'}
+				name={'link'}
+				label={'Укажите ссылку на видео'}
+			/>
+			<Field
+				component={FormItem}
 				type={'number'}
 				name={'sort'}
 				label={'Укажите позицию'}

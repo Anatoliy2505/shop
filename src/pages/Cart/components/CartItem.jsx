@@ -1,24 +1,23 @@
 import React, { useMemo } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 
 export const CartItem = ({
+	add,
+	link,
 	image,
 	title,
 	count,
 	price,
-	add,
+	remove,
 	subtract,
 	properties,
-	remove,
+
 	id,
 }) => {
-	const subtractProduct = () => {
-		if (count - 1 === 0) {
-			return remove(id)
-		}
-		subtract(id)
-	}
+	const location = useLocation()
+
 	const propertiesElements = useMemo(() => {
-		const lengthProp = properties.length
+		const lengthProp = properties ? properties.length : 0
 		if (lengthProp > 0) {
 			const items = properties.map((item, index) => (
 				<span key={index + lengthProp}>
@@ -37,14 +36,42 @@ export const CartItem = ({
 		}
 		return null
 	}, [properties])
+
+	const subtractProduct = () => {
+		if (count - 1 === 0) {
+			return remove(id)
+		}
+		subtract(id)
+	}
+
 	return (
 		<tr className={'main-cart__item'}>
 			<td className={'main-cart__item-img'}>
-				<img src={process.env.PUBLIC_URL + image} alt={'img'} />
+				<NavLink
+					to={{
+						pathname: link,
+						state: { prevPath: location.pathname },
+					}}
+				>
+					<img
+						src={
+							process.env.PUBLIC_URL +
+							(image ? image : '/images/products/noImage.jpg')
+						}
+						alt={'img'}
+					/>
+				</NavLink>
 			</td>
 			<td className={'main-cart__item-desc'}>
-				<span className={'product-title'}>{title}</span>
-				{propertiesElements ? <>({propertiesElements})</> : null}
+				<NavLink
+					to={{
+						pathname: link,
+						state: { prevPath: location.pathname },
+					}}
+				>
+					<span className={'product-title'}>{title}</span>
+					{propertiesElements ? <>({propertiesElements})</> : null}
+				</NavLink>
 			</td>
 			<td className={'main-cart__item-price'}>{price}</td>
 			<td className="main-cart__item-count">

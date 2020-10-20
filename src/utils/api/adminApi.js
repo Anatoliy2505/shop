@@ -54,3 +54,35 @@ export const updateNewsApi = body => request('api/news/updateNews', 'PUT', body)
 
 export const removeNewsApi = body =>
 	request('api/news/removeNews', 'DELETE', body)
+
+export const createVideoApi = body =>
+	request('api/video/createVideo', 'POST', body)
+
+export const updateVideoApi = body =>
+	request('api/video/updateVideo', 'PUT', body)
+
+export const deleteVideoApi = body =>
+	request('api/video/removeVideo', 'DELETE', body)
+
+export const getAllVideosApi = () => request('api/video/getAllVideos', 'GET')
+
+export const getOrderByNumberApi = orderNumber =>
+	request(`api/order/getOrderByNumber/${orderNumber}`, 'GET')
+
+export const getOrdersByEmailApi = email =>
+	request(`api/order/getOrdersByEmail/${email}`, 'GET')
+
+export const getNotRegUsersOrdersApi = () =>
+	request(`api/order/getNotRegUsersOrders`, 'GET')
+
+export const getOrdersBySurnameApi = surname =>
+	request(`api/order/getOrdersBySurname`, 'POST', { surname })
+
+export const changeOrderStatusApi = body =>
+	request('api/order/changeOrderStatus', 'PUT', body)
+
+export const deleteProductFromOrdersApi = body =>
+	request('api/order/deleteProductFromOrder', 'DELETE', body)
+
+export const deleteOrderApi = body =>
+	request('api/order/deleteOrder', 'DELETE', body)

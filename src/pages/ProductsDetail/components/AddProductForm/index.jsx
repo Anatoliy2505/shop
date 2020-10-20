@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useSetToast } from '../../../../hooks'
 
 export const AddProductForm = ({
-	title,
 	id,
+	link,
+	isset,
+	title,
 	price,
-	addProduct,
 	productId,
 	properties,
-	isset,
+	addProduct,
 }) => {
 	const [productCount, setProductCount] = useState(1)
 	const { setToast } = useSetToast()
@@ -22,7 +23,7 @@ export const AddProductForm = ({
 	const addProductToCart = e => {
 		e.preventDefault()
 		addProduct(
-			{ _id: id, price, count: Number(productCount), properties },
+			{ _id: id, price, count: Number(productCount), properties, link },
 			setToast
 		)
 		setProductCount(1)

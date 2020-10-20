@@ -20,7 +20,8 @@ const UserStageForm = ({
 	}, [userData, initialize])
 
 	const onSubmit = values => {
-		setState(prevState => ({ ...prevState, userData: { ...values } }))
+		const { avatar, ...rest } = values
+		setState(prevState => ({ ...prevState, userData: { ...rest } }))
 		toAddressStage()
 	}
 

@@ -11,6 +11,7 @@ import {
 	removeAllProductsFromCart,
 	getProductsForCart,
 	resetProductsData,
+	sendAnOrder,
 } from './redux/actions'
 
 import { CartItem, Order } from './components'
@@ -36,6 +37,7 @@ const Cart = ({
 	getProductsForCart,
 	resetProductsData,
 	getUserData,
+	sendAnOrder,
 }) => {
 	const didMount = useRef(false)
 
@@ -47,16 +49,11 @@ const Cart = ({
 	}, [didMount, resetProductsData])
 
 	useEffect(() => {
-		if (
-			!loadedData &&
-			!errorMsg &&
-			productsIds.length > 0 &&
-			!didMount.current
-		) {
+		if (productsIds.length > 0 && !didMount.current) {
 			getProductsForCart({ productsIds: [...productsIds] })
 			didMount.current = true
 		}
-	}, [loadedData, errorMsg, productsIds, getProductsForCart])
+	}, [productsIds, getProductsForCart])
 
 	useEffect(() => {
 		if (isAuth && !user && !address) {
@@ -111,9 +108,9 @@ const Cart = ({
 						<tbody>{getOrderProducts()}</tbody>
 						<tfoot className={'main-cart__footer'}>
 							<tr>
-								<td className={'main-cart__footer-title'} colSpan={'3'}>
-									Итого:
-								</td>
+								<td></td>
+								<td></td>
+								<td className={'main-cart__footer-title'}>Итого:</td>
 								<td>{totalCount}</td>
 								<td>{totalPrice}</td>
 								<td></td>
@@ -122,7 +119,12 @@ const Cart = ({
 					</table>
 					<div className="wrap-button">
 						<Modal textButton={'Заказать'}>
-							<Order user={user} address={address} products={products} />
+							<Order
+								user={user}
+								address={address}
+								products={products}
+								sendAnOrder={sendAnOrder}
+							/>
 						</Modal>
 						<button className={'button'} onClick={removeAllProductsFromCart}>
 							Очистить
@@ -150,5 +152,6 @@ export default connect(
 		getProductsForCart,
 		resetProductsData,
 		getUserData,
+		sendAnOrder,
 	}
 )(Cart)

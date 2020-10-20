@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
 
 import { routes } from './routes'
 import './Admin.scss'
@@ -43,6 +42,4 @@ const Admin = () => {
 	)
 }
 
-export default connect(state => ({
-	state,
-}))(Admin)
+export default Admin

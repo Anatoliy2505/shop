@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import { useSetToast } from '../../../hooks/useSetToast'
+import { useSetToast } from '../../../hooks/useSetToast'
 import { AddressStage } from './AddressStage'
 import { UserStage } from './UserStage'
 import { DeliveryStage } from './DeliveryStage'
@@ -16,11 +16,14 @@ export const Order = ({ user, address, hide, products, sendAnOrder }) => {
 		isDeliveryStage: false,
 	})
 
-	// const { setToast } = useSetToast()
+	const [sending, setSending] = useState(false)
+
+	const { setToast } = useSetToast()
 
 	useEffect(() => {
 		if (products) {
-			setState(prevState => ({ ...prevState, productsData: { ...products } }))
+			const { properties, ...rest } = products
+			setState(prevState => ({ ...prevState, productsData: { ...rest } }))
 		}
 	}, [products])
 
@@ -59,15 +62,15 @@ export const Order = ({ user, address, hide, products, sendAnOrder }) => {
 	}
 
 	const resetAll = () => {
+		setSending(false)
 		hide()
 	}
 
 	const onSubmit = values => {
 		const { userData, addressData, productsData } = state
 		const allData = { ...values, userData, addressData, productsData }
-		console.log(allData)
-		resetAll()
-		// sendAnOrder(values, setToast, resetAll)
+		setSending(true)
+		sendAnOrder(allData, setToast, resetAll, setSending)
 	}
 
 	return (
@@ -91,6 +94,7 @@ export const Order = ({ user, address, hide, products, sendAnOrder }) => {
 				isActive={stage.isDeliveryStage}
 				toAddressStage={toAddressStage}
 				state={state}
+				sending={sending}
 				onSubmit={onSubmit}
 			/>
 		</div>

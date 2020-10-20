@@ -1,7 +1,7 @@
 export const error = {
-	request: 'Не удалось получить список новостей!',
+	request: 'Не удалось получить заказы!',
 	connect: 'Не удалось отправить запрос!',
 	unknown: 'Неизвестная ошибка!',
 }
 
-export const NAME = 'news'
+export const NAME = 'ordersForAdmin'

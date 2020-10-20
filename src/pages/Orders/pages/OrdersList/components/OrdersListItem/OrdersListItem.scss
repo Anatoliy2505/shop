@@ -1,0 +1,33 @@
+@import '../../../../../../styles/vars';
+
+.order {
+  font-size: 0.85em;
+  border-bottom: 1px solid #aaa;
+  td {
+    text-align: center;
+  }
+  td.order-date {
+    text-align: left;
+  }
+  &-paid{
+    &__yes {
+      color: $greenColor;
+    }
+    &__no {
+      color: #fb0000;
+    }
+    &__ready {
+      color: #1238d9;
+    }
+  }
+  &-number {
+    a {
+      color: $mainColor;
+    }    
+  }
+  &-products {
+    &__item {
+      line-height: 1.2em;
+    }
+  }
+}

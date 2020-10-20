@@ -1,0 +1,50 @@
+@import '../../../../../../styles/vars';
+
+.ordered-products {
+  &__section {
+    padding-top: 1rem;
+  }  
+  width: 100%;
+  border-spacing: 0;
+  &__title {    
+    text-align: center;
+    .name {
+      text-align: left;
+    }
+    th {
+      font-weight: 600;
+    }
+  }
+  &__item {
+    text-align: center;
+    .name {
+      text-align: left;
+      a {
+        color: inherit;
+        transition: color 0.3s;
+        &:hover {
+          color: $mainColor;
+        }
+      }
+    }
+    td {
+      padding: 0.25rem 0;
+      border-bottom: 1px solid #aaa;
+    }
+    &:first-of-type {
+      td {
+        padding-top: 0.75rem;
+      }
+    }
+  }
+  &__foot {
+    font-weight: 600;
+    text-align: center;
+    td{
+      padding-top: 1rem;
+    }
+  }
+  .wrap-button {
+    text-align: right;
+  }
+}

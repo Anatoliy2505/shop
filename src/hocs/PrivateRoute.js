@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -12,6 +12,8 @@ const PrivateRoure = ({
 	user,
 	...rest
 }) => {
+	const location = useLocation()
+
 	return (
 		<Route
 			{...rest}
@@ -23,7 +25,12 @@ const PrivateRoure = ({
 						<Redirect to={'/'} />
 					)
 				) : (
-					<Redirect to={'/login'} />
+					<Redirect
+						to={{
+							pathname: '/login',
+							state: { prevLocation: location.pathname },
+						}}
+					/>
 				)
 			}
 		/>
@@ -36,7 +43,10 @@ export default connect(state => ({
 }))(PrivateRoure)
 
 PrivateRoure.propTypes = {
-	component: PropTypes.object.isRequired,
+	component: PropTypes.oneOfType([
+		PropTypes.func.isRequired,
+		PropTypes.object.isRequired,
+	]),
 	user: PropTypes.object,
 	isAuth: PropTypes.bool.isRequired,
 }

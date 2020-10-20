@@ -6,6 +6,7 @@ import { validateDeliveryStage as validate } from '../../../utils/validators/ord
 const DeliveryStageForm = ({
 	isActive,
 	toAddressStage,
+	sending,
 	onSubmit,
 	valid,
 	submitting,
@@ -57,7 +58,7 @@ const DeliveryStageForm = ({
 				<button
 					type={'submit'}
 					className={'button'}
-					disabled={submitting || !valid}
+					disabled={submitting || !valid || sending}
 				>
 					Заказать
 				</button>

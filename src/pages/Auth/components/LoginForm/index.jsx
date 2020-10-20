@@ -20,9 +20,11 @@ const LoginReduxForm = ({
 	valid,
 }) => {
 	const { setToast } = useSetToast()
+
 	const submitForm = body => {
 		loginAction(body, setToast)
 	}
+
 	return (
 		<div>
 			<div className={'auth-page'}>

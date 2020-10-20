@@ -48,6 +48,9 @@ const Footer = () => {
 								<li className={'footer-nav__item'}>
 									<Link to={'/hits'}>Хиты продаж</Link>
 								</li>
+								<li className={'footer-nav__item'}>
+									<Link to={'/video'}>Обучающие видео</Link>
+								</li>
 							</ul>
 						</div>
 						<div className={'flex-container__item'}>
@@ -60,6 +63,9 @@ const Footer = () => {
 								</li>
 								<li className={'footer-nav__item'}>
 									<Link to={'/help/return'}>Возврат товара</Link>
+								</li>
+								<li className={'footer-nav__item'}>
+									<Link to={'/about'}>О нас</Link>
 								</li>
 							</ul>
 						</div>

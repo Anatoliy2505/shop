@@ -522,3 +522,19 @@ export const validateRemoveRecommendations = values => {
 
 	return errors
 }
+
+export const validateVideos = values => {
+	const errors = {}
+
+	if (!values['title']) {
+		errors['title'] = 'Необхождимо название для видео'
+	} else if (values['title'].length > 70) {
+		errors['title'] = 'Длина названия более 70 символов'
+	}
+
+	if (!values['link']) {
+		errors['link'] = 'Необхождимо указать ссылку на YouTube видео'
+	}
+
+	return errors
+}

@@ -1,22 +1,58 @@
-@import '../../../../styles/vars';
-
-.news-one {
-  &__img {
-    width: 100%;
-    max-height: 25rem;
-    object-fit: cover;
-  }
-
-  &__title {
-    margin-bottom: 0.8rem;
-  }
-
-  &__desc {
+.orders {
+  &-page {
     font-size: 0.9em;
-    margin-top: 0;
+    input {
+      box-sizing: border-box;
+      display: inline-block;
+      width: 300px;
+      margin-bottom: 0.5rem;
+      font-size: 0.9em;
+      padding: 0.22rem 0.3rem;
+      margin-right: 0.5rem;
+    }
+    .button {
+      margin-top: 0;
+      &.slider {
+        margin-top: 0.5rem;
+        margin-left: 1rem;
+      }
+    } 
+    span {
+      display: inline-block;
+      &:not(:last-of-type), &:first-of-type {
+        margin-right: 0.5rem;
+      }
+    } 
   }
-
-  &__date {
-    @extend %date;
+  &-manager {
+    &__title {
+      font-size: 1em;
+      font-weight: 600;
+      line-height: 1em;
+      margin: 0.5rem 0;
+    }
   }
+  &-data {
+    padding-top: 2rem;
+  }
+  &-item {
+    &__data {
+      margin-bottom: 1rem;
+    }    
+    &__body, &__bottom {
+      padding-left: 1rem;
+    }
+    &__title {
+      color: #979595;
+    }
+    &__number {
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+    &__manager {
+      .button:not(:last-of-type) {
+        margin-right: 0.5rem;
+      }
+    }
+  }    
 }

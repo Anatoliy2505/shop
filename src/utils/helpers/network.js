@@ -54,14 +54,19 @@ export const request = async (
 		if (body) {
 			const formData = new FormData()
 			for (let key in body) {
-				formData.append(key, body[key])
+				let data = body[key]
+				if (data !== null && typeof data === 'object' && !data.type) {
+					data = JSON.stringify(body[key])
+				}
+				formData.append(key, data)
 			}
 			body = formData
-			const token = localStorage.getItem('token')
-			if (!!token) {
-				headers['Authorization'] = `Bearer ${token}`
-			}
 		}
+		const token = localStorage.getItem('token')
+		if (!!token) {
+			headers['Authorization'] = `Bearer ${token}`
+		}
+
 		const API_ROOT = 'http://localhost:3000'
 		const response = await fetch(`${API_ROOT}/${endPoint}`, {
 			method,

@@ -8,6 +8,7 @@ import {
 } from '../../../utils/api/userApi'
 import { actionForUser } from '../../../utils/helpers/actionForUser'
 import { checkResponse } from '../../../utils/helpers/checkResponse'
+import { logoutSimpleAction } from '../../Auth/redux/actions'
 
 export const getUserDataRequest = () => ({
 	type: t.GET_USER_DATA_REQEST,
@@ -26,7 +27,7 @@ export const getUserDataFailure = (errorMsg = error.connect) => ({
 	error: true,
 })
 
-export const getUserData = () => {
+export const getUserData = (setToast = () => {}) => {
 	return dispatch => {
 		dispatch(getUserDataRequest())
 
@@ -35,6 +36,16 @@ export const getUserData = () => {
 				if (checkResponse(res)) {
 					dispatch(getUserDataSuccess({ user: res.user, address: res.address }))
 				} else {
+					if (res.auth === false) {
+						setToast({
+							data: {
+								type: 'error',
+								title: 'Ошибка!',
+								message: res.message || error.auth,
+							},
+						})
+						return dispatch(logoutSimpleAction())
+					}
 					dispatch(getUserDataFailure(res.message))
 				}
 			})

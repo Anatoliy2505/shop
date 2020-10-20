@@ -32,6 +32,7 @@ export default (state = initialState, action) => {
 					...oldProduct,
 					count: newCountProduct,
 					price: product.price,
+					properties: product.properties,
 				}
 				products[productId] = newProduct
 				const newTotalPrice =
@@ -230,6 +231,33 @@ export default (state = initialState, action) => {
 				...state,
 				loadedData: false,
 			}
+		case t.SET_PRODUCTS_FROM_ORDER: {
+			let totalCount = state.totalCount
+			let totalPrice = state.totalPrice
+			const productsIds = [...state.productsIds]
+			const products = { ...state.products }
+			for (const item of action.products) {
+				if (item._id in products) {
+					products[item._id].count += item.count
+				} else {
+					productsIds.push(item._id)
+					products[item._id] = item
+				}
+				totalCount += item.count
+				totalPrice += item.count * products[item._id].price
+			}
+			localStorage.setItem('products', JSON.stringify(products))
+			localStorage.setItem('productsIds', JSON.stringify(productsIds))
+			localStorage.setItem('totalCount', totalCount)
+			localStorage.setItem('totalPrice', totalPrice)
+			return {
+				...state,
+				totalCount,
+				totalPrice,
+				productsIds,
+				products,
+			}
+		}
 
 		default:
 			return state

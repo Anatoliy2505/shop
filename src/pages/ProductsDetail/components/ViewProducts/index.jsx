@@ -5,6 +5,7 @@ import { getProperties } from '../../../../utils/helpers/getProperties'
 import { CategoriesSlider } from '../../../../components'
 
 export const ViewProducts = ({
+	link,
 	products,
 	collection,
 	recommendation,
@@ -157,6 +158,7 @@ export const ViewProducts = ({
 								/>
 							</div>
 							<AddProductForm
+								link={link}
 								title={productData.title}
 								properties={properties}
 								addProduct={addProductToCart}
@@ -173,7 +175,18 @@ export const ViewProducts = ({
 
 						<div className="products-section two">
 							<h3 className="products-title">Описание:</h3>
-							<div className="products-description">{collection.content}</div>
+							<div className="products-description">
+								{collection.content}{' '}
+								{collection.link ? (
+									<a
+										className={'abort-link'}
+										target={'_blank'}
+										href={collection.link}
+									>
+										Смотреть видео на нашем YouTube канале.
+									</a>
+								) : null}
+							</div>
 
 							{propertiesList}
 

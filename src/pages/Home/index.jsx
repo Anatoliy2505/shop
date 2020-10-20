@@ -4,6 +4,7 @@ import {
 	HomeNews,
 	HitsSlider,
 	SaleSlider,
+	HomeVideos,
 	// VkPosts,
 } from './components'
 import './Home.scss'
@@ -15,6 +16,7 @@ const Home = () => {
 			<HomeNews />
 			<HitsSlider />
 			<SaleSlider />
+			<HomeVideos />
 			{/* <VkPosts />*/}
 		</>
 	)

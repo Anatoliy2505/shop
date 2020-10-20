@@ -57,8 +57,6 @@ export const validateAddressStage = values => {
 
 	if (!values['index']) {
 		errors['index'] = 'Укажите индекс'
-	} else if (!/^[0-9]{6,8}$/.test(values['index'])) {
-		errors['index'] = 'Некорректный индекс'
 	}
 
 	return errors

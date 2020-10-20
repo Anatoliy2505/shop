@@ -1,0 +1,24 @@
+@import '../../../../styles/vars';
+
+.order {  
+  &-page {
+    font-size: 0.95em;
+  }  
+  &-item {
+    &__title {
+      font-weight: 600;
+      margin: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.1em;
+    }
+  }
+  &-paid__yes {
+    color: $greenColor; 
+  }
+  &-ready {
+    color: #1238d9; 
+  }
+  &-paid__not {
+    color: #fb0000;
+  }
+}

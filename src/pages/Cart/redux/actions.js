@@ -1,6 +1,7 @@
 import * as t from './actionTypes'
 import { getProducsDataFromIds } from '../../../utils/api/cartApi'
 import { checkResponse } from '../../../utils/helpers/checkResponse'
+import { sendOrderApi } from '../../../utils/api/orderApi'
 
 export const addProductToCart = (data, setToast) => dispatch => {
 	try {
@@ -67,7 +68,7 @@ export const getProductsDataFailure = errorMsg => ({
 	error: true,
 })
 
-export const getProductsForCart = (productsIds, setToast) => {
+export const getProductsForCart = (productsIds, setToast = () => {}) => {
 	return dispatch => {
 		dispatch(getProductsDataRequest())
 		return getProducsDataFromIds(productsIds)
@@ -103,3 +104,59 @@ export const resetProductsData = () => dispatch =>
 	dispatch({
 		type: t.RESET_PRODUCTS_DATA,
 	})
+
+export const sendAnOrder = (
+	data,
+	setToast,
+	reset = () => {},
+	setSending = () => {}
+) => dispatch => {
+	setToast({
+		data: {
+			message: 'Подождите, заказ отправляется',
+		},
+		duration: 5000,
+	})
+	return sendOrderApi(data)
+		.then(res => {
+			if (!checkResponse(res)) {
+				setSending(false)
+				return setToast({
+					data: { type: 'error', title: 'Ошибка!', message: res.message },
+				})
+			}
+			reset()
+			setToast({
+				data: {
+					type: 'success',
+					title: 'Отлично!',
+					message: res.message,
+				},
+			})
+			dispatch(removeAllProductsFromCart())
+		})
+		.catch(() => {
+			setSending(false)
+			setToast({
+				data: {
+					type: 'error',
+					title: 'Ошибка!',
+					message: 'Что-то пошло не так. Не удалось отправить данные на сервер',
+				},
+			})
+		})
+}
+
+export const setProductsFromOrder = (
+	products,
+	setToast = () => {}
+) => dispatch => {
+	dispatch({ type: t.SET_PRODUCTS_FROM_ORDER, products })
+	setToast({
+		data: {
+			type: 'success',
+			title: 'Отлично!',
+			message: 'Товары добавлены в корзину',
+		},
+	})
+}
